@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NISM Series V-A Mock Test 1 | Mutual Fund Distributors</title>
+<style>
+:root{
+  --bg:#0a0e17; --bg2:#0f1420; --panel:#131927; --panel2:#1a2235;
+  --border:#243047; --border-light:#2e3b56;
+  --text:#e8edf7; --text-dim:#8b97b3; --text-faint:#5d6a87;
+  --accent:#4f8cff; --accent-dim:#2c5dc7; --accent-glow:rgba(79,140,255,.35);
+  --green:#2dd4a7; --green-dim:#1a8f72; --red:#ff5d7a; --red-dim:#c23854;
+  --amber:#ffb74f; --amber-dim:#cc8c2e;
+  --purple:#a78bfa;
+  --radius:14px; --radius-sm:8px;
+  --shadow:0 8px 30px rgba(0,0,0,.45);
+  --transition:.25s cubic-bezier(.4,0,.2,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{
+  background:radial-gradient(circle at 20% 0%, #15203a 0%, var(--bg) 55%);
+  color:var(--text);
+  font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+::selection{background:var(--accent-glow);}
+button{font-family:inherit;cursor:pointer;border:none;outline:none;background:none;color:inherit;}
+::-webkit-scrollbar{width:8px;height:8px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:8px;}
+::-webkit-scrollbar-thumb:hover{background:var(--accent-dim);}
+
+.screen{display:none;min-height:100vh;width:100%;animation:fadeIn .45s ease;}
+.screen.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.55;}}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes pop{0%{transform:scale(.85);opacity:0;}100%{transform:scale(1);opacity:1;}}
+@keyframes slideDown{from{transform:translateY(-12px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+@keyframes shimmer{0%{background-position:-200% 0;}100%{background-position:200% 0;}}
+
+/* ============ START SCREEN ============ */
+#startScreen{display:flex;align-items:center;justify-content:center;padding:24px;}
+.start-card{
+  width:100%;max-width:780px;background:linear-gradient(160deg,var(--panel) 0%, var(--bg2) 100%);
+  border:1px solid var(--border);border-radius:20px;padding:42px 40px;box-shadow:var(--shadow);
+  animation:pop .5s ease;
+}
+.brand-row{display:flex;align-items:center;gap:14px;margin-bottom:6px;}
+.brand-badge{
+  width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--purple));
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#fff;
+  box-shadow:0 6px 18px var(--accent-glow);flex-shrink:0;
+}
+.brand-text-sm{font-size:12px;letter-spacing:2px;color:var(--text-faint);text-transform:uppercase;font-weight:600;}
+.start-title{font-size:28px;font-weight:800;margin-top:14px;line-height:1.3;background:linear-gradient(90deg,#fff,#b9c6e6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.start-sub{color:var(--text-dim);margin-top:8px;font-size:14.5px;line-height:1.6;}
+.info-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:30px 0;}
+.info-box{
+  background:var(--panel2);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:16px 14px;text-align:center;transition:var(--transition);
+}
+.info-box:hover{border-color:var(--accent-dim);transform:translateY(-2px);}
+.info-box .ic{font-size:20px;margin-bottom:8px;}
+.info-box .val{font-size:20px;font-weight:800;color:#fff;}
+.info-box .lbl{font-size:11.5px;color:var(--text-faint);margin-top:3px;text-transform:uppercase;letter-spacing:.5px;}
+.rules-box{
+  background:rgba(255,183,79,.06);border:1px solid rgba(255,183,79,.25);border-radius:var(--radius-sm);
+  padding:16px 18px;margin-bottom:26px;
+}
+.rules-box h4{color:var(--amber);font-size:13px;margin-bottom:10px;display:flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.5px;}
+.rules-box ul{list-style:none;font-size:13.5px;color:var(--text-dim);line-height:1.95;}
+.rules-box li{display:flex;gap:8px;}
+.rules-box li::before{content:'▸';color:var(--amber);flex-shrink:0;}
+.resume-banner{
+  background:rgba(79,140,255,.08);border:1px solid rgba(79,140,255,.3);border-radius:var(--radius-sm);
+  padding:13px 16px;margin-bottom:22px;font-size:13.5px;color:var(--accent);display:flex;align-items:center;justify-content:space-between;gap:10px;
+  animation:slideDown .4s ease;
+}
+.resume-banner span b{color:#fff;}
+.resume-banner .clear-btn{font-size:12px;color:var(--text-faint);text-decoration:underline;flex-shrink:0;}
+.start-actions{display:flex;gap:14px;align-items:center;}
+.btn{
+  padding:14px 28px;border-radius:11px;font-weight:700;font-size:14.5px;transition:var(--transition);
+  display:inline-flex;align-items:center;gap:8px;letter-spacing:.2px;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--accent),#3f6fe0);color:#fff;box-shadow:0 8px 24px var(--accent-glow);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px var(--accent-glow);}
+.btn-primary:active{transform:translateY(0);}
+.btn-ghost{background:var(--panel2);color:var(--text-dim);border:1px solid var(--border);}
+.btn-ghost:hover{border-color:var(--border-light);color:var(--text);}
+.start-foot{margin-top:22px;font-size:12px;color:var(--text-faint);text-align:center;}
+
+/* ============ TEST SCREEN ============ */
+#testScreen{display:none;}
+#testScreen.active{display:flex;flex-direction:column;height:100vh;}
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;padding:0 22px;height:62px;flex-shrink:0;
+  background:var(--panel);border-bottom:1px solid var(--border);position:relative;z-index:20;
+}
+.topbar-left{display:flex;align-items:center;gap:12px;min-width:0;}
+.topbar-logo{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--purple));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0;}
+.topbar-title{font-size:14.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.topbar-title small{display:block;font-size:11px;color:var(--text-faint);font-weight:500;}
+.topbar-right{display:flex;align-items:center;gap:16px;}
+.timer-box{
+  display:flex;align-items:center;gap:9px;background:var(--panel2);border:1px solid var(--border);
+  border-radius:10px;padding:8px 16px;font-weight:700;font-size:16px;font-variant-numeric:tabular-nums;
+}
+.attempted-box{
+  background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 16px;
+  font-size:13.5px;font-weight:700;color:var(--text-dim);white-space:nowrap;
+}
+.attempted-box span{color:var(--accent);font-weight:800;}
+.attempted-box #totalText{color:var(--text);}
+.timer-box.warn{border-color:var(--red-dim);color:var(--red);animation:pulse 1.1s infinite;}
+.timer-ic{font-size:15px;}
+.submit-btn{
+  background:linear-gradient(135deg,var(--green-dim),var(--green));color:#04241c;font-weight:700;font-size:13.5px;
+  padding:10px 20px;border-radius:9px;transition:var(--transition);
+}
+.submit-btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(45,212,167,.3);}
+.progress-top{height:3px;width:100%;background:var(--border);flex-shrink:0;}
+.progress-top-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--purple));transition:width .35s ease;}
+
+.test-body{display:flex;flex:1;overflow:hidden;}
+.question-area{flex:1;display:flex;flex-direction:column;overflow-y:auto;padding:34px 44px 110px;}
+.q-meta-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.q-counter{font-size:13px;color:var(--text-faint);font-weight:600;letter-spacing:.3px;}
+.q-counter b{color:var(--accent);}
+.mark-btn{
+  display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--text-dim);
+  border:1px solid var(--border);padding:7px 14px;border-radius:20px;transition:var(--transition);
+}
+.mark-btn:hover{border-color:var(--purple);color:var(--purple);}
+.mark-btn.active{background:rgba(167,139,250,.14);border-color:var(--purple);color:var(--purple);}
+.q-card{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:30px 32px;
+  animation:fadeIn .3s ease; max-width:760px;
+}
+.q-text{font-size:17.5px;line-height:1.65;font-weight:600;color:#f3f6fc;margin-bottom:26px;}
+.q-tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.6px;color:var(--accent);background:rgba(79,140,255,.1);padding:3px 9px;border-radius:6px;margin-bottom:14px;text-transform:uppercase;}
+.options{display:flex;flex-direction:column;gap:12px;}
+.option{
+  display:flex;align-items:flex-start;gap:14px;padding:15px 18px;border:1.5px solid var(--border);
+  border-radius:11px;cursor:pointer;transition:var(--transition);background:var(--bg2);
+}
+.option:hover{border-color:var(--border-light);background:var(--panel2);transform:translateX(2px);}
+.option.selected{border-color:var(--accent);background:rgba(79,140,255,.1);box-shadow:0 0 0 1px var(--accent) inset;}
+.opt-radio{
+  width:22px;height:22px;border-radius:50%;border:2px solid var(--border-light);flex-shrink:0;margin-top:1px;
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;transition:var(--transition);color:transparent;
+}
+.option.selected .opt-radio{border-color:var(--accent);background:var(--accent);color:#fff;}
+.opt-text{font-size:14.8px;line-height:1.55;color:var(--text);padding-top:1px;}
+.review-mode .option{cursor:default;}
+.review-mode .option.correct-ans{border-color:var(--green);background:rgba(45,212,167,.1);}
+.review-mode .option.wrong-ans{border-color:var(--red);background:rgba(255,93,122,.1);}
+.review-mode .option.correct-ans .opt-radio{border-color:var(--green);background:var(--green);}
+.review-mode .option.wrong-ans .opt-radio{border-color:var(--red);background:var(--red);}
+.explanation-box{
+  margin-top:22px;padding:16px 18px;background:rgba(79,140,255,.06);border-left:3px solid var(--accent);
+  border-radius:8px;font-size:13.5px;line-height:1.65;color:var(--text-dim);animation:slideDown .35s ease;
+}
+.explanation-box b{color:var(--accent);display:block;margin-bottom:6px;font-size:12px;letter-spacing:.4px;text-transform:uppercase;}
+
+.nav-footer{
+  position:sticky;bottom:0;display:flex;align-items:center;justify-content:flex-start;
+  padding:16px 44px;background:linear-gradient(180deg,transparent,var(--bg) 30%);margin-top:auto;gap:18px;flex-wrap:wrap;
+}
+.nav-footer-center{display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:center;}
+.nav-btn{
+  padding:12px 24px;border-radius:10px;font-weight:700;font-size:13.5px;background:var(--panel2);
+  border:1px solid var(--border);color:var(--text);transition:var(--transition);display:flex;align-items:center;gap:8px;
+}
+.nav-btn:hover:not(:disabled){border-color:var(--accent-dim);transform:translateY(-1px);}
+.nav-btn:disabled{opacity:.35;cursor:not-allowed;}
+.nav-btn.next-primary{background:linear-gradient(135deg,var(--accent-dim),var(--accent));border:none;}
+.clear-btn-mini{font-size:12.5px;color:var(--text-faint);text-decoration:underline;}
+
+/* SIDEBAR */
+.sidebar{
+  width:300px;flex-shrink:0;background:var(--panel);border-left:1px solid var(--border);
+  display:flex;flex-direction:column;padding:20px;overflow-y:auto;
+}
+.sidebar-progress{margin-bottom:18px;}
+.sidebar-progress-label{display:flex;justify-content:space-between;font-size:11.5px;color:var(--text-faint);margin-bottom:6px;}
+.sidebar-bar{height:6px;border-radius:6px;background:var(--border);overflow:hidden;}
+.sidebar-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--purple));transition:width .35s ease;}
+.legend{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;font-size:11.5px;color:var(--text-dim);}
+.legend-item{display:flex;align-items:center;gap:7px;}
+.legend-dot{width:11px;height:11px;border-radius:4px;flex-shrink:0;}
+.dot-answered{background:var(--green);}
+.dot-notanswered{background:var(--red-dim);border:1.5px solid var(--red);}
+.dot-notvisited{background:transparent;border:1.5px solid var(--border-light);}
+.dot-marked{background:var(--purple);}
+.dot-current{background:var(--accent);}
+.palette-title{font-size:12px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;font-weight:700;}
+.palette-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-bottom:20px;
+}
+.pal-item{
+  aspect-ratio:1;border-radius:9px;display:flex;align-items:center;justify-content:center;
+  font-size:12.5px;font-weight:700;border:1.5px solid var(--border-light);background:transparent;color:var(--text-dim);
+  transition:var(--transition);position:relative;
+}
+.pal-item:hover{transform:scale(1.08);}
+.pal-item.answered{background:var(--green-dim);border-color:var(--green);color:#fff;}
+.pal-item.notanswered{background:rgba(255,93,122,.15);border-color:var(--red);color:var(--red);}
+.pal-item.marked{background:var(--purple);border-color:var(--purple);color:#1a0f2e;box-shadow:0 0 0 1px var(--purple) inset;}
+.pal-item.marked.answered{background:var(--purple);border-color:var(--purple);color:#1a0f2e;}
+.pal-item.marked.notanswered{background:var(--purple);border-color:var(--purple);color:#1a0f2e;}
+.pal-item.marked::after{
+  content:'\2605';position:absolute;top:-6px;right:-6px;width:15px;height:15px;border-radius:50%;
+  background:var(--panel);color:var(--purple);font-size:9px;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 1.5px var(--purple);
+}
+.pal-item.current{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-glow);transform:scale(1.05);}
+.sidebar-submit{margin-top:auto;}
+.sidebar-stats{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;font-size:12.5px;}
+.sidebar-stat-row{display:flex;justify-content:space-between;color:var(--text-dim);}
+.sidebar-stat-row b{color:#fff;}
+
+/* MODAL */
+.modal-overlay{
+  display:none;position:fixed;inset:0;background:rgba(5,8,15,.78);backdrop-filter:blur(4px);
+  align-items:center;justify-content:center;z-index:100;animation:fadeIn .25s ease;
+}
+.modal-overlay.active{display:flex;}
+.modal-box{
+  background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:32px;max-width:420px;
+  width:90%;box-shadow:var(--shadow);animation:pop .3s ease;
+}
+.modal-box h3{font-size:18px;margin-bottom:10px;}
+.modal-box p{font-size:13.5px;color:var(--text-dim);line-height:1.6;margin-bottom:24px;}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;}
+
+/* ============ RESULT SCREEN ============ */
+#resultScreen{padding:40px 24px 80px;display:flex;justify-content:center;}
+.result-wrap{width:100%;max-width:920px;}
+.result-header{text-align:center;margin-bottom:30px;}
+.badge{
+  display:inline-flex;align-items:center;gap:10px;padding:10px 26px;border-radius:30px;font-weight:800;
+  font-size:14px;letter-spacing:.5px;margin-bottom:18px;animation:pop .5s ease;
+}
+.badge.pass{background:rgba(45,212,167,.12);color:var(--green);border:1.5px solid var(--green-dim);}
+.badge.fail{background:rgba(255,93,122,.12);color:var(--red);border:1.5px solid var(--red-dim);}
+.result-header h1{font-size:30px;font-weight:800;margin-bottom:8px;}
+.result-header p{color:var(--text-dim);font-size:14px;}
+.score-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin:32px 0;}
+.score-card{
+  background:linear-gradient(160deg,var(--panel),var(--bg2));border:1px solid var(--border);border-radius:14px;
+  padding:20px 14px;text-align:center;animation:pop .45s ease;
+}
+.score-card .num{font-size:25px;font-weight:800;color:#fff;}
+.score-card.green .num{color:var(--green);}
+.score-card.red .num{color:var(--red);}
+.score-card.amber .num{color:var(--amber);}
+.score-card.accent .num{color:var(--accent);}
+.score-card .lbl{font-size:11px;color:var(--text-faint);margin-top:5px;text-transform:uppercase;letter-spacing:.4px;}
+.result-actions{display:flex;gap:14px;justify-content:center;margin-bottom:40px;}
+.review-section h2{font-size:19px;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.review-filters{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.filter-chip{
+  padding:8px 16px;border-radius:20px;font-size:12.5px;font-weight:600;border:1px solid var(--border);
+  color:var(--text-dim);transition:var(--transition);
+}
+.filter-chip.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.filter-chip:hover:not(.active){border-color:var(--border-light);}
+.review-card{
+  background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:24px 26px;margin-bottom:16px;
+  animation:fadeIn .3s ease;
+}
+.review-card-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;gap:12px;}
+.review-status{
+  font-size:11px;font-weight:800;padding:4px 11px;border-radius:7px;letter-spacing:.4px;text-transform:uppercase;flex-shrink:0;
+}
+.review-status.correct{background:rgba(45,212,167,.15);color:var(--green);}
+.review-status.wrong{background:rgba(255,93,122,.15);color:var(--red);}
+.review-status.skip{background:rgba(139,151,179,.15);color:var(--text-faint);}
+.mini-options{display:flex;flex-direction:column;gap:8px;margin-top:14px;}
+.mini-opt{padding:10px 14px;border-radius:8px;font-size:13px;border:1px solid var(--border);background:var(--bg2);display:flex;gap:10px;}
+.mini-opt.correct-ans{border-color:var(--green);background:rgba(45,212,167,.08);color:var(--green);}
+.mini-opt.wrong-ans{border-color:var(--red);background:rgba(255,93,122,.08);color:var(--red);}
+.mini-opt .tag{font-weight:800;font-size:10.5px;flex-shrink:0;}
+
+@media (max-width:900px){
+  .test-body{flex-direction:column;}
+  .sidebar{
+    width:100%;border-left:none;border-top:1px solid var(--border);max-height:38vh;
+    order:2;
+  }
+  .question-area{padding:22px 18px 100px;order:1;}
+  .info-grid{grid-template-columns:repeat(2,1fr);}
+  .score-grid{grid-template-columns:repeat(2,1fr);}
+  .start-card{padding:28px 22px;}
+  .nav-footer{padding:14px 18px;flex-direction:column;align-items:stretch;}
+  .nav-footer-center{order:2;justify-content:space-between;width:100%;flex-wrap:wrap;}
+  .nav-footer #prevBtn{width:100%;justify-content:center;order:1;}
+  .topbar{flex-wrap:wrap;height:auto;padding:10px 14px;gap:8px;}
+  .topbar-right{flex-wrap:wrap;gap:8px;width:100%;justify-content:space-between;}
+  .attempted-box,.timer-box{font-size:12.5px;padding:7px 12px;}
+  .submit-btn{padding:8px 14px;font-size:12.5px;}
+  .q-card{padding:22px 18px;}
+  .sidebar{display:none;max-height:none;height:100%;position:fixed;top:0;right:0;bottom:0;width:84%;z-index:50;box-shadow:-6px 0 24px rgba(0,0,0,.35);}
+  .sidebar.open{display:flex;}
+  .sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(5,8,15,.6);z-index:40;}
+  .sidebar-backdrop.open{display:block;}
+  .palette-toggle-btn{display:inline-flex;}
+  .sidebar-close-btn{display:flex;}
+}
+@media (min-width:901px){
+  .palette-toggle-btn{display:none;}
+  .sidebar-close-btn{display:none;}
+}
+
+/* ============ INFO / REVEAL-TYPE QUESTIONS ============ */
+.info-note{
+  display:flex;align-items:center;gap:8px;font-size:12px;color:var(--amber);background:rgba(255,183,79,.08);
+  border:1px solid rgba(255,183,79,.25);border-radius:8px;padding:9px 14px;margin-bottom:20px;
+}
+.context-list{display:flex;flex-direction:column;gap:10px;margin-bottom:6px;}
+.context-item{
+  padding:13px 16px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg2);
+  font-size:14px;line-height:1.55;color:var(--text-dim);
+}
+.reveal-btn{
+  margin-top:10px;padding:13px 22px;border-radius:11px;font-weight:700;font-size:14px;
+  background:linear-gradient(135deg,var(--accent-dim),var(--accent));color:#fff;transition:var(--transition);
+  display:inline-flex;align-items:center;gap:8px;
+}
+.reveal-btn:hover{transform:translateY(-1px);box-shadow:0 8px 22px var(--accent-glow);}
+.answer-reveal{
+  margin-top:20px;padding:18px 20px;background:rgba(45,212,167,.07);border:1px solid rgba(45,212,167,.3);
+  border-radius:12px;animation:slideDown .35s ease;
+}
+.answer-reveal .ar-label{font-size:11px;font-weight:800;letter-spacing:.5px;color:var(--green);text-transform:uppercase;margin-bottom:8px;}
+.answer-reveal .ar-answer{font-size:16px;font-weight:700;color:#fff;margin-bottom:14px;line-height:1.5;}
+.self-assess{display:flex;gap:12px;flex-wrap:wrap;}
+.self-btn{
+  flex:1;min-width:180px;padding:13px 16px;border-radius:11px;font-weight:700;font-size:13.5px;
+  border:1.5px solid var(--border);background:var(--panel2);color:var(--text);transition:var(--transition);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.self-btn:hover{transform:translateY(-1px);}
+.self-btn.know:hover, .self-btn.know.picked{border-color:var(--green);background:rgba(45,212,167,.14);color:var(--green);}
+.self-btn.dontknow:hover, .self-btn.dontknow.picked{border-color:var(--red);background:rgba(255,93,122,.14);color:var(--red);}
+.self-assess-result{
+  margin-top:14px;padding:11px 15px;border-radius:9px;font-size:13px;font-weight:700;text-align:center;
+}
+.self-assess-result.correct{background:rgba(45,212,167,.12);color:var(--green);}
+.self-assess-result.wrong{background:rgba(255,93,122,.12);color:var(--red);}
+</style>
+</head>
+<body>
+<!-- ============ TEST SCREEN (auto-launches immediately) ============ -->
+<div id="testScreen" class="screen active">
+  <div class="progress-top"><div class="progress-top-fill" id="progressTopFill"></div></div>
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-logo">M1</div>
+      <div class="topbar-title">NISM Series V-A Mock Test 1
+        <small>Mutual Fund Distributors Certification</small>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <button class="nav-btn palette-toggle-btn" id="paletteToggleBtn" style="display:none;padding:7px 12px;font-size:12.5px;">📋 Palette</button>
+      <div class="attempted-box" id="attemptedBox"><span id="attemptedText">0</span> / <span id="totalText">50</span> Attempted</div>
+      <div class="timer-box" id="timerBox"><span class="timer-ic">⏱️</span><span id="timerText">30:00</span></div>
+      <button class="submit-btn" id="submitBtnTop">Submit Test</button>
+    </div>
+  </div>
+
+  <div class="test-body">
+    <div class="question-area" id="questionArea">
+      <!-- injected by JS -->
+    </div>
+
+    <div class="sidebar" id="sidebarPanel">
+      <button class="sidebar-close-btn" id="sidebarCloseBtn" style="display:none;margin-left:auto;margin-bottom:10px;background:none;border:none;color:var(--text-dim);font-size:20px;cursor:pointer;">✕</button>
+      <div class="sidebar-progress">
+        <div class="sidebar-progress-label"><span>Progress</span><span id="sidebarProgressPct">0%</span></div>
+        <div class="sidebar-bar"><div class="sidebar-bar-fill" id="sidebarBarFill"></div></div>
+      </div>
+      <div class="sidebar-stats">
+        <div class="sidebar-stat-row"><span>Answered</span><b id="statAnswered">0</b></div>
+        <div class="sidebar-stat-row"><span>Marked for Review</span><b id="statMarked">0</b></div>
+        <div class="sidebar-stat-row"><span>Not Visited</span><b id="statNotVisited">100</b></div>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><span class="legend-dot dot-answered"></span>Answered</div>
+        <div class="legend-item"><span class="legend-dot dot-notanswered"></span>Not Answered</div>
+        <div class="legend-item"><span class="legend-dot dot-notvisited"></span>Not Visited</div>
+        <div class="legend-item"><span class="legend-dot dot-marked"></span>Marked</div>
+      </div>
+      <div class="palette-title">Question Palette</div>
+      <div class="palette-grid" id="paletteGrid"></div>
+    </div>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+  </div>
+
+  <div class="nav-footer">
+    <button class="nav-btn" id="prevBtn">← Previous</button>
+    <div class="nav-footer-center">
+      <button class="nav-btn" id="clearResponseBtn">Clear Response</button>
+      <button class="nav-btn mark-btn" id="markBtn"><span>☆</span> Mark for Review</button>
+      <button class="nav-btn next-primary" id="nextBtn">Save &amp; Next</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ RESULT SCREEN ============ -->
+<div id="resultScreen" class="screen">
+  <div class="result-wrap">
+    <div class="result-header">
+      <div class="badge" id="resultBadge">PASS</div>
+      <h1>Test Completed!</h1>
+      <p id="resultSubtext">Here's a detailed breakdown of your performance.</p>
+    </div>
+
+    <div class="score-grid">
+      <div class="score-card accent"><div class="num" id="rScore">0</div><div class="lbl">Score</div></div>
+      <div class="score-card green"><div class="num" id="rCorrect">0</div><div class="lbl">Correct</div></div>
+      <div class="score-card red"><div class="num" id="rWrong">0</div><div class="lbl">Wrong</div></div>
+      <div class="score-card amber"><div class="num" id="rSkipped">0</div><div class="lbl">Unattempted</div></div>
+      <div class="score-card"><div class="num" id="rAccuracy">0%</div><div class="lbl">Accuracy</div></div>
+    </div>
+    <div class="score-grid" style="grid-template-columns:repeat(2,1fr);margin-top:-6px;">
+      <div class="score-card"><div class="num" id="rTimeTaken">00:00</div><div class="lbl">Time Taken</div></div>
+      <div class="score-card"><div class="num" id="rTotalQ">100</div><div class="lbl">Total Questions</div></div>
+    </div>
+
+    <div class="result-actions">
+      <button class="btn btn-primary" id="reviewBtn">📋 View Detailed Review</button>
+      <button class="btn btn-ghost" id="retakeBtn">↻ Retake Test</button>
+    </div>
+
+    <div class="review-section" id="reviewSection" style="display:none;">
+      <h2>📋 Detailed Review</h2>
+      <div class="review-filters">
+        <button class="filter-chip active" data-filter="all">All Questions</button>
+        <button class="filter-chip" data-filter="correct">Correct</button>
+        <button class="filter-chip" data-filter="wrong">Wrong</button>
+        <button class="filter-chip" data-filter="skip">Unattempted</button>
+        <button class="filter-chip" data-filter="marked">Marked</button>
+      </div>
+      <div id="reviewList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL ============ -->
+<div class="modal-overlay" id="submitModal">
+  <div class="modal-box">
+    <h3 id="modalTitle">Submit Test?</h3>
+    <p id="modalText">You still have unanswered questions. Are you sure you want to submit the test now? This action cannot be undone.</p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="modalCancel">Cancel</button>
+      <button class="btn btn-primary" id="modalConfirm">Yes, Submit</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* === ANALYTICS ENGINE (inline) === */
+/* ============================================================================
+   ANALYTICS ENGINE — Apna Learning Club
+   Shared module used by every mock-test file AND index.html (Performance
+   Dashboard). Centralising this logic means each mock file just calls a
+   couple of functions instead of re-implementing localStorage / topic /
+   timing logic four times.
+   ============================================================================ */
+(function (global) {
+  'use strict';
+
+  const DB_KEY = 'alc_dashboard_v1';
+
+  /* ----------------------------------------------------------------------
+   * 1. TOPIC CLASSIFICATION
+   * The raw QUESTIONS array has no `topic` field, so we infer one from the
+   * question text using a keyword map specific to the NISM-Series-IV
+   * (Interest Rate Derivatives) syllabus. If a question matches no keyword
+   * it falls back to "General Concepts". This is a heuristic — for 100%
+   * accuracy, add an explicit `topic` key to a question object and this
+   * function will respect it automatically.
+   * ------------------------------------------------------------------- */
+  const TOPIC_KEYWORDS = {
+    'Fund Basics & Structure': ['mutual fund', 'trust', 'sponsor', 'trustee', 'amc', 'asset management company', 'custodian', 'rta', 'registrar', 'nav', 'net asset value'],
+    'Scheme Types & Features': ['scheme', 'equity fund', 'debt fund', 'hybrid fund', 'index fund', 'etf', 'fund of fund', 'close-ended', 'open-ended', 'sid', 'sai', 'kim'],
+    'Return, Risk & Valuation': ['return', 'risk', 'volatility', 'standard deviation', 'beta', 'alpha', 'sharpe', 'benchmark', 'tracking error', 'expense ratio', 'total expense ratio', 'ter'],
+    'Investor Services & Transactions': ['sip', 'stp', 'swp', 'systematic', 'folio', 'kyc', 'nomination', 'redemption', 'purchase', 'switch', 'load', 'exit load'],
+    'Taxation': ['tax', 'capital gain', 'ltcg', 'stcg', 'dividend', 'indexation', 'tds'],
+    'Regulatory & Compliance': ['sebi', 'rbi', 'amfi', 'code of conduct', 'arn', 'euin', 'kra', 'fatca', 'pmla', 'stamp duty'],
+    'Distributor Role & Practices': ['distributor', 'commission', 'brokerage', 'agent', 'selling practice', 'financial planning', 'financial goal', 'risk profiling']
+  };
+
+  function inferTopic(question) {
+    if (!question) return 'General Concepts';
+    if (question.topic) return question.topic; // explicit override always wins
+    const text = question.question.toLowerCase();
+    for (const [topic, keywords] of Object.entries(TOPIC_KEYWORDS)) {
+      if (keywords.some(k => text.includes(k))) return topic;
+    }
+    return 'General Concepts';
+  }
+
+  /* ----------------------------------------------------------------------
+   * 2. DIFFICULTY CLASSIFICATION
+   * Heuristic based on explanation length + option count (longer / more
+   * nuanced explanations tend to correspond to trickier concepts). Again,
+   * an explicit `difficulty` field on the question object overrides this.
+   * ------------------------------------------------------------------- */
+  function inferDifficulty(question) {
+    if (!question) return 'Medium';
+    if (question.difficulty) return question.difficulty;
+    const len = (question.explanation || '').length;
+    const optCount = (question.options || []).length;
+    if (len < 160 && optCount <= 2) return 'Easy';
+    if (len > 380) return 'Hard';
+    return 'Medium';
+  }
+
+  /* ----------------------------------------------------------------------
+   * 3. DASHBOARD DATA STORE
+   * Shape:
+   * {
+   *   mockResults: [
+   *     { mockId, mockName, completedAt, timeTakenSec,
+   *       score, maxScore, correct, wrong, skipped, accuracy, percentObtained, passed,
+   *       topicStats: { [topic]: {correct, wrong, skipped, total, timeSpentSec, accuracy} },
+   *       perQuestion: [{id, topic, difficulty, timeSpentSec, status}]
+   *     }, ...
+   *   ]
+   * }
+   * ------------------------------------------------------------------- */
+  function getDB() {
+    try {
+      const raw = localStorage.getItem(DB_KEY);
+      return raw ? JSON.parse(raw) : { mockResults: [] };
+    } catch (e) {
+      console.warn('Dashboard DB read failed', e);
+      return { mockResults: [] };
+    }
+  }
+
+  function setDB(db) {
+    try {
+      localStorage.setItem(DB_KEY, JSON.stringify(db));
+    } catch (e) {
+      console.warn('Dashboard DB write failed', e);
+    }
+  }
+
+  /**
+   * Builds topic-wise stats + TPQ (Time-Per-Question) data from a finished
+   * mock attempt and persists it. Replaces any earlier attempt for the same
+   * mockId so the dashboard always reflects the latest attempt per mock,
+   * while still keeping history for score progression if called multiple
+   * times with unique mockIds (mock1..mock4).
+   *
+   * @param {Object} payload
+   *  - mockId: string, e.g. 'mock1'
+   *  - mockName: string, e.g. 'NISM-IV Mock Test 1'
+   *  - questions: the QUESTIONS array used in this mock
+   *  - perQ: array of {q, sel, status, marked} as produced by computeAndRenderResult
+   *  - timeSpent: map of questionId -> milliseconds spent (state.timeSpent)
+   *  - timeTakenSec: total time taken for the whole mock (seconds)
+   *  - score, maxScore, correct, wrong, skipped, accuracy, percentObtained, passed
+   */
+  function saveMockResult(payload) {
+    const { mockId, mockName, questions, perQ, timeSpent } = payload;
+
+    const topicStats = {};
+    const perQuestion = perQ.map(r => {
+      const topic = inferTopic(r.q);
+      const difficulty = inferDifficulty(r.q);
+      const timeSpentSec = Math.round(((timeSpent && timeSpent[r.q.id]) || 0) / 1000);
+
+      if (!topicStats[topic]) {
+        topicStats[topic] = { correct: 0, wrong: 0, skipped: 0, total: 0, timeSpentSec: 0 };
+      }
+      topicStats[topic][r.status === 'skip' ? 'skipped' : r.status === 'correct' ? 'correct' : 'wrong']++;
+      topicStats[topic].total++;
+      topicStats[topic].timeSpentSec += timeSpentSec;
+
+      return { id: r.q.id, topic, difficulty, timeSpentSec, status: r.status };
+    });
+
+    // Derive accuracy per topic now that totals are known
+    Object.values(topicStats).forEach(t => {
+      const attempted = t.correct + t.wrong;
+      t.accuracy = attempted > 0 ? Math.round((t.correct / attempted) * 100) : 0;
+    });
+
+    const result = {
+      mockId,
+      mockName,
+      completedAt: Date.now(),
+      timeTakenSec: payload.timeTakenSec,
+      score: payload.score,
+      maxScore: payload.maxScore,
+      correct: payload.correct,
+      wrong: payload.wrong,
+      skipped: payload.skipped,
+      accuracy: payload.accuracy,
+      percentObtained: payload.percentObtained,
+      passed: payload.passed,
+      topicStats,
+      perQuestion
+    };
+
+    const db = getDB();
+    db.mockResults = db.mockResults.filter(r => r.mockId !== mockId); // keep only latest attempt per mock
+    db.mockResults.push(result);
+    setDB(db);
+    return result;
+  }
+
+  /**
+   * Time-Per-Question (TPQ) calculator. Given a finished mock result (or
+   * the whole DB), returns the average seconds spent per question, overall
+   * and per topic — used by the dashboard bar chart.
+   */
+  function computeTPQ(mockResult) {
+    const total = mockResult.perQuestion.length || 1;
+    const totalTimeSec = mockResult.perQuestion.reduce((s, q) => s + q.timeSpentSec, 0);
+    const overallTPQ = Math.round((totalTimeSec / total) * 10) / 10;
+
+    const byTopic = {};
+    Object.entries(mockResult.topicStats).forEach(([topic, stats]) => {
+      byTopic[topic] = Math.round((stats.timeSpentSec / (stats.total || 1)) * 10) / 10;
+    });
+
+    return { overallTPQ, byTopic };
+  }
+
+  function clearDashboardData() {
+    try { localStorage.removeItem(DB_KEY); } catch (e) { /* ignore */ }
+  }
+
+  function formatSeconds(totalSec) {
+    const m = Math.floor(totalSec / 60).toString().padStart(2, '0');
+    const s = Math.floor(totalSec % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+  }
+
+  // Expose a small public API on window.AnalyticsEngine
+  global.AnalyticsEngine = {
+    inferTopic,
+    inferDifficulty,
+    saveMockResult,
+    computeTPQ,
+    getDashboardData: getDB,
+    clearDashboardData,
+    formatSeconds
+  };
+})(window);
+
+</script>
+<script>
+const QUESTIONS = 
+[{"id": 1, "type": "mcq", "question": "While the SID, SAI and KIM need to be updated periodically, the interim changes are updated by the AMC through the issuance ____________.", "explanation": "While the SID, SAI and KIM need to be updated periodically, the interim changes are updated through the issuance of addendum. The addendum is considered to be a part of the scheme related documents and must accompany the KIM.", "options": ["Addendum", "Amendment Notice", "Circular", "Scheme Update Bulletin"], "correctIndex": 0}, {"id": 2, "type": "mcq", "question": "Securities and Exchange Board of India (SEBI) functions does not include which of the following?", "options": ["Regulation of Stock Exchanges", "Enforcing compliance of its regulations", "Making regulations for the Mutual Fund industry", "Approving the fund managers which have been appointed by the AMC"], "correctIndex": 3, "explanation": "An approval of SEBI is not required by the AMC while appointing the fund managers."}, {"id": 3, "type": "mcq", "question": "When the asset allocation is maintained as a constant ratio by regular rebalancing of portfolio, it is known as ________ .", "options": ["Dynamic asset allocation", "Flexible asset allocation", "Fixed asset allocation", "Variable asset allocation"], "correctIndex": 2, "explanation": "For eg -  If a fund has a fixed asset allocation of 50:50 for Debt and Equity and if equity valuation rises by 10%, then as per the fixed asset allocation strategy, 10% of equity portfolio will be sold and debt will be bought so that the debt equity valuation will be 50:50."}, {"id": 4, "type": "mcq", "question": "The equity share prices of gold mining companies can depend on : 1. The gold reserves of the company 2. The operational efficiency and management of the company 3. International prices of gold", "explanation": "Profitability of gold mining companies is linked to several factors. For eg. - When gold metal price increases, gold mining companies with large reserves of gold can appreciate If there are concerns about a company’s management the share prices may see a decline irrespective of the price of gold.", "options": ["Only the international price of gold", "Only the company's operational efficiency", "Only the company's gold reserves", "All 1, 2 and 3"], "correctIndex": 3}, {"id": 5, "type": "mcq", "question": "_______ is not a fair selling practice by a mutual fund distributor.", "options": ["Informing the investor of the various investment options", "Carefully understanding the clients financial needs", "Encouraging the churning of investments", "Giving personalised after sales service"], "correctIndex": 2, "explanation": "Churning means frequent buying and selling. Encouraging over transacting and churning of Mutual Fund investments to earn higher commissions by MF agents is a bad practice."}, {"id": 6, "type": "mcq", "question": "As per AMFI’s code of ethics, an Asset Management Company has to disclose which of the following scheme related information to the unit holders?", "explanation": "AMFI's Code of Ethics mandates disclosure of investment patterns and portfolio turnover ratios to investors. Details of securities transactions are not required to be disclosed to unit holders.", "options": ["A and B", "A and C", "B and C", "A, B and C"], "correctIndex": 0}, {"id": 7, "type": "mcq", "question": "Identify the TRUE statements -", "explanation": "Beta measures systematic risk, not unsystematic risk. Beta quantifies a scheme's returns relative to market fluctuations, while unsystematic risk is specific to individual securities and cannot be measured by Beta.", "options": ["A and B are True", "Only A is True", "Only C is True", "A, B and C are True"], "correctIndex": 0}, {"id": 8, "type": "mcq", "question": "An investor wants regular income along with relatively lower risk compared to equity funds. Which mutual fund category is generally most suitable?", "explanation": "Debt funds primarily invest in fixed income securities such as bonds and money market instruments. They are generally considered more suitable for investors seeking regular income with lower volatility than equity-oriented funds.", "options": ["Debt Fund", "Sector Fund", "Small Cap Fund", "International Fund"], "correctIndex": 0}, {"id": 9, "type": "mcq", "question": "The units of a Close-ended mutual fund are traded between the unit holders/investors and __________on the stock exchange.", "options": ["Other unit holders/investors", "Specially appointed market makers to enhance liquidity"], "correctIndex": 0, "explanation": "The units of a Close-ended mutual fund are traded between other unit holders/investors on the stock exchange, similar to stocks. Once the fund is launched, new units cannot be created, and investors cannot redeem units directly with the fund house before maturity. Instead, these units are listed on stock exchanges, providing liquidity by allowing investors to buy and sell units with other investors at prevailing market prices, which may differ from the fund's Net Asset Value (NAV)."}, {"id": 10, "type": "mcq", "question": "For how long is the trail commission paid to the mutual fund distributor?", "options": ["For the first one year only", "For the first three years only", "For the first ten years only", "Till the money is held in the fund"], "correctIndex": 3, "explanation": "A mutual fund distributor is paid trail commission for as long as the investor’s money is held in the fund."}, {"id": 11, "type": "mcq", "question": "In a Contra Fund, the minimum investment in equity & equity related instruments shall be ____________ of total assets.", "explanation": "A contra fund is an open-ended equity scheme following contrarian investment strategy. Minimum investment in equity & equity related instruments shall be 65 percent of total assets.", "options": ["50 percent", "65 percent", "75 percent", "80 percent"], "correctIndex": 1}, {"id": 12, "type": "mcq", "question": "________ is a proper benchmark for a balanced hybrid scheme.", "options": ["CRISIL Hybrid 75+25 , Conservative Index", "CRISIL Hybrid 25+75 , Aggressive Index", "CRISIL Hybrid 50+50 , Moderate Index"], "correctIndex": 2, "explanation": "CRISIL blended indices for hybrid funds : Aggressive Hybrid Fund - CRISIL Hybrid 25+75 , Aggressive Index Balanced Hybrid Fund - CRISIL Hybrid 50+50 , Moderate Index Conservative Hybrid Fund - CRISIL Hybrid 75+25 , Conservative Index"}, {"id": 13, "type": "mcq", "question": "Identify the TRUE statement/s - A. Time stamping is relevant only for Financial transactions and not for Non-Financial transactions B. Time stamping is relevant for both Financial and Non-Financial transactions", "explanation": "Time stamping for financial transactions like purchase and redemptions etc. is very crucial as it determines the NAV at which the transaction will take place. Time stamping for non-financial transactions like the change of address, investor’s acknowledgement etc. is not crucial. Only date stamping is important for such non-financial transactions.", "options": ["Only A is true", "Only B is true", "Both A and B are true", "Neither A nor B is true"], "correctIndex": 0}, {"id": 14, "type": "mcq", "question": "Dividing an individual’s portfolio allocation between Core portfolio and Satellite portfolio is dependent on the risk profile of the investor - State whether True or False?", "explanation": "Ideally an investor's portfolio should be divided into Core and Satellite portfolios. The core portfolio will be invested according to the long-term needs of the investor and the satellite portfolio will be invested to take advantage of expected short-term market movements. However, the division between core and satellite portfolios will depend upon each investor’s profile. Conservative investors may like a very small proportion of their overall portfolio to be managed tactically and an investor comfortable with taking higher risk may have an even higher exposure to tactical investments.", "options": ["True", "False"], "correctIndex": 0}, {"id": 15, "type": "mcq", "question": "Ultra-short-term debt scheme invests in debt and money market instruments with Macaulay duration between __________ .", "explanation": "Macaulay Duration is the weighted average of the time to receive the cash flows from a bond. An open ended ultra-short-term debt scheme invests in debt and money market instruments with Macaulay duration between 3 months and 6 months.", "options": ["3 to 6 months", "6 to 12 months", "1 to 3 years", "Greater than 7 years"], "correctIndex": 0}, {"id": 16, "type": "mcq", "question": "Which of these statement(s) is/are FALSE with respect to Benchmarks?", "explanation": "Choice of investment universe is important and drives the choice of benchmark in debt schemes. For eg - Liquid schemes invest in securities of upto 91 days’ maturity. Therefore, a short term money market benchmark such as NSE’s MIBOR or CRISIL Liquid Fund Index is suitable.  Non-liquid schemes can use other type indices depending on the nature of their portfolio.", "options": ["Only A is false", "Only B is false", "Both A and B are false", "Neither A nor B is false"], "correctIndex": 1}, {"id": 17, "type": "mcq", "question": "Identify the INCORRECT statement with respect to SEBI Complaint Redress System (SCORES)", "options": ["SCORES enables the market intermediaries and listed companies to receive complaints from investors, redress such complaints and report redressal", "SCORES is a web-based centralized grievance redress system", "SCORES is completely online, so an investor cannot lodge a physical compliant", "If an investor lodges a physical complaint then such complaints are scanned and then uploaded in SCORES for processing"], "correctIndex": 2, "explanation": "An investor, who is not familiar with SCORES or does not have access to SCORES, can lodge complaints in physical form at any of the offices of SEBI. Such complaints are scanned and then uploaded in SCORES for processing."}, {"id": 18, "type": "mcq", "question": "A mutual fund scheme’s NAV is said to be cum-dividend from the ________ .", "options": ["Date the dividend is announced till it is paid out", "Date the dividend is paid", "Date unit holders approve the dividend", "Date of notice of meeting"], "correctIndex": 0, "explanation": "When a dividend is announced, and until it is paid out, it is referred to as cum-Dividend NAV."}, {"id": 19, "type": "mcq", "question": "For which mutual fund distributors is a due diligence process mandated by SEBI ?", "options": ["A mutual fund distributor who services more than 25 investors", "A mutual fund distributor who receives commission of over Rs. 50 Lakhs from a single mutual fund", "A mutual fund distributor who brings in investments from investors of over Rs. 1 crore for a single mutual fund"], "correctIndex": 1, "explanation": "SEBI mandates AMCs to perform due diligence for distributors meeting any of these criteria: Operating in more than 20 locations. AUM of over Rs.100 crore in non-institutional category. Commission exceeding Rs.1 crore annually across industry or Rs.50 lakhs from one mutual fund."}, {"id": 20, "type": "mcq", "question": "Equity Linked Savings Schemes (ELSS) are eligible for deduction under Section 8OC of the Income Tax Act. However, such schemes have a lock-in period of ________________from the date of investment.", "options": ["3 years from the date of allotment of each individual unit", "3 years from the date of original investment even in case of subsequent purchases", "5 years from the date of allotment of each individual unit", "If tax exemption is NOT availed, there will not be any lock-in period"], "correctIndex": 0, "explanation": "Equity Linked Savings Schemes (ELSS) are eligible for a tax deduction under Section 80C of the Income Tax Act, allowing investors to claim deductions up to Rs. 1.5 lakh in a financial year. However, these schemes come with a mandatory lock-in period of 3 years from the date of allotment of each individual unit. This means that any additional investment or purchase made later will have its own 3-year lock-in period starting from its respective allotment date. ELSS combines tax-saving benefits with wealth creation potential, as it primarily invests in equity and equity-related instruments. The lock-in period is the shortest among tax-saving instruments, making it a popular choice for investors seeking tax savings and growth opportunities."}, {"id": 21, "type": "mcq", "question": "Segregated portfolio means _________ .", "options": ["A portfolio which is kept aside for a ‘rainy day’ or contingency fund", "A portfolio which is created out of debt or money market securities affected by a credit event", "A portfolio which is left after removing poor credit quality papers"], "correctIndex": 1, "explanation": "To ensure fair treatment to all investors in case of a credit event and to deal with the liquidity risk, in December 2018, SEBI permitted creation of segregated portfolio of debt and money market instruments by mutual funds schemes. “Segregated portfolio” means a portfolio, comprising of debt or money market instrument affected by a credit event, that has been segregated in a mutual fund scheme."}, {"id": 22, "type": "mcq", "question": "Identify the category of mutual fund scheme in which the Net Asset Value (NAV) has to be declared for up to 4 decimal points?", "explanation": "NAV is to be calculated upto 4 decimal places in the case of index funds, liquid funds and other debt funds. (NAV for equity and balanced funds is to be calculated upto at least 2 decimal places)", "options": ["Liquid Funds", "Equity Funds", "Balanced Funds", "Sector Funds"], "correctIndex": 0}, {"id": 23, "type": "mcq", "question": "If the sale and purchase transactions for a year amounted to Rs. 10,000 crore, and the average size of net assets is Rs. 5,000 crore, this means that investments are held in the portfolio, on an average for __________.", "explanation": "Portfolio Turnover Ratio is calculated as Value of Purchase and Sale of Securities during a period divided by the average size of net assets of the scheme during the period. = Rs. 10,000 crore ÷ Rs. 5,000 crore = 2 or 200 percent This means that investments are held in the portfolio, on an average for 12 months ÷ 2 i.e. 6 months.", "options": ["3 months", "6 months", "12 months", "24 months"], "correctIndex": 1}, {"id": 24, "type": "mcq", "question": "In which of these options can an investor expect a cash flow in his bank account?", "explanation": "Only if the investor chooses Dividend Payout option in his mutual fund investments, the money will flow into his bank account when ever the mutual fund pays the dividend. In a growth option, dividend is not declared. Therefore, nothing is received in the bank account In a dividend re-investment option, the investor does not receive the dividend in his bank account; the amount is reinvested in the same scheme and additional units are allotted to the investor. In a bonus issue, the investor does not pay anything. The fund allots new units for free.", "options": ["Growth Option", "Bonus Option", "Dividend Payout", "Dividend Re-investment"], "correctIndex": 2}, {"id": 25, "type": "mcq", "question": "Mr. Anand has Rs. 5 lakhs to invest but he may need money in the short term. In which of these funds should he NOT invest?", "explanation": "When an investor needs money in the short term, he should invest in debt funds like liquid funds, money market funds, overnight fund etc. where he can withdraw money without any risk of capital loss. He should not invest in an Index fund as its an equity fund and there can be possibility of losses in the short term due to stock market fluctuations.", "options": ["Liquid Fund", "Money Market Fund", "Overnight Fund", "Index fund"], "correctIndex": 3}, {"id": 26, "type": "mcq", "question": "When the asset allocation is maintained as a constant ratio by regular rebalancing of portfolio, it is known as ________.", "options": ["Dynamic asset allocation", "Flexible asset allocation", "Fixed asset allocation", "Variable asset allocation"], "correctIndex": 2, "explanation": "For eg - If a fund has a fixed asset allocation of 50:50 for Debt and Equity and if equity valuation rises by 10%, then as per the fixed asset allocation strategy, 10% of equity portfolio will be sold and debt will be bought so that the debt equity valuation will be 50:50."}, {"id": 27, "type": "mcq", "question": "____________ risk arises because of difference in price movement of the derivative vis-a-vis that of the security being hedged.", "explanation": "Basis Risk arises when there is a difference in price movement between a derivative instrument (such as a futures or options contract) and the underlying security it is intended to hedge. Basis is the difference between the spot price of the underlying asset and the price of the derivative. If the price movements of the derivative and the underlying asset do not align perfectly, the hedge may not fully offset the risk, leading to basis risk. Why not the other options? Model Risk: Occurs when the mathematical model used for pricing or risk estimation is flawed. Market Liquidity Risk: Refers to the inability to trade a security without significantly impacting its price. Credit Risk: Arises when the counterparty fails to fulfill their financial obligations.", "options": ["Model Risk", "Basis Risk", "Credit Risk", "Market Liquidity Risk"], "correctIndex": 1}, {"id": 28, "type": "mcq", "question": "Which of the following have the highest credit risk ?", "explanation": "Junk bonds are a type of bond that carries a higher risk of default. The issuer of such bonds may not have the adequate cash flow to pay regular interest or repay the principal amount to the bondholders at the time of maturity. The bonds issued by financially struggling companies are termed junk bonds but they pay higher returns to make them attractive to investors.", "options": ["Government Securities", "AAA rated Bonds", "Junk Bond", "Treasury Bills"], "correctIndex": 2}, {"id": 29, "type": "mcq", "question": "Financial goals have to be defined in terms of _______.", "options": ["Time horizon and external funds required", "Costs and economic policies", "Time horizon and money needed"], "correctIndex": 2, "explanation": "The first step in goal setting is to identify events in life which will require funding like - marriage, education, buying a vehicle etc. The next step is to assign priorities - which of these events are more important than the others After that, one needs to assign a timeline as well as amount of funding required at the time of such events."}, {"id": 30, "type": "mcq", "question": "As we move from diversified funds to focused funds, thematic funds, and finally sector funds, which type of risk increases?", "explanation": "As we move from Diversified Funds → Focused Funds → Thematic Funds → Sector Funds, the risk increases, not decreases, due to higher concentration in fewer stocks, themes, or sectors. Diversified Funds: Invest across multiple sectors and industries, reducing concentration risk through diversification. Focused Funds: Invest in a limited number of stocks, increasing concentration risk compared to diversified funds. Thematic Funds: Focus on a specific theme (e.g., technology or infrastructure), leading to higher concentration risk within that theme. Sector Funds: Invest in one particular sector (e.g., banking or pharmaceuticals), exposing investors to the highest concentration risk since performance depends entirely on that sector. Why not the other options? Interest rate risk: Related to bond prices, not equity funds. Credit risk: Related to the default risk of bond issuers, not equity investments. Inflation risk: Affects the purchasing power, but not directly tied to fund concentration. Conclusion: The risk discussed here is Concentration Risk (Option 2), which increases as funds become more focused and less diversified.", "options": ["Interest rate risk", "Credit risk", "Concentration risk", "Inflation risk"], "correctIndex": 2}, {"id": 31, "type": "mcq", "question": "Identify the INCORRECT statement/s with respect to investments in real estate.", "options": ["The minimum amount required (Ticket size) for investing in real estate is high compared to other financial assets", "The transaction costs are low for investments in real estate as compared to other financial assets", "The real estate market is quiet illiquid and the pricing is not transparent"], "correctIndex": 1, "explanation": "Transaction costs, in the form of stamp duty, registration fees, brokerage etc. are high in real estate transactions."}, {"id": 32, "type": "mcq", "question": "_______________% of unit holders can pass a resolution to wind up a scheme.", "explanation": "A resolution to wind up a mutual fund scheme can be passed if 75% of the unit holders, by value, agree to it. This provision ensures that a significant majority of investors support the decision, protecting their collective interests. It is typically invoked in cases where the scheme becomes unviable, fails to meet its objectives, or experiences unfavorable market conditions.", "options": ["50%", "65%", "75%", "90%"], "correctIndex": 2}, {"id": 33, "type": "mcq", "question": "What is asset allocation?", "options": ["Deciding which and how many mutual fund schemes to invest in", "Finalizing which mutual fund schemes would deliver the highest returns in future", "Deciding how to invest money across various asset categories in line with one’s risk profile, financial objectives and current situation", "Deciding which asset category would outperform the others and investing in it"], "correctIndex": 2, "explanation": "Asset Allocation is a process of allocating money across various asset categories in line with a stated objective. The basic meaning of asset allocation is to allocate an investor’s money across asset categories in order to achieve same objective."}, {"id": 34, "type": "mcq", "question": "As per SEBI regulations, a mutual fund scheme should have at least ________ investors.", "explanation": "As per SEBI, a Mutual Fund Scheme/Plan shall have a minimum of 20 investors and no single investor shall account for more than 25 percent of the corpus of the Scheme/Plan(s).", "options": ["10", "15", "20", "25"], "correctIndex": 2}, {"id": 35, "type": "mcq", "question": "Identify the TRUE statement/s -", "options": ["Rolling returns are the average annualized returns calculated for alternate holding periods.", "Holding Period Returns (HPR) do not provide an accurate picture of a fund's performance if its initial or ending value is abnormally high or low."], "correctIndex": 1, "explanation": "Holding Period Return (HPR) is calculated across a fixed point-to-point timeline (such as 1 year, 3 years, or since inception). Because it only looks at two specific dates, HPR can easily present a distorted or inaccurate picture if the market happened to hit an extreme peak or a deep trough on either the start date (initial value) or the end date. Rolling Returns are used specifically to eliminate this point-to-point bias. They measure a fund's continuous, average annualized performance across multiple consecutive holding periods over a larger evaluation timeline (e.g., daily or weekly rolling intervals), rather than alternate periods."}, {"id": 36, "type": "mcq", "question": "The opening of time stamping machine needs to be documented and reported to _______", "explanation": "The points of acceptance for mutual fund transactions have time stamping machines with tamper-proof seal. Opening the machine for repairs or maintenance is permitted only by vendors or nominated persons of the mutual fund. Such opening of the machine has to be properly documented and reported to the Trustees.", "options": ["Asset Management Company", "Trustees", "SEBI", "AMFI"], "correctIndex": 1}, {"id": 37, "type": "mcq", "question": "The New Fund Offer dates are published in the _________________.", "options": ["Both Key Information Memorandum and Scheme Information Document", "Statement of Additional Information (SAI)", "Key Information Memorandum (KIM)", "Scheme Information Document (SID)"], "correctIndex": 0, "explanation": "SID has information on relevant NFO dates (opening, closing, re-opening), KIM is essentially a summary of the SID and SAI. It contains the key points of the offer document including the dates of Issue Opening, Issue Closing & Re-opening for Sale and Re-purchase"}, {"id": 38, "type": "mcq", "question": "Segregated portfolio means _________.", "options": ["a portfolio which is kept aside for a ‘rainy day’ or contingency fund", "a portfolio which is created out of debt or money market securities affected by a credit event", "a portfolio which is left after removing poor credit quality papers"], "correctIndex": 1, "explanation": "To ensure fair treatment to all investors in case of a credit event and to deal with the liquidity risk, in December 2018, SEBI permitted creation of segregated portfolio of debt and money market instruments by mutual funds schemes. “Segregated portfolio” means a portfolio, comprising of debt or money market instrument affected by a credit event, that has been segregated in a mutual fund scheme."}, {"id": 39, "type": "mcq", "question": "The indices based on Government securities will be an appropriate benchmark for which type of funds?", "explanation": "Gilt funds invest only in Government securities. Therefore, indices based on Government Securities are the appropriate benchmark.", "options": ["Gilt Funds", "Liquid Funds", "Banking Funds", "Equity Funds"], "correctIndex": 0}, {"id": 40, "type": "mcq", "question": "Which of the statements is/are True? (a) A portfolio with a beta of less than 1 is less risky than the market (b) Unsystematic Risk is measured by Beta (c) The Diversified Index has a beta of 1", "explanation": "(a) True - A portfolio with beta less than 1 is less risky than the market because it reacts less sensitively to market fluctuations, offering lower volatility. (b) False - Unsystematic risk is not measured by Beta. It is the specific risk associated with a particular company or industry and can be diversified away. Beta measures systematic risk, which cannot be diversified. (c) True - A diversified index has a beta of 1, as it represents the overall market performance and acts as a benchmark for measuring other portfolios. Thus, statements (a) and (c) are correct.", "options": ["a,b", "a,c", "b,c", "a,b,c"], "correctIndex": 1}, {"id": 41, "type": "mcq", "question": "If an investor wants to get updated monthly performance and portfolio data on mutual funds, which of the following documents should he read?", "options": ["Scheme Information Document (SID)", "Fund Fact Sheet", "Key Information Memorandum (KIM)", "Statement of Additional Information (SAI)"], "correctIndex": 1, "explanation": "The fund fact sheet plays a vital role in giving updated information on the mutual fund schems and usually is published on a monthly basis by all the fund houses. Factsheet is not a statutory requirement."}, {"id": 42, "type": "mcq", "question": "State True or False - Gilt schemes have more risks than liquid schemes as their NAV fluctuates more due to changes in the yield market.", "explanation": "Gilt schemes, which invest in only long term government securities, have a higher price risk because their NAV can fluctuate a lot more, on account of changes in yield in the market. Greater the proportion of longer maturity securities in the portfolio, higher would be the fluctuation in NAV.", "options": ["True", "False"], "correctIndex": 0}, {"id": 43, "type": "mcq", "question": "Investors tend to extrapolate the current event into the future and expect a repeat. This is an example of ________ bias.", "explanation": "Recency bias : The impact of recent events on decision making can be very strong. This applies equally to positive and negative experiences. Investors tend to extrapolate the event into the future and expect a repeat. A bear market or a financial crisis lead people to prefer safe assets. Similarly, a bull market makes people allocate more than what is advised for risky assets. The recent experience overrides analysis in decision making.", "options": ["Anchoring", "Recency", "Confirmation", "Overconfidence"], "correctIndex": 1}, {"id": 44, "type": "mcq", "question": "Which statement is FALSE with reference to risk appetite?", "options": ["Risk appetite can be assessed by risk profiling", "Preferred risk appetite is different from ideal risk appetite", "Risk appetite indicates level of risk that investor is comfortable with", "People of same age will have same risk appetite"], "correctIndex": 3, "explanation": "One of the common factors that many people use to evaluate the investor’s risk profile is the investor’s age. It is popularly believed that younger investors have the potential for taking higher risks compared to old people. However, this may not be correct as different investors have different financial goals at different age levels. In fact, investors in the same age group may also have different goals. Their financial situations may also differ. In such cases, it may not be prudent to categorize investors on the basis of age alone."}, {"id": 45, "type": "mcq", "question": "Can an investor redeem any amount from a Segregated Portfolio. If Yes, than what are the restrictions?", "options": ["There is no restriction on redemptions from a Segregated Portfolio", "Only 25 % of the value of current investments can be redeemed from a Segregated Portfolio", "Only 50 % of the value of current investments can be redeemed from a Segregated Portfolio", "An investor cannot redeem any amount from a Segregated Portfolio from the AMC"], "correctIndex": 3, "explanation": "“Segregated portfolio” means a portfolio, comprising of debt or money market instrument affected by a credit event, that has been segregated in a mutual fund scheme. No redemption or subscription is allowed in the segregated portfolio. However, in order to facilitate exit to unitholders in segregated portfolio, AMC shall enable listing of units of segregated portfolio on the recognized stock exchange."}, {"id": 46, "type": "mcq", "question": "A mutual fund has the policy of imposing an exit load of 2% for redemption up to one year and 1% for redemptions beyond one year. If an investor redeems 2000 units at an NAV of Rs. 40 at the end of six months from the date of investment, what will be the redemption amount receivable by the investor?", "explanation": "The investor redeems 2000 units at a NAV of Rs. 40 after 6 months, which attracts an exit load of 2% as the redemption is within 1 year. Step 1: Calculate the total redemption value before the exit load: 2000×40=80,000 Step 2: Calculate the exit load: 80,000×2%=1600 Step 3: Deduct the exit load from the redemption value: 80,000−1600=78,400 Thus, the redemption amount receivable by the investor is Rs. 78,400.", "options": ["Rs. 78400", "Rs. 79200", "Rs. 80000", "Rs. 76800"], "correctIndex": 0}, {"id": 47, "type": "mcq", "question": "To whom does the profits or losses made by the mutual fund belong?", "options": ["The investors", "The Asset Management Company"], "correctIndex": 0, "explanation": "The money received from investors is invested by the mutual fund scheme in a portfolio of securities as per the stated investment objective. Profits or losses, as the case might be, belong to the investors or unitholders. No other entity involved in the mutual fund in any capacity participates in the scheme’s profits or losses. They are all paid a fee or commission for the contributions they make to launching and operating the schemes."}, {"id": 48, "type": "mcq", "question": "Which of the below statements is a important advantage of a Exchange Traded Fund (ETF) ?", "options": ["A person can closely track the current valuation of an ETF and buy/sell the units on a stock exchange at those prices", "ETFs generally give higher returns than other Mutual Funds", "An investor in an ETF can have a control on where his money can be invested"], "correctIndex": 0, "explanation": "ETFs are passive funds whose portfolio replicates an index or benchmark such as an equity market index or a commodity index. The units of the ETF are traded at real time prices that are linked to the changes in the underlying index. The market price also tracks the NAV very closely."}, {"id": 49, "type": "mcq", "question": "As the complete exposure is to a single sector, Sector Funds are high on ___________.", "explanation": "The sector funds invest in stocks belonging to just one sector of the economy, in order to take advantages within the said sector. The examples of such funds are: Pharma fund, or Banking fund. Sector funds are risky because of the concentration in one sector. If the sector under-performs then the scheme’s returns is likely to be very poor.", "options": ["Interest rate risk", "Credit risk", "Concentration Risk", "Liquidity Risk"], "correctIndex": 2}, {"id": 50, "type": "mcq", "question": "Identify the CORRECT statement/s with respect to Conservative hybrid funds.", "explanation": "Conservative Hybrid Fund is an open-ended hybrid scheme investing predominantly in debt instruments. Investment in debt instruments shall be between 75 percent and 90 percent of total assets while investment in equity and equity instruments shall be between 10 percent and 25 percent of total assets. The word “conservative” in the name of Conservative hybrid funds category only refers to the equity allocation. Therefore, a Conservative hybrid fund cannot invest more than 25% of their total assets in equity instruments.", "options": ["Only A is correct", "Only B is correct", "Only C is correct", "A, B and C are correct"], "correctIndex": 1}, {"id": 51, "type": "mcq", "question": "What happens when the NAV of a mutual fund rises from Rs. 20 to Rs. 22, assuming no dividend is paid?", "options": ["Scheme expense ratio increases automatically", "Value of investor’s holdings increases", "Number of units decreases automatically"], "correctIndex": 1, "explanation": "NAV represents per-unit value of the scheme. If NAV rises from Rs. 20 to Rs. 22 and units remain the same, the total value of the investor’s holdings increases accordingly."}, {"id": 52, "type": "mcq", "question": "In which categories of stocks do Multi Cap equity funds invest?", "options": ["Mostly large cap stocks only of various companies", "Mostly mid cap stocks only of various companies", "Mostly small cap stocks only of various companies", "A mix of large, mid and small cap stocks"], "correctIndex": 3, "explanation": "Multi Cap Equity Funds invest in a mix of large-cap, mid-cap, and small-cap stocks, providing diversification across different market capitalizations. Large-cap stocks offer stability and lower risk due to their established market position. Mid-cap stocks provide a balance of growth and risk, with potential for higher returns. Small-cap stocks carry higher risk but also offer the potential for substantial growth. This diversified approach allows multi-cap funds to capitalize on opportunities across various segments of the market while spreading risk, making them suitable for investors seeking long-term capital appreciation."}, {"id": 53, "type": "mcq", "question": "The expenses which can be charged by an Asset Management Company to a Mutual Fund scheme are limited by ___________.", "explanation": "The expenses which can be charged and the expense ratios etc. are mentioned in the SEBI Mutual Fund Regulations, 1996 which the AMC's have to adhere to.", "options": ["AMFI", "SEBI", "RBI", "The Trustees"], "correctIndex": 1}, {"id": 54, "type": "mcq", "question": "Which of these statement(s) is/are FALSE?", "options": ["If an investor holds his investments in a debt fund for more than three years, the capital gain will be considered as a long term capital gain", "As the purchase and re-purchase is done with the mutual fund, the investor does not have to pay any capital gain tax", "Both 'a' and 'b' are false"], "correctIndex": 1, "explanation": "If an investor holds his investments in a debt fund for more than three years, the capital gain will be considered as a long term capital gain - This is a true statement. As the purchase and re-purchase is done with the mutual fund, the investor does not have to pay any capital gain tax - This is false as the difference between the purchase price of the units and the selling price of the units would be treated as capital gain and such capital gains are subject to tax."}, {"id": 55, "type": "mcq", "question": "Which of these is a physical asset?", "explanation": "Real estate means physical property in the form of land and buildings. Units by Real Estate investment Trusts, Bank Deposits and shares in physical form are all financial assets.", "options": ["Real estate", "Units by Real Estate Investment Trusts", "Shares in physical form", "Bank Deposits"], "correctIndex": 0}, {"id": 56, "type": "mcq", "question": "What action has to be taken before deleting a default bank account from the registered bank account in a mutual fund folio?", "options": ["A new folio will have to be opened with the same joint holding as the new default account", "Another account has to be designated as the default bank account", "All the nominees of the mutual fund scheme have to sign on the change form irrespective of the mode of holding"], "correctIndex": 1, "explanation": "If the default bank account is being deleted from the list of registered accounts,  then before that, another account has to be designated as the default bank account."}, {"id": 57, "type": "mcq", "question": "___________ will help help the investors understand the suitability of a mutual fund scheme to them.", "options": ["Product Label / Riskometer", "Standard Deviation / Beta"], "correctIndex": 0, "explanation": "The risk levels in different categories of mutual fund schemes can be understood with the help of product labelling of Mutual Funds. SEBI had introduced product labelling of mutual funds to address the issue of mis-selling and to provide investors an easy understanding of the kind of product/scheme they are investing in and its suitability to them. All the mutual funds were required to ‘Label’ their schemes on the parameters such as - Nature of scheme, Investment objective, Level of risk depicted by colour code boxes etc."}, {"id": 58, "type": "mcq", "question": "Arrange the following mutual fund categories from lowest risk to highest risk:", "options": ["Large Cap Funds - Large and Mid-cap Funds - Multi Cap Funds - Mid-cap Funds - Small Cap Funds", "Multi Cap Funds - Large Cap Funds - Large and Mid-cap Funds - Mid-cap Funds - Small Cap Funds", "Large Cap Funds - Mid-cap Funds - Small Cap Funds - Large and Mid-cap Funds - Multi Cap Funds", "Small cap funds - Mid-cap funds - Multi cap funds - Large and mid-cap funds - Large cap funds"], "correctIndex": 0, "explanation": "Mutual fund categories differ in risk levels based on the market capitalization of the companies they invest in and their diversification strategy. Here's the reasoning behind the risk hierarchy: 1. Large Cap Funds: Invest in large, stable companies, generally considered the least risky. 2. Large and Mid-cap Funds: Include some exposure to mid-cap stocks, adding moderate risk. 3. Multi Cap Funds: Diversify across large, mid, and small-cap stocks, offering a balanced risk-reward profile. 4. Mid-cap Funds: Focus on mid-sized companies with higher growth potential and risk. 5. Small Cap Funds: Invest in smaller companies with the highest growth potential but also the highest risk."}, {"id": 59, "type": "mcq", "question": "What is the portfolio of a 'Fund of Funds' made up of?", "explanation": "Fund of funds is a mutual fund which utilises its pool of resources to invest in various other kinds of mutual funds available in the market. It does not directly invest in equity or debt securities.", "options": ["Money market securities", "Equity shares directly", "Mutual Fund schemes", "Government securities"], "correctIndex": 2}, {"id": 60, "type": "mcq", "question": "Key information memorandum (KIM) is a synopsis of important information contained in the SID and SAI.", "explanation": "The Key Information Memorandum (KIM) is a concise summary of important details included in the Scheme Information Document (SID) and Statement of Additional Information (SAI). It provides key information such as investment objectives, risk factors, fees, and terms of the scheme in a simplified format to help investors make informed decisions. It serves as a quick reference document, complementing the comprehensive details in the SID and SAI.", "options": ["TRUE", "FALSE"], "correctIndex": 0}, {"id": 61, "type": "mcq", "question": "A top performing scheme within a category _______", "options": ["Is the best choice for an investor to invest his funds", "May or may not be the top performer in the next years to come", "usually remains the top performer for a long period of time", "usually be the worst performer in the next years to come"], "correctIndex": 1, "explanation": "While a top-performing scheme within a category may have performed well in the past, it does not guarantee continued top performance in the future. Market conditions, economic factors, and changes in the scheme’s management or strategy can all affect future performance. Therefore, past performance is not always indicative of future results."}, {"id": 62, "type": "mcq", "question": "Long term capital gains is NOT taxed in which of these funds?", "explanation": "Capital gains from Equity, Debt and Hybrid funds are taxable subject to certain conditions like the holding period etc.", "options": ["Balanced Advantage Funds", "Balanced Funds", "Diversified Equity Funds", "Capital gains from all types of mutual funds are taxed subject to certain conditions"], "correctIndex": 3}, {"id": 63, "type": "mcq", "question": "Once a New Fund Offer closes, an open ended mutual fund is open for purchases _________.", "options": ["By existing investors only", "By existing investors on the stock exchange platform only", "By both existing and new investors on the stock exchange platform only", "By both existing and new investors"], "correctIndex": 3, "explanation": "An Open Ended mutual fund can be purchased by both new and existing investors through the traditional way or through stock exchanges."}, {"id": 64, "type": "mcq", "question": "Tactical asset allocations are taken based on", "options": ["Likely behavior of the market", "Income level of the investor", "Risk Profile of the investor"], "correctIndex": 0, "explanation": "Tactical Asset Allocation (TAA) involves making short-term adjustments to a portfolio’s asset allocation based on the likely behavior of the market or economic outlook. It allows investors to take advantage of market opportunities or temporary mispricings by shifting weights in asset classes, such as equities, bonds, or cash, while still maintaining the long-term strategic allocation. This approach is dynamic and aims to enhance returns by capitalizing on short-term trends without deviating from the investor's overall risk tolerance and investment objectives."}, {"id": 65, "type": "mcq", "question": "Mutual fund units issued against purchase transactions would be subject to levy of stamp duty at ______ of the amount invested.", "explanation": "With effect from July 1, 2020, mutual fund units issued against purchase transactions (whether through lump-sum investments or SIP or STP or switch-ins or dividend reinvestment) would be subject to levy of stamp duty @ 0.005% of the amount invested.", "options": ["0.005%", "0.05%", "0.5%", "0.1%"], "correctIndex": 0}, {"id": 66, "type": "mcq", "question": "Identify the TRUE statement.", "explanation": "Why is Statement B False? Statement B incorrectly mentions that the later NAV is taken as NAV plus Exit Load, whereas it should be NAV minus Exit Load to reflect the deduction due to the exit charge. Conclusion: Only Statement A is True, making it the correct answer.", "options": ["Only A", "Only B", "Both A and B", "Neither A nor B"], "correctIndex": 0}, {"id": 67, "type": "mcq", "question": "Whom should the investor approach if his complaint is not resolved by the Asset Management Company (AMC)?", "explanation": "In the event of any issue with the AMC or mutual fund scheme, the investor can first approach the AMC Investor Service Centre. If the issue is not redressed, even after taking it up at senior levels in the AMC, then the investor can write to SEBI (through SCORES) with the complaint details. SEBI Complaint Redress System (SCORES) is a web based centralized grievance redress system of SEBI. SCORES enables investors to lodge, follow up on their complaints and track the status of redressal of such complaints online.", "options": ["Association of Mutual Funds in India (AMFI)", "Reserve Bank of India (RBI)", "Securities and Exchange Board of India (SEBI)", "Ministry of Finance"], "correctIndex": 2}, {"id": 68, "type": "mcq", "question": "Identify the TRUE statement with respect to 'Tracking Error'.", "explanation": "Tracking error is a measure of the consistency of the out-performance of the fund manager relative to the benchmark. The tracking error has to be low for a consistently out-performing fund. While investing in an Index Fund, one should invest in a fund with the lowest tracking error.", "options": ["Only A is true", "Only B is true", "Both A and B are true", "Neither A nor B is true"], "correctIndex": 0}, {"id": 69, "type": "mcq", "question": "As per mutual fund transaction rules, KYC compliance is mainly required for:", "options": ["Only lump sum investments above Rs. 50,000", "All investors before investing"], "correctIndex": 1, "explanation": "Know Your Customer (KYC) compliance is mandatory for all investors before investing in mutual funds. It helps verify identity and prevents misuse of the financial system."}, {"id": 70, "type": "mcq", "question": "Which of these funds has the highest risk ?", "explanation": "The sector funds invest in stocks belonging to just one sector of the economy, in order to take advantages within the said sector. The examples of such funds are: Pharma fund or Banking fund. Sector funds are very risky because of the concentration in one sector. If the sector underperforms then the scheme’s returns is likely to be poor.", "options": ["Liquid funds", "Gilt funds", "Sector funds", "Large Cap funds"], "correctIndex": 2}, {"id": 71, "type": "mcq", "question": "The loss booked from a debt investment of 15 months can be set off against ________", "options": ["Short term capital loss", "Short term capital gain or long term capital gain"], "correctIndex": 1, "explanation": "A capital gain or loss from an investment of less than 3 years in a debt instrument is considered as Short term. Short term capital loss is to be set off against short term capital gain or long term capital gain. Long term capital loss can only be set off against long term capital gain."}, {"id": 72, "type": "mcq", "question": "The expenses which can be charged by an Asset Management Company to a Mutual Fund scheme are limited by __________________.", "explanation": "The expenses which can be charged and the expense ratios etc. are mentioned in the SEBI Mutual Fund Regulations, 1996 which the AMC's have to adhere to.", "options": ["AMFI", "SEBI", "RBI", "The Trustees"], "correctIndex": 1}, {"id": 73, "type": "mcq", "question": "If the sale and purchase transactions for a year amounted to Rs. 10,000 crore, and the average size of net assets is Rs. 5,000 crore, this means that investments are held in the portfolio, on an average for ________ .", "explanation": "Portfolio Turnover Ratio is calculated as Value of Purchase and Sale of Securities during a period divided by the average size of net assets of the scheme during the period. = Rs. 10,000 crore ÷ Rs. 5,000 crore = 2 or 200 percent This means that investments are held in the portfolio, on an average for 12 months ÷ 2 i.e. 6 months.", "options": ["3 months", "6 months", "12 months", "24 months"], "correctIndex": 1}, {"id": 74, "type": "mcq", "question": "What is negative Alpha?", "options": ["It is indicative of outperformance by the fund manager", "It is indicative of under-performance by the fund manager", "It is indicative of over-hedging by the fund manager", "It is indicative of under-hedging by the fund manager"], "correctIndex": 1, "explanation": "The difference between a scheme’s actual return and its optimal return is its Alpha - a measure of the fund manager’s performance. Alpha, therefore, measures the performance of the investment in comparison to a suitable market index. Positive alpha is indicative of outperformance by the fund manager; negative alpha might indicate under-performance."}, {"id": 75, "type": "mcq", "question": "In case of ______________, the Net Asset Value has to be declared for upto 4 decimal points.", "options": ["Mid Cap and Small Cap Funds", "Liquid Funds", "Aggressive Hybrid Funds"], "correctIndex": 1, "explanation": "NAV is to be calculated upto 4 decimal places in the case of index funds, liquid funds and other debt funds. (NAV for equity and balanced funds is to be calculated upto at least 2 decimal places)"}, {"id": 76, "type": "mcq", "question": "Which of the following is/are True? (a) Global diversification could be one of the major reasons for investing in International Funds (b) Indian investors do not have an option to diversify their investment internationally", "explanation": "Option (b) - 'a only' is Correct. (a) Global diversification is indeed one of the major reasons for investing in International Funds. It allows investors to access global markets, reduce domestic market risks, and benefit from growth opportunities in other economies. It also provides currency diversification, which can protect against domestic currency depreciation. (b) The statement that Indian investors do not have an option to diversify their investment internationally is false. Indian investors can invest in international mutual funds and exchange-traded funds (ETFs) that provide exposure to foreign markets, enabling global diversification. Thus, only statement (a) is true.", "options": ["a only", "b only", "Both a and b", "Neither a nor b"], "correctIndex": 0}, {"id": 77, "type": "mcq", "question": "What is the purpose of ‘credit enhancement’ in case of securitised transaction?", "options": ["Payment of higher coupon", "Generating capital gain", "Higher credit worthiness"], "correctIndex": 2, "explanation": "In securitisation transactions, it is possible to work towards a target credit rating, which could be much higher than the originator’s own credit rating. This is possible through a mechanism called “Credit enhancement”. The process of “Credit enhancement” is fulfilled by filtering the underlying asset classes and applying selection criteria, which further diminishes the risks inherent for a particular asset class."}, {"id": 78, "type": "mcq", "question": "Which of these funds has the highest risk?", "explanation": "The sector funds invest in stocks belonging to just one sector of the economy, in order to take advantages within the said sector. The examples of such funds are: Pharma fund or Banking fund. Sector funds are very risky because of the concentration in one sector. If the sector underperforms then the scheme’s returns is likely to be poor.", "options": ["Liquid funds", "Gilt funds", "Sector funds", "Large Cap funds"], "correctIndex": 2}, {"id": 79, "type": "mcq", "question": "Inflation Risk is also referred as _______ .", "explanation": "Inflation, or price inflation is the general rise in the prices of various commodities, products, and services that we consume. Inflation erodes the purchasing power of the money. Inflation risk is also referred to as purchasing power risk, is the risk that inflation will undermine the real value of cash flows made from an investment.", "options": ["Market Risk", "Purchasing Power Risk", "Credit Risk", "Basis Risk"], "correctIndex": 1}, {"id": 80, "type": "mcq", "question": "Can Minors invest in Mutual Fund Schemes?", "options": ["No, cannot invest at all", "Yes, Only through guardian", "Yes, Only in schemes specially launched for Minor", "Yes, Only if AMC approve"], "correctIndex": 1, "explanation": "The correct answer is (b) Yes, Only through guardian. Minors can invest in mutual fund schemes, but the investment must be made through a guardian. The guardian can be either a parent or a court-appointed legal guardian. Key conditions include: The investment account is opened in the minor's name, and the guardian operates it until the minor attains 18 years of age. On turning 18, the minor must update KYC and convert the account to an individual account to continue transactions. The guardian must also complete KYC formalities as required by SEBI regulations. This process ensures compliance with legal and regulatory frameworks while enabling minors to start investing early for their future financial goals."}, {"id": 81, "type": "mcq", "question": "Diversified equity funds are less risky compared to Thematic funds in terms of _______ risk.", "explanation": "A Thematic fund invests in line with an investment theme. For example, an infrastructure thematic fund might invest in shares of companies that are into infrastructure, construction, cement, steel, telecom, power etc. A Diversified equity fund invests in many sectors and themes as per the investment policy and fund managers decisions. Thematic funds are risky because of the concentration in one theme. If the theme under-performs then the scheme’s returns is likely to be poor.", "options": ["Credit", "Concentration", "Interest rate", "Liquidity"], "correctIndex": 1}, {"id": 82, "type": "mcq", "question": "For which of these documents is Time Stamping mandatory?", "options": ["Payment instrument only", "Transaction slip for buying additional units", "Both for Application form / transaction slip and payment instrument"], "correctIndex": 2, "explanation": "Time stamping is mandatory for all financial transactions in mutual funds like purchase, redemption etc. The application form, the payment instrument etc. have to be time and date stamped."}, {"id": 83, "type": "mcq", "question": "Which of these can be a benchmark for a Banking Fund?", "explanation": "The S&P BSE Bankex index comprises constituents of the S&P BSE 500 that are classified as members of the banks sector as defined by the BSE industry classification system", "options": ["S&P BSE Bankex", "S&P BSE 500", "NSE Nifty 50", "CRISIL Liquid Fund Index"], "correctIndex": 0}, {"id": 84, "type": "mcq", "question": "The Asset Management Companies have to disclose the Total Expense Ratios (TER) of the various schemes on their websites on a ______ basis.", "explanation": "One of the important factors that impacts the scheme’s NAV is the Total Expense Ratio (TER), charged to the scheme. Though, the same is very tightly regulated through SEBI regulations, the investor should know about the scheme expense ratio. SEBI has mandated that the Asset Management Companies (AMCs) should prominently disclose on a daily basis, the Total expense ratio (scheme-wise, date-wise) of all schemes on their website. The same must also be published on AMFI website.", "options": ["Weekly", "Monthly", "Quarterly", "Daily"], "correctIndex": 3}, {"id": 85, "type": "mcq", "question": "The investments in a Mutual Fund Folio are valued at:", "explanation": "Investments in a Mutual Fund Folio are valued at their market value, which represents the current price at which the securities held in the portfolio can be bought or sold. This valuation method ensures transparency and provides an accurate reflection of the fund’s Net Asset Value (NAV). NAV is calculated daily based on the market value of the fund’s underlying assets, helping investors track the real-time performance of their investments.", "options": ["Cost Price", "Face Value", "Market Value", "Book Value"], "correctIndex": 2}, {"id": 86, "type": "mcq", "question": "An investor in India is investing in US Dollar based funds. He/She will benefit when ______ .", "options": ["The US Dollar becomes weaker", "The US Dollar becomes stronger", "The US Dollar reamins steady"], "correctIndex": 1, "explanation": "If the investor invests in the US, and the US Dollar becomes stronger during the period of his investment, he/she will benefit. For eg. - An investor buys USD 1000 worth of units in a US mutual fund when the exchange rate was Rs 75 for 1 USD. So his investment is Rs 75000 If USD becomes stronger against India Rupee and rises to Rs. 77 and he sells USD 1000 worth of units, his realisation in Indian rupees is 1000 x 77 = Rs 77000. So he earns Rs 2000 (This is assuming all other factors like the NAV of the mutual fund remaining the same)"}, {"id": 87, "type": "mcq", "question": "Investments are carried at ________ in a mutual fund portfolio.", "explanation": "Investments are taken at their market value. This is done, to ensure that sale and re-purchase transactions are effected at the true worth of the unit, including the gains on the investment portfolio. The process of valuing each security in the investment portfolio of the scheme at its current market value is called ‘mark to market’ i.e. marking the securities to their market value.", "options": ["Cost Price", "Face Value", "Market Value", "Book Value"], "correctIndex": 2}, {"id": 88, "type": "mcq", "question": "Which of the following investors require investment approval through board resolution for investing in a Mutual Fund Scheme?", "explanation": "Institutional investors, such as companies, trusts, and organizations, require investment approval through a board resolution to invest in a mutual fund scheme. This ensures that the investment decision is formally authorized by the governing body of the institution, complying with legal and regulatory requirements, as well as internal governance policies. Other categories like Minors, HUFs, and NRIs do not need a board resolution, but may require legal guardians, karta, or self-declaration for compliance purposes.", "options": ["Minors", "NRIs", "HUFs", "Institutional Investors"], "correctIndex": 3}, {"id": 89, "type": "mcq", "question": "Ultra-short-term debt scheme invests in debt and money market instruments with Macaulay duration between __________.", "explanation": "Macaulay Duration is the weighted average of the time to receive the cash flows from a bond. An open ended ultra-short-term debt scheme invests in debt and money market instruments with Macaulay duration between 3 months and 6 months.", "options": ["3 to 6 months", "6 to 12 months", "1 to 3 years", "Greater than 7 years"], "correctIndex": 0}, {"id": 90, "type": "mcq", "question": "Banks and NBFC's can lend money against ________ of mutual fund units.", "explanation": "Banks, NBFCs and other financiers often lend money against pledge of Units by the Unitholder. This is effected through a Pledge Form executed by the unit-holder (pledger). The form has a provision for specifying the party in whose favour the units are pledged (pledgee).", "options": ["Sale", "Pledge", "Transmission", "Nomination"], "correctIndex": 1}, {"id": 91, "type": "mcq", "question": "Long Duration debt scheme invests in debt instruments with Macaulay duration _____ .", "explanation": "Macaulay Duration is the weighted average of the time to receive the cash flows from a bond. Long Duration Fund : An open-ended debt scheme investing in debt and money market instruments with Macaulay duration greater than 7 years.", "options": ["Between 1 year and 3 years", "6 months and 12 months", "3 to 6 months", "Greater than 7 years"], "correctIndex": 3}, {"id": 92, "type": "mcq", "question": "Among equity funds, Focused funds carry __________ risks as compared to diversified funds due to _________.", "options": ["Lower ; highly concentrated portfolio", "Higher ; highly concentrated portfolio", "Lower ; lower expenses of the fund", "Higher ; investments in debt securities"], "correctIndex": 1, "explanation": "Among the equity funds, some schemes may have a portfolio concentrated in a few stocks. Such scheme category is known as “Focused funds”. These schemes carry higher risk than a diversified fund, due to higher concentration among smaller number of stocks."}, {"id": 93, "type": "mcq", "question": "In whose beneficial interest is a mutual fund managed?", "explanation": "An investor (unit holder) in a mutual fund scheme is the beneficial owner of the units one has bought. The mutual fund is managed for the beneficial interest of the unitholders.", "options": ["The AMC", "The Sponsors", "Unit holders", "The Trustees"], "correctIndex": 2}, {"id": 94, "type": "mcq", "question": "A board resolution for investing in a mutual fund scheme is compulsorily required by ______________.", "options": ["Non Resident Indians - NRIs", "Hindu Undivided Family - HUF", "Institutional Investors"], "correctIndex": 2, "explanation": "Institutional investors require a authorisation for the investing in any security / asset etc. This is typically in the form of a Board Resolution."}, {"id": 95, "type": "mcq", "question": "Key Information Memorandum (KIM) is a summary of ___________.", "explanation": "While an investor is expected to read all the scheme related documents, circulation of the same along with the application forms is too difficult and costly, especially if the printed forms are to be distributed. In order to ensure the investor gets access to sufficient information in spite of such a constraint, a Key Information Memorandum (KIM) is mandatorily circulated along with the application form. KIM is essentially a summary of the SID and SAI (Scheme Related Documents). It contains the key points of these documents that are essential for the investor to know to make a decision on the suitability of the investment for their needs. It is more easily and widely distributed in the market. As per SEBI regulations, every application form is to be accompanied by the KIM.", "options": ["Only Scheme Information Document (SID)", "Only Statement of Additional Information (SAI)", "Both SID and SAI", "Neither SID nor SAI"], "correctIndex": 2}, {"id": 96, "type": "mcq", "question": "In case of a balanced hybrid fund, the investment in Equity and Equity related instruments is in the range of________________.", "options": ["40% and 60% of the total assets", "50% and 60% of the total assets", "10% and 25% of the total assets", "65% and 80% of the total assets"], "correctIndex": 0, "explanation": "A Balanced Hybrid Fund is a type of mutual fund that invests 40% to 60% of its total assets in equity and equity-related instruments and the remaining in debt instruments. This allocation provides a balanced approach by combining growth potential from equities and stability from debt, making it suitable for moderate-risk investors. Balanced hybrid funds are not allowed to engage in arbitrage strategies, ensuring that the investments are straightforward and transparent."}, {"id": 97, "type": "mcq", "question": "Recency bias applies to ______ events.", "explanation": "Recency bias : The impact of recent events on decision making can be very strong. This applies equally to positive and negative experiences. Investors tend to extrapolate the event into the future and expect a repeat. A bear market or a financial crisis leads people to prefer safe assets. Similarly, a bull market makes people allocate more than what is advised for risky assets.", "options": ["Only positive events", "Only negative events", "Both positive and negative", "Neither positive nor negative"], "correctIndex": 2}, {"id": 98, "type": "mcq", "question": "How is the redemption transaction of a mutual fund priced?", "explanation": "Schemes are permitted to keep the re-purchase Price lower than the NAV. The difference between the NAV and re-purchase Price is called the “exit load”. If the NAV of a scheme is Rs. 11.00 per unit, and it were to charge exit load of 1 percent, the re-purchase Price would be Rs. 11 - 1 percent on Rs. 11 i.e. Rs. 10.89.", "options": ["NAV plus entry load", "NAV minus exit load", "NAV plus exit load", "NAV minus entry load"], "correctIndex": 1}, {"id": 99, "type": "mcq", "question": "Which of these statements are false?", "explanation": "1) Any cost is a drag on investor’s returns. Investors need to be particularly careful about the cost structure of debt schemes, because in the normal course, debt returns can be much lower than equity schemes. So expense ratio is more critical for debt funds 2) The mutual fund advertisements use the disclaimer: “Past performance may or may not be sustained in future”. There is a reason for that. As experience has shown time and again, the top performers during one period may not necessarily remain as a top performer forever or near the other top performers and vice versa. In such a case, simply buying into a scheme due to good returns in the recent past may not be a wise approach. 3) When the limits are not tightly defined, the fund manager may assume an active role in managing the risk, e.g. an ultra-short term debt fund may take credit risk, since the SEBI regulations only define the permitted maturity profile, which indicates how much interest rate risk the scheme can take.", "options": ["A and B are false", "B and C are false", "A and C are false", "A, B and C are false"], "correctIndex": 1}, {"id": 100, "type": "mcq", "question": "Identify the TRUE statements with respect to measuring returns for mutual fund schemes. 1. The returns published in a mutual fund advertisement should factor the entry or exit load 2. Compounded Annual Growth Rate (CAGR) is the accepted standard of showing returns for investment of holding period of more than one year 3. Simple returns can be calculated by the formula :(Sale price – Cost price / Cost price ) x 100", "explanation": "Per SEBI rules: Returns must exclude entry or exit loads when advertised. Compounded Annual Growth Rate (CAGR) is the standard for investment periods exceeding one year, and simple returns are calculated using the formula: (SalePrice−CostPrice)÷CostPrice(SalePrice-CostPrice)÷CostPrice × 100.", "options": ["All 1, 2 and 3 are true", "Only 1 and 2 are true", "Only 2 and 3 are true", "Only 1 and 3 are true"], "correctIndex": 2}];
+
+/* ===================== CONFIG ===================== */
+const TEST_DURATION_SEC = 7200; // 120 minutes (NISM-V-A actual exam pattern)
+const MARKS_CORRECT = 1;
+const MARKS_WRONG = 0; // NISM-V-A has no negative marking
+const PASS_PERCENT = 50;
+const STORAGE_KEY = 'nismva_mocktest1_state_v1';
+
+/* ===================== STATE ===================== */
+let state = {
+  current: 0,
+  answers: {},     // qid -> selected option index
+  visited: {},      // qid -> true
+  marked: {},       // qid -> true
+  timeSpent: {},    // qid -> milliseconds spent on that question (TPQ source)
+  timeLeft: TEST_DURATION_SEC,
+  startedAt: null,
+  finished: false,
+};
+
+let timerInterval = null;
+let questionEnteredAt = null;   // Date.now() timestamp when current question was shown
+let lastTrackedQId = null;      // id of the question time is currently accruing against
+
+/* ===================== ELEMENTS ===================== */
+const el = id => document.getElementById(id);
+const testScreen = el('testScreen');
+const resultScreen = el('resultScreen');
+
+/* ===================== LOCAL STORAGE ===================== */
+function saveState(){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }catch(e){ console.warn('save failed', e); }
+}
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return null;
+    return JSON.parse(raw);
+  }catch(e){ return null; }
+}
+function clearState(){
+  try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+}
+
+/* ===================== AUTO LAUNCH ON LOAD ===================== */
+(function autoLaunch(){
+  el('totalText').textContent = QUESTIONS.length;
+  const saved = loadState();
+  if(saved && !saved.finished && saved.startedAt){
+    state = saved;
+    if(!state.timeSpent) state.timeSpent = {}; // backward-compat for older saved sessions
+    if(!state.revealed) state.revealed = {}; // backward-compat for older saved sessions
+    questionEnteredAt = Date.now(); // resume point — don't count offline/refresh gap as question time
+    lastTrackedQId = null;
+    enterTestScreen();
+  } else {
+    beginFreshTest();
+  }
+})();
+
+function beginFreshTest(){
+  state = {
+    current: 0,
+    answers: {},
+    visited: {},
+    marked: {},
+    revealed: {},
+    timeSpent: {},
+    timeLeft: TEST_DURATION_SEC,
+    startedAt: Date.now(),
+    finished: false,
+  };
+  questionEnteredAt = Date.now();
+  lastTrackedQId = null;
+  saveState();
+  enterTestScreen();
+}
+
+function enterTestScreen(){
+  testScreen.classList.add('active');
+  buildPalette();
+  renderQuestion();
+  startTimer();
+}
+
+/* ===================== TIMER (TIMESTAMP-BASED) =====================
+   Bug fix: the old version decremented timeLeft by 1 inside setInterval,
+   which drifts badly when the browser throttles timers on a background
+   tab, and on refresh it just resumed the last-saved countdown without
+   accounting for time that passed while the page was closed/inactive.
+   Fix: always derive timeLeft from Date.now() - state.startedAt, so the
+   timer is self-correcting regardless of throttling, refreshes, or the
+   user switching tabs for a while. */
+function computeTimeLeft(){
+  const elapsedSec = Math.floor((Date.now() - state.startedAt) / 1000);
+  return Math.max(0, TEST_DURATION_SEC - elapsedSec);
+}
+function startTimer(){
+  state.timeLeft = computeTimeLeft();
+  updateTimerDisplay();
+  timerInterval = setInterval(()=>{
+    state.timeLeft = computeTimeLeft();
+    updateTimerDisplay();
+    if(state.timeLeft <= 0){
+      clearInterval(timerInterval);
+      finishTest(true);
+      return;
+    }
+    if(state.timeLeft % 5 === 0) saveState();
+  }, 1000);
+  // Re-sync immediately when the tab regains focus (covers throttled/paused intervals)
+  document.addEventListener('visibilitychange', onVisibilityResync);
+}
+function onVisibilityResync(){
+  if(document.visibilityState === 'visible' && timerInterval){
+    state.timeLeft = computeTimeLeft();
+    updateTimerDisplay();
+    if(state.timeLeft <= 0){
+      clearInterval(timerInterval);
+      finishTest(true);
+    }
+  }
+}
+function updateTimerDisplay(){
+  const m = Math.floor(state.timeLeft/60).toString().padStart(2,'0');
+  const s = (state.timeLeft%60).toString().padStart(2,'0');
+  el('timerText').textContent = `${m}:${s}`;
+  const box = el('timerBox');
+  if(state.timeLeft <= 120) box.classList.add('warn'); else box.classList.remove('warn');
+}
+
+/* ===================== RENDER QUESTION ===================== */
+function accrueTimeForLastQuestion(){
+  // Adds the time spent on whichever question was on screen before this
+  // render call into state.timeSpent — the raw data source for TPQ.
+  if(lastTrackedQId !== null && questionEnteredAt !== null){
+    const delta = Date.now() - questionEnteredAt;
+    state.timeSpent[lastTrackedQId] = (state.timeSpent[lastTrackedQId] || 0) + delta;
+  }
+}
+function renderQuestion(){
+  accrueTimeForLastQuestion();
+  const idx = state.current;
+  const q = QUESTIONS[idx];
+  questionEnteredAt = Date.now();
+  lastTrackedQId = q.id;
+  state.visited[q.id] = true;
+
+  if(q.type === 'info'){
+    renderInfoQuestion(q, idx);
+    return;
+  }
+
+  const selected = state.answers[q.id];
+  const isMarked = !!state.marked[q.id];
+
+  const optionsHtml = q.options.map((opt, i)=>{
+    const sel = selected === i ? 'selected' : '';
+    const letter = String.fromCharCode(65+i);
+    return `<div class="option ${sel}" data-idx="${i}">
+      <div class="opt-radio">${selected===i ? '✓' : letter}</div>
+      <div class="opt-text">${escapeHtml(opt)}</div>
+    </div>`;
+  }).join('');
+
+  el('questionArea').innerHTML = `
+    <div class="q-meta-row">
+      <div class="q-counter">Question <b>${idx+1}</b> of ${QUESTIONS.length}</div>
+    </div>
+    <div class="q-card">
+      <span class="q-tag">Mutual Fund Distributors</span>
+      <div class="q-text">${escapeHtml(q.question)}</div>
+      <div class="options" id="optionsWrap">${optionsHtml}</div>
+    </div>
+  `;
+
+  document.querySelectorAll('#optionsWrap .option').forEach(opt=>{
+    opt.addEventListener('click', ()=>{
+      const i = parseInt(opt.dataset.idx);
+      state.answers[q.id] = i;
+      saveState();
+      renderQuestion();
+      refreshPaletteItem(idx);
+      updateSidebarStats();
+    });
+  });
+
+  el('markBtn').classList.toggle('active', isMarked);
+  el('markBtn').innerHTML = `<span>${isMarked ? '★' : '☆'}</span> ${isMarked ? 'Marked for Review' : 'Mark for Review'}`;
+
+  el('prevBtn').disabled = idx === 0;
+  el('nextBtn').textContent = idx === QUESTIONS.length-1 ? 'Save & Submit ✓' : 'Save & Next →';
+
+  refreshPaletteItem(idx, true);
+  updateSidebarStats();
+  updateTopProgress();
+}
+
+function renderInfoQuestion(q, idx){
+  const isMarked = !!state.marked[q.id];
+  const isRevealed = !!(state.revealed && state.revealed[q.id]);
+  const selfStatus = state.answers[q.id]; // 'self_correct' | 'self_wrong' | undefined
+
+  const contextHtml = (q.context && q.context.length)
+    ? `<div class="context-list">${q.context.map(c=>`<div class="context-item">${escapeHtml(c)}</div>`).join('')}</div>`
+    : '';
+
+  const revealHtml = isRevealed ? `
+    <div class="answer-reveal">
+      <div class="ar-label">Correct Answer</div>
+      <div class="ar-answer">${escapeHtml(q.answer)}</div>
+      <div class="self-assess">
+        <button class="self-btn know ${selfStatus==='self_correct'?'picked':''}" id="selfKnowBtn">✅ I Knew This</button>
+        <button class="self-btn dontknow ${selfStatus==='self_wrong'?'picked':''}" id="selfDontKnowBtn">❌ I Didn't Know</button>
+      </div>
+      ${selfStatus ? `<div class="self-assess-result ${selfStatus==='self_correct'?'correct':'wrong'}">${selfStatus==='self_correct' ? 'Marked as known — counted as correct.' : 'Marked as not known — counted as incorrect.'}</div>` : ''}
+    </div>
+  ` : `<button class="reveal-btn" id="revealBtn">🔍 Reveal Answer</button>`;
+
+  el('questionArea').innerHTML = `
+    <div class="q-meta-row">
+      <div class="q-counter">Question <b>${idx+1}</b> of ${QUESTIONS.length}</div>
+    </div>
+    <div class="q-card">
+      <span class="q-tag">Mutual Fund Distributors</span>
+      <div class="info-note">ℹ️ This question's original option data is incomplete — it's presented as a self-check flashcard instead of multiple-choice.</div>
+      <div class="q-text">${escapeHtml(q.question)}</div>
+      ${contextHtml}
+      ${revealHtml}
+    </div>
+  `;
+
+  const revealBtn = el('revealBtn');
+  if(revealBtn){
+    revealBtn.addEventListener('click', ()=>{
+      if(!state.revealed) state.revealed = {};
+      state.revealed[q.id] = true;
+      saveState();
+      renderQuestion();
+    });
+  }
+  const knowBtn = el('selfKnowBtn');
+  const dontKnowBtn = el('selfDontKnowBtn');
+  if(knowBtn) knowBtn.addEventListener('click', ()=>{
+    state.answers[q.id] = 'self_correct';
+    saveState(); renderQuestion(); refreshPaletteItem(idx); updateSidebarStats();
+  });
+  if(dontKnowBtn) dontKnowBtn.addEventListener('click', ()=>{
+    state.answers[q.id] = 'self_wrong';
+    saveState(); renderQuestion(); refreshPaletteItem(idx); updateSidebarStats();
+  });
+
+  el('markBtn').classList.toggle('active', isMarked);
+  el('markBtn').innerHTML = `<span>${isMarked ? '★' : '☆'}</span> ${isMarked ? 'Marked for Review' : 'Mark for Review'}`;
+  el('prevBtn').disabled = idx === 0;
+  el('nextBtn').textContent = idx === QUESTIONS.length-1 ? 'Save & Submit ✓' : 'Save & Next →';
+  refreshPaletteItem(idx, true);
+  updateSidebarStats();
+  updateTopProgress();
+}
+
+function escapeHtml(str){
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+/* ===================== NAVIGATION ===================== */
+el('prevBtn').addEventListener('click', ()=>{
+  if(state.current > 0){ state.current--; saveState(); renderQuestion(); window.scrollTo(0,0); }
+});
+el('nextBtn').addEventListener('click', ()=>{
+  if(state.current < QUESTIONS.length-1){ state.current++; saveState(); renderQuestion(); window.scrollTo(0,0); }
+  else { openSubmitModal(); }
+});
+el('clearResponseBtn').addEventListener('click', ()=>{
+  const q = QUESTIONS[state.current];
+  delete state.answers[q.id];
+  saveState();
+  renderQuestion();
+  refreshPaletteItem(state.current);
+  updateSidebarStats();
+});
+el('markBtn').addEventListener('click', ()=>{
+  const q = QUESTIONS[state.current];
+  if(state.marked[q.id]) delete state.marked[q.id];
+  else state.marked[q.id] = true;
+  saveState();
+  renderQuestion();
+  refreshPaletteItem(state.current);
+  updateSidebarStats();
+});
+
+document.addEventListener('keydown', (e)=>{
+  if(!testScreen.classList.contains('active')) return;
+  if(e.key === 'ArrowRight'){ el('nextBtn').click(); }
+  if(e.key === 'ArrowLeft'){ el('prevBtn').click(); }
+  if(['1','2','3','4'].includes(e.key)){
+    const i = parseInt(e.key)-1;
+    const q = QUESTIONS[state.current];
+    if(q.type === 'mcq' && i < q.options.length){
+      state.answers[q.id] = i;
+      saveState(); renderQuestion(); refreshPaletteItem(state.current); updateSidebarStats();
+    }
+  }
+});
+
+/* ===================== PALETTE ===================== */
+function buildPalette(){
+  const grid = el('paletteGrid');
+  grid.innerHTML = QUESTIONS.map((q,i)=>`<button class="pal-item" id="pal-${i}" data-idx="${i}">${i+1}</button>`).join('');
+  grid.querySelectorAll('.pal-item').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      state.current = parseInt(btn.dataset.idx);
+      saveState();
+      renderQuestion();
+      window.scrollTo(0,0);
+    });
+  });
+}
+function paletteClassFor(idx){
+  const q = QUESTIONS[idx];
+  const answered = state.answers.hasOwnProperty(q.id);
+  const visited = !!state.visited[q.id];
+  const marked = !!state.marked[q.id];
+  let cls = '';
+  if(answered) cls = 'answered';
+  else if(visited) cls = 'notanswered';
+  if(marked) cls += ' marked';
+  return cls;
+}
+function refreshPaletteItem(idx, isCurrent){
+  for(let i=0;i<QUESTIONS.length;i++){
+    const btn = el('pal-'+i);
+    if(!btn) continue;
+    btn.className = 'pal-item ' + paletteClassFor(i);
+    if(i === state.current) btn.classList.add('current');
+  }
+}
+
+/* ===================== SIDEBAR STATS ===================== */
+function updateSidebarStats(){
+  const total = QUESTIONS.length;
+  let answered=0, marked=0, visitedNotAns=0, notVisited=0;
+  QUESTIONS.forEach(q=>{
+    const isAns = state.answers.hasOwnProperty(q.id);
+    const isVis = !!state.visited[q.id];
+    const isMarked = !!state.marked[q.id];
+    if(isAns) answered++;
+    if(isMarked) marked++;
+    if(!isVis) notVisited++;
+  });
+  el('statAnswered').textContent = answered;
+  el('statMarked').textContent = marked;
+  el('statNotVisited').textContent = notVisited;
+  el('attemptedText').textContent = answered;
+  const pct = Math.round((answered/total)*100);
+  el('sidebarProgressPct').textContent = pct + '%';
+  el('sidebarBarFill').style.width = pct + '%';
+}
+function updateTopProgress(){
+  const total = QUESTIONS.length;
+  const visitedCount = Object.keys(state.visited).length;
+  const pct = Math.round((visitedCount/total)*100);
+  el('progressTopFill').style.width = pct + '%';
+}
+
+/* ===================== SUBMIT FLOW ===================== */
+function openSubmitModal(){
+  const total = QUESTIONS.length;
+  const answered = Object.keys(state.answers).length;
+  const unanswered = total - answered;
+  el('modalTitle').textContent = 'Submit Test?';
+  el('modalText').textContent = unanswered > 0
+    ? `You have ${unanswered} unanswered question(s). Are you sure you want to submit the test now? This action cannot be undone.`
+    : `You have answered all questions. Are you sure you want to submit the test now?`;
+  el('submitModal').classList.add('active');
+}
+el('submitBtnTop').addEventListener('click', openSubmitModal);
+
+/* ---- MOBILE PALETTE TOGGLE ---- */
+(function(){
+  const toggleBtn = el('paletteToggleBtn');
+  const closeBtn = el('sidebarCloseBtn');
+  const panel = el('sidebarPanel');
+  const backdrop = el('sidebarBackdrop');
+  function openPanel(){ panel.classList.add('open'); backdrop.classList.add('open'); }
+  function closePanel(){ panel.classList.remove('open'); backdrop.classList.remove('open'); }
+  if(toggleBtn) toggleBtn.addEventListener('click', openPanel);
+  if(closeBtn) closeBtn.addEventListener('click', closePanel);
+  if(backdrop) backdrop.addEventListener('click', closePanel);
+})();
+el('modalCancel').addEventListener('click', ()=> el('submitModal').classList.remove('active'));
+el('modalConfirm').addEventListener('click', ()=>{
+  el('submitModal').classList.remove('active');
+  finishTest(false);
+});
+
+function finishTest(autoSubmitted){
+  clearInterval(timerInterval);
+  document.removeEventListener('visibilitychange', onVisibilityResync);
+  accrueTimeForLastQuestion();
+  lastTrackedQId = null;
+  state.finished = true;
+  state.finishedAt = Date.now();
+  saveState();
+  computeAndRenderResult(autoSubmitted);
+  testScreen.classList.remove('active');
+  resultScreen.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* ===================== SCORING ===================== */
+let lastResultData = null;
+function computeAndRenderResult(autoSubmitted){
+  let correct=0, wrong=0, skipped=0, score=0;
+  const perQ = QUESTIONS.map(q=>{
+    const sel = state.answers.hasOwnProperty(q.id) ? state.answers[q.id] : null;
+    let status;
+    if(sel === null){ status='skip'; skipped++; }
+    else if(q.type === 'info'){
+      if(sel === 'self_correct'){ status='correct'; correct++; score += MARKS_CORRECT; }
+      else { status='wrong'; wrong++; score += MARKS_WRONG; }
+    }
+    else if(sel === q.correctIndex){ status='correct'; correct++; score += MARKS_CORRECT; }
+    else { status='wrong'; wrong++; score += MARKS_WRONG; }
+    return {q, sel, status, marked: !!state.marked[q.id]};
+  });
+  score = Math.round(score*100)/100;
+  const total = QUESTIONS.length;
+  const attempted = correct+wrong;
+  const accuracy = attempted>0 ? Math.round((correct/attempted)*100) : 0;
+  const maxScore = total*MARKS_CORRECT;
+  const percentObtained = (score/maxScore)*100;
+  const passed = percentObtained >= PASS_PERCENT;
+
+  const elapsed = state.startedAt ? Math.floor(((state.finishedAt||Date.now()) - state.startedAt)/1000) : (TEST_DURATION_SEC-state.timeLeft);
+  const em = Math.floor(elapsed/60).toString().padStart(2,'0');
+  const es = (elapsed%60).toString().padStart(2,'0');
+
+  el('resultBadge').textContent = passed ? '✓ PASS' : '✗ FAIL';
+  el('resultBadge').className = 'badge ' + (passed?'pass':'fail');
+  el('resultSubtext').textContent = autoSubmitted
+    ? "Time's up! Your test was submitted automatically. Here's how you performed."
+    : "Here's a detailed breakdown of your performance.";
+  el('rScore').textContent = score + ' / ' + maxScore;
+  el('rCorrect').textContent = correct;
+  el('rWrong').textContent = wrong;
+  el('rSkipped').textContent = skipped;
+  el('rAccuracy').textContent = accuracy + '%';
+  el('rTimeTaken').textContent = `${em}:${es}`;
+  el('rTotalQ').textContent = total;
+
+  lastResultData = perQ;
+  renderReviewList(perQ, 'all');
+
+  // ---- Push this attempt into the shared Performance Dashboard store ----
+  if(window.AnalyticsEngine){
+    AnalyticsEngine.saveMockResult({
+      mockId: 'nismva_mock1',
+      mockName: 'NISM-V-A Mock Test 1 (Mutual Fund Distributors)',
+      questions: QUESTIONS,
+      perQ,
+      timeSpent: state.timeSpent,
+      timeTakenSec: elapsed,
+      score, maxScore, correct, wrong, skipped, accuracy, percentObtained, passed
+    });
+  }
+
+  clearState(); // test complete, clear saved in-progress state
+}
+
+/* ===================== REVIEW ===================== */
+el('reviewBtn').addEventListener('click', ()=>{
+  const sec = el('reviewSection');
+  sec.style.display = sec.style.display === 'none' ? 'block' : 'none';
+  if(sec.style.display === 'block') sec.scrollIntoView({behavior:'smooth', block:'start'});
+});
+el('retakeBtn').addEventListener('click', ()=>{
+  clearState();
+  resultScreen.classList.remove('active');
+  el('reviewSection').style.display = 'none';
+  beginFreshTest();
+});
+
+document.querySelectorAll('.filter-chip').forEach(chip=>{
+  chip.addEventListener('click', ()=>{
+    document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    renderReviewList(lastResultData, chip.dataset.filter);
+  });
+});
+
+function renderReviewList(perQ, filter){
+  let list = perQ;
+  if(filter==='correct') list = perQ.filter(r=>r.status==='correct');
+  if(filter==='wrong') list = perQ.filter(r=>r.status==='wrong');
+  if(filter==='skip') list = perQ.filter(r=>r.status==='skip');
+  if(filter==='marked') list = perQ.filter(r=>r.marked);
+
+  if(list.length===0){
+    el('reviewList').innerHTML = `<p style="color:var(--text-faint);text-align:center;padding:30px;">No questions in this category.</p>`;
+    return;
+  }
+
+  el('reviewList').innerHTML = list.map(r=>{
+    const q = r.q;
+    const qIndexGlobal = QUESTIONS.findIndex(x=>x.id===q.id)+1;
+    const statusLabel = r.status==='correct'?'Correct':r.status==='wrong'?'Wrong':'Unattempted';
+
+    if(q.type === 'info'){
+      const selfLabel = r.sel==='self_correct' ? 'You marked: I Knew This' : r.sel==='self_wrong' ? "You marked: I Didn't Know" : 'Not attempted';
+      const ctxHtml = (q.context && q.context.length) ? `<div class="mini-options">${q.context.map(c=>`<div class="mini-opt">${escapeHtml(c)}</div>`).join('')}</div>` : '';
+      return `<div class="review-card">
+        <div class="review-card-head">
+          <div><b>Q${qIndexGlobal}.</b> ${escapeHtml(q.question)}</div>
+          <span class="review-status ${r.status==='skip'?'skip':r.status}">${statusLabel}</span>
+        </div>
+        ${ctxHtml}
+        <div class="mini-opt correct-ans" style="margin-top:10px;"><span><b>Correct Answer:</b> ${escapeHtml(q.answer)}</span></div>
+        <div style="margin-top:6px;font-size:12.5px;color:var(--text-faint);">${selfLabel} (self-assessed)</div>
+        <div class="explanation-box"><b>Explanation</b>${escapeHtml(q.explanation)}</div>
+      </div>`;
+    }
+
+    const optsHtml = q.options.map((opt,i)=>{
+      let cls='', tag='';
+      if(i===q.correctIndex){ cls='correct-ans'; tag='✓ Correct'; }
+      if(r.sel===i && i!==q.correctIndex){ cls='wrong-ans'; tag='✗ Your Answer'; }
+      if(r.sel===i && i===q.correctIndex){ tag='✓ Your Answer'; }
+      return `<div class="mini-opt ${cls}"><span>${escapeHtml(opt)}</span>${tag?`<span class="tag" style="margin-left:auto;">${tag}</span>`:''}</div>`;
+    }).join('');
+    return `<div class="review-card">
+      <div class="review-card-head">
+        <div><b>Q${qIndexGlobal}.</b> ${escapeHtml(q.question)}</div>
+        <span class="review-status ${r.status==='skip'?'skip':r.status}">${statusLabel}</span>
+      </div>
+      <div class="mini-options">${optsHtml}</div>
+      <div class="explanation-box"><b>Explanation</b>${escapeHtml(q.explanation)}</div>
+    </div>`;
+  }).join('');
+}
+</script>
+</body>
+</html>

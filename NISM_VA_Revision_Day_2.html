@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NISM Series V-A Revision Day 2</title>
+<style>
+:root{
+  --bg:#0a0e17; --bg2:#0f1420; --panel:#131927; --panel2:#1a2235;
+  --border:#243047; --border-light:#2e3b56;
+  --text:#e8edf7; --text-dim:#8b97b3; --text-faint:#5d6a87;
+  --accent:#4f8cff; --accent-dim:#2c5dc7; --accent-glow:rgba(79,140,255,.35);
+  --green:#2dd4a7; --green-dim:#1a8f72; --red:#ff5d7a; --red-dim:#c23854;
+  --amber:#ffb74f; --amber-dim:#cc8c2e;
+  --purple:#a78bfa;
+  --radius:14px; --radius-sm:8px;
+  --shadow:0 8px 30px rgba(0,0,0,.45);
+  --transition:.25s cubic-bezier(.4,0,.2,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{
+  background:radial-gradient(circle at 20% 0%, #15203a 0%, var(--bg) 55%);
+  color:var(--text);
+  font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+::selection{background:var(--accent-glow);}
+button{font-family:inherit;cursor:pointer;border:none;outline:none;background:none;color:inherit;}
+::-webkit-scrollbar{width:8px;height:8px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:8px;}
+::-webkit-scrollbar-thumb:hover{background:var(--accent-dim);}
+
+.screen{display:none;min-height:100vh;width:100%;animation:fadeIn .45s ease;}
+.screen.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.55;}}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes pop{0%{transform:scale(.85);opacity:0;}100%{transform:scale(1);opacity:1;}}
+@keyframes slideDown{from{transform:translateY(-12px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+@keyframes shimmer{0%{background-position:-200% 0;}100%{background-position:200% 0;}}
+
+/* ============ START SCREEN ============ */
+#startScreen{display:flex;align-items:center;justify-content:center;padding:24px;}
+.start-card{
+  width:100%;max-width:780px;background:linear-gradient(160deg,var(--panel) 0%, var(--bg2) 100%);
+  border:1px solid var(--border);border-radius:20px;padding:42px 40px;box-shadow:var(--shadow);
+  animation:pop .5s ease;
+}
+.brand-row{display:flex;align-items:center;gap:14px;margin-bottom:6px;}
+.brand-badge{
+  width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--purple));
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#fff;
+  box-shadow:0 6px 18px var(--accent-glow);flex-shrink:0;
+}
+.brand-text-sm{font-size:12px;letter-spacing:2px;color:var(--text-faint);text-transform:uppercase;font-weight:600;}
+.start-title{font-size:28px;font-weight:800;margin-top:14px;line-height:1.3;background:linear-gradient(90deg,#fff,#b9c6e6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.start-sub{color:var(--text-dim);margin-top:8px;font-size:14.5px;line-height:1.6;}
+.info-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:30px 0;}
+.info-box{
+  background:var(--panel2);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:16px 14px;text-align:center;transition:var(--transition);
+}
+.info-box:hover{border-color:var(--accent-dim);transform:translateY(-2px);}
+.info-box .ic{font-size:20px;margin-bottom:8px;}
+.info-box .val{font-size:20px;font-weight:800;color:#fff;}
+.info-box .lbl{font-size:11.5px;color:var(--text-faint);margin-top:3px;text-transform:uppercase;letter-spacing:.5px;}
+.rules-box{
+  background:rgba(255,183,79,.06);border:1px solid rgba(255,183,79,.25);border-radius:var(--radius-sm);
+  padding:16px 18px;margin-bottom:26px;
+}
+.rules-box h4{color:var(--amber);font-size:13px;margin-bottom:10px;display:flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.5px;}
+.rules-box ul{list-style:none;font-size:13.5px;color:var(--text-dim);line-height:1.95;}
+.rules-box li{display:flex;gap:8px;}
+.rules-box li::before{content:'▸';color:var(--amber);flex-shrink:0;}
+.resume-banner{
+  background:rgba(79,140,255,.08);border:1px solid rgba(79,140,255,.3);border-radius:var(--radius-sm);
+  padding:13px 16px;margin-bottom:22px;font-size:13.5px;color:var(--accent);display:flex;align-items:center;justify-content:space-between;gap:10px;
+  animation:slideDown .4s ease;
+}
+.resume-banner span b{color:#fff;}
+.resume-banner .clear-btn{font-size:12px;color:var(--text-faint);text-decoration:underline;flex-shrink:0;}
+.start-actions{display:flex;gap:14px;align-items:center;}
+.btn{
+  padding:14px 28px;border-radius:11px;font-weight:700;font-size:14.5px;transition:var(--transition);
+  display:inline-flex;align-items:center;gap:8px;letter-spacing:.2px;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--accent),#3f6fe0);color:#fff;box-shadow:0 8px 24px var(--accent-glow);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px var(--accent-glow);}
+.btn-primary:active{transform:translateY(0);}
+.btn-ghost{background:var(--panel2);color:var(--text-dim);border:1px solid var(--border);}
+.btn-ghost:hover{border-color:var(--border-light);color:var(--text);}
+.start-foot{margin-top:22px;font-size:12px;color:var(--text-faint);text-align:center;}
+
+/* ============ TEST SCREEN ============ */
+#testScreen{display:none;}
+#testScreen.active{display:flex;flex-direction:column;height:100vh;}
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;padding:0 22px;height:62px;flex-shrink:0;
+  background:var(--panel);border-bottom:1px solid var(--border);position:relative;z-index:20;
+}
+.topbar-left{display:flex;align-items:center;gap:12px;min-width:0;}
+.topbar-logo{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--purple));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0;}
+.topbar-title{font-size:14.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.topbar-title small{display:block;font-size:11px;color:var(--text-faint);font-weight:500;}
+.topbar-right{display:flex;align-items:center;gap:16px;}
+.timer-box{
+  display:flex;align-items:center;gap:9px;background:var(--panel2);border:1px solid var(--border);
+  border-radius:10px;padding:8px 16px;font-weight:700;font-size:16px;font-variant-numeric:tabular-nums;
+}
+.attempted-box{
+  background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 16px;
+  font-size:13.5px;font-weight:700;color:var(--text-dim);white-space:nowrap;
+}
+.attempted-box span{color:var(--accent);font-weight:800;}
+.attempted-box #totalText{color:var(--text);}
+.timer-box.warn{border-color:var(--red-dim);color:var(--red);animation:pulse 1.1s infinite;}
+.timer-ic{font-size:15px;}
+.submit-btn{
+  background:linear-gradient(135deg,var(--green-dim),var(--green));color:#04241c;font-weight:700;font-size:13.5px;
+  padding:10px 20px;border-radius:9px;transition:var(--transition);
+}
+.submit-btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(45,212,167,.3);}
+.progress-top{height:3px;width:100%;background:var(--border);flex-shrink:0;}
+.progress-top-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--purple));transition:width .35s ease;}
+
+.test-body{display:flex;flex:1;overflow:hidden;}
+.question-area{flex:1;display:flex;flex-direction:column;overflow-y:auto;padding:34px 44px 110px;}
+.q-meta-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.q-counter{font-size:13px;color:var(--text-faint);font-weight:600;letter-spacing:.3px;}
+.q-counter b{color:var(--accent);}
+.mark-btn{
+  display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--text-dim);
+  border:1px solid var(--border);padding:7px 14px;border-radius:20px;transition:var(--transition);
+}
+.mark-btn:hover{border-color:var(--purple);color:var(--purple);}
+.mark-btn.active{background:rgba(167,139,250,.14);border-color:var(--purple);color:var(--purple);}
+.q-card{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:30px 32px;
+  animation:fadeIn .3s ease; max-width:760px;
+}
+.q-text{font-size:17.5px;line-height:1.65;font-weight:600;color:#f3f6fc;margin-bottom:26px;}
+.q-tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.6px;color:var(--accent);background:rgba(79,140,255,.1);padding:3px 9px;border-radius:6px;margin-bottom:14px;text-transform:uppercase;}
+.options{display:flex;flex-direction:column;gap:12px;}
+.option{
+  display:flex;align-items:flex-start;gap:14px;padding:15px 18px;border:1.5px solid var(--border);
+  border-radius:11px;cursor:pointer;transition:var(--transition);background:var(--bg2);
+}
+.option:hover{border-color:var(--border-light);background:var(--panel2);transform:translateX(2px);}
+.option.selected{border-color:var(--accent);background:rgba(79,140,255,.1);box-shadow:0 0 0 1px var(--accent) inset;}
+.opt-radio{
+  width:22px;height:22px;border-radius:50%;border:2px solid var(--border-light);flex-shrink:0;margin-top:1px;
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;transition:var(--transition);color:transparent;
+}
+.option.selected .opt-radio{border-color:var(--accent);background:var(--accent);color:#fff;}
+.opt-text{font-size:14.8px;line-height:1.55;color:var(--text);padding-top:1px;}
+.review-mode .option{cursor:default;}
+.review-mode .option.correct-ans{border-color:var(--green);background:rgba(45,212,167,.1);}
+.review-mode .option.wrong-ans{border-color:var(--red);background:rgba(255,93,122,.1);}
+.review-mode .option.correct-ans .opt-radio{border-color:var(--green);background:var(--green);}
+.review-mode .option.wrong-ans .opt-radio{border-color:var(--red);background:var(--red);}
+.explanation-box{
+  margin-top:22px;padding:16px 18px;background:rgba(79,140,255,.06);border-left:3px solid var(--accent);
+  border-radius:8px;font-size:13.5px;line-height:1.65;color:var(--text-dim);animation:slideDown .35s ease;
+}
+.explanation-box b{color:var(--accent);display:block;margin-bottom:6px;font-size:12px;letter-spacing:.4px;text-transform:uppercase;}
+
+.nav-footer{
+  position:sticky;bottom:0;display:flex;align-items:center;justify-content:flex-start;
+  padding:16px 44px;background:linear-gradient(180deg,transparent,var(--bg) 30%);margin-top:auto;gap:18px;flex-wrap:wrap;
+}
+.nav-footer-center{display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:center;}
+.nav-btn{
+  padding:12px 24px;border-radius:10px;font-weight:700;font-size:13.5px;background:var(--panel2);
+  border:1px solid var(--border);color:var(--text);transition:var(--transition);display:flex;align-items:center;gap:8px;
+}
+.nav-btn:hover:not(:disabled){border-color:var(--accent-dim);transform:translateY(-1px);}
+.nav-btn:disabled{opacity:.35;cursor:not-allowed;}
+.nav-btn.next-primary{background:linear-gradient(135deg,var(--accent-dim),var(--accent));border:none;}
+.clear-btn-mini{font-size:12.5px;color:var(--text-faint);text-decoration:underline;}
+
+/* SIDEBAR */
+.sidebar{
+  width:300px;flex-shrink:0;background:var(--panel);border-left:1px solid var(--border);
+  display:flex;flex-direction:column;padding:20px;overflow-y:auto;
+}
+.sidebar-progress{margin-bottom:18px;}
+.sidebar-progress-label{display:flex;justify-content:space-between;font-size:11.5px;color:var(--text-faint);margin-bottom:6px;}
+.sidebar-bar{height:6px;border-radius:6px;background:var(--border);overflow:hidden;}
+.sidebar-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--purple));transition:width .35s ease;}
+.legend{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;font-size:11.5px;color:var(--text-dim);}
+.legend-item{display:flex;align-items:center;gap:7px;}
+.legend-dot{width:11px;height:11px;border-radius:4px;flex-shrink:0;}
+.dot-answered{background:var(--green);}
+.dot-notanswered{background:var(--red-dim);border:1.5px solid var(--red);}
+.dot-notvisited{background:transparent;border:1.5px solid var(--border-light);}
+.dot-marked{background:var(--purple);}
+.dot-current{background:var(--accent);}
+.palette-title{font-size:12px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;font-weight:700;}
+.palette-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-bottom:20px;
+}
+.pal-item{
+  aspect-ratio:1;border-radius:9px;display:flex;align-items:center;justify-content:center;
+  font-size:12.5px;font-weight:700;border:1.5px solid var(--border-light);background:transparent;color:var(--text-dim);
+  transition:var(--transition);position:relative;
+}
+.pal-item:hover{transform:scale(1.08);}
+.pal-item.answered{background:var(--green-dim);border-color:var(--green);color:#fff;}
+.pal-item.notanswered{background:rgba(255,93,122,.15);border-color:var(--red);color:var(--red);}
+.pal-item.marked{background:var(--purple);border-color:var(--purple);color:#1a0f2e;box-shadow:0 0 0 1px var(--purple) inset;}
+.pal-item.marked.answered{background:var(--purple);border-color:var(--purple);color:#1a0f2e;}
+.pal-item.marked.notanswered{background:var(--purple);border-color:var(--purple);color:#1a0f2e;}
+.pal-item.marked::after{
+  content:'\2605';position:absolute;top:-6px;right:-6px;width:15px;height:15px;border-radius:50%;
+  background:var(--panel);color:var(--purple);font-size:9px;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 1.5px var(--purple);
+}
+.pal-item.current{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-glow);transform:scale(1.05);}
+.sidebar-submit{margin-top:auto;}
+.sidebar-stats{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;font-size:12.5px;}
+.sidebar-stat-row{display:flex;justify-content:space-between;color:var(--text-dim);}
+.sidebar-stat-row b{color:#fff;}
+
+/* MODAL */
+.modal-overlay{
+  display:none;position:fixed;inset:0;background:rgba(5,8,15,.78);backdrop-filter:blur(4px);
+  align-items:center;justify-content:center;z-index:100;animation:fadeIn .25s ease;
+}
+.modal-overlay.active{display:flex;}
+.modal-box{
+  background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:32px;max-width:420px;
+  width:90%;box-shadow:var(--shadow);animation:pop .3s ease;
+}
+.modal-box h3{font-size:18px;margin-bottom:10px;}
+.modal-box p{font-size:13.5px;color:var(--text-dim);line-height:1.6;margin-bottom:24px;}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;}
+
+/* ============ RESULT SCREEN ============ */
+#resultScreen{padding:40px 24px 80px;display:flex;justify-content:center;}
+.result-wrap{width:100%;max-width:920px;}
+.result-header{text-align:center;margin-bottom:30px;}
+.badge{
+  display:inline-flex;align-items:center;gap:10px;padding:10px 26px;border-radius:30px;font-weight:800;
+  font-size:14px;letter-spacing:.5px;margin-bottom:18px;animation:pop .5s ease;
+}
+.badge.pass{background:rgba(45,212,167,.12);color:var(--green);border:1.5px solid var(--green-dim);}
+.badge.fail{background:rgba(255,93,122,.12);color:var(--red);border:1.5px solid var(--red-dim);}
+.result-header h1{font-size:30px;font-weight:800;margin-bottom:8px;}
+.result-header p{color:var(--text-dim);font-size:14px;}
+.score-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin:32px 0;}
+.score-card{
+  background:linear-gradient(160deg,var(--panel),var(--bg2));border:1px solid var(--border);border-radius:14px;
+  padding:20px 14px;text-align:center;animation:pop .45s ease;
+}
+.score-card .num{font-size:25px;font-weight:800;color:#fff;}
+.score-card.green .num{color:var(--green);}
+.score-card.red .num{color:var(--red);}
+.score-card.amber .num{color:var(--amber);}
+.score-card.accent .num{color:var(--accent);}
+.score-card .lbl{font-size:11px;color:var(--text-faint);margin-top:5px;text-transform:uppercase;letter-spacing:.4px;}
+.result-actions{display:flex;gap:14px;justify-content:center;margin-bottom:40px;}
+.review-section h2{font-size:19px;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.review-filters{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.filter-chip{
+  padding:8px 16px;border-radius:20px;font-size:12.5px;font-weight:600;border:1px solid var(--border);
+  color:var(--text-dim);transition:var(--transition);
+}
+.filter-chip.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.filter-chip:hover:not(.active){border-color:var(--border-light);}
+.review-card{
+  background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:24px 26px;margin-bottom:16px;
+  animation:fadeIn .3s ease;
+}
+.review-card-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;gap:12px;}
+.review-status{
+  font-size:11px;font-weight:800;padding:4px 11px;border-radius:7px;letter-spacing:.4px;text-transform:uppercase;flex-shrink:0;
+}
+.review-status.correct{background:rgba(45,212,167,.15);color:var(--green);}
+.review-status.wrong{background:rgba(255,93,122,.15);color:var(--red);}
+.review-status.skip{background:rgba(139,151,179,.15);color:var(--text-faint);}
+.mini-options{display:flex;flex-direction:column;gap:8px;margin-top:14px;}
+.mini-opt{padding:10px 14px;border-radius:8px;font-size:13px;border:1px solid var(--border);background:var(--bg2);display:flex;gap:10px;}
+.mini-opt.correct-ans{border-color:var(--green);background:rgba(45,212,167,.08);color:var(--green);}
+.mini-opt.wrong-ans{border-color:var(--red);background:rgba(255,93,122,.08);color:var(--red);}
+.mini-opt .tag{font-weight:800;font-size:10.5px;flex-shrink:0;}
+
+@media (max-width:900px){
+  .test-body{flex-direction:column;}
+  .sidebar{
+    width:100%;border-left:none;border-top:1px solid var(--border);max-height:38vh;
+    order:2;
+  }
+  .question-area{padding:22px 18px 100px;order:1;}
+  .info-grid{grid-template-columns:repeat(2,1fr);}
+  .score-grid{grid-template-columns:repeat(2,1fr);}
+  .start-card{padding:28px 22px;}
+  .nav-footer{padding:14px 18px;flex-direction:column;align-items:stretch;}
+  .nav-footer-center{order:2;justify-content:space-between;width:100%;flex-wrap:wrap;}
+  .nav-footer #prevBtn{width:100%;justify-content:center;order:1;}
+  .topbar{flex-wrap:wrap;height:auto;padding:10px 14px;gap:8px;}
+  .topbar-right{flex-wrap:wrap;gap:8px;width:100%;justify-content:space-between;}
+  .attempted-box,.timer-box{font-size:12.5px;padding:7px 12px;}
+  .submit-btn{padding:8px 14px;font-size:12.5px;}
+  .q-card{padding:22px 18px;}
+  .sidebar{display:none;max-height:none;height:100%;position:fixed;top:0;right:0;bottom:0;width:84%;z-index:50;box-shadow:-6px 0 24px rgba(0,0,0,.35);}
+  .sidebar.open{display:flex;}
+  .sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(5,8,15,.6);z-index:40;}
+  .sidebar-backdrop.open{display:block;}
+  .palette-toggle-btn{display:inline-flex;}
+  .sidebar-close-btn{display:flex;}
+}
+@media (min-width:901px){
+  .palette-toggle-btn{display:none;}
+  .sidebar-close-btn{display:none;}
+}
+</style>
+</head>
+<body>
+<!-- ============ TEST SCREEN (auto-launches immediately) ============ -->
+<div id="testScreen" class="screen active">
+  <div class="progress-top"><div class="progress-top-fill" id="progressTopFill"></div></div>
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-logo">R2</div>
+      <div class="topbar-title">NISM Series V-A Revision Day 2
+        <small>Mutual Fund Distributors Certification</small>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <button class="nav-btn palette-toggle-btn" id="paletteToggleBtn" style="display:none;padding:7px 12px;font-size:12.5px;">📋 Palette</button>
+      <div class="attempted-box" id="attemptedBox"><span id="attemptedText">0</span> / <span id="totalText">50</span> Attempted</div>
+      <div class="timer-box" id="timerBox"><span class="timer-ic">⏱️</span><span id="timerText">30:00</span></div>
+      <button class="submit-btn" id="submitBtnTop">Submit Test</button>
+    </div>
+  </div>
+
+  <div class="test-body">
+    <div class="question-area" id="questionArea">
+      <!-- injected by JS -->
+    </div>
+
+    <div class="sidebar" id="sidebarPanel">
+      <button class="sidebar-close-btn" id="sidebarCloseBtn" style="display:none;margin-left:auto;margin-bottom:10px;background:none;border:none;color:var(--text-dim);font-size:20px;cursor:pointer;">✕</button>
+      <div class="sidebar-progress">
+        <div class="sidebar-progress-label"><span>Progress</span><span id="sidebarProgressPct">0%</span></div>
+        <div class="sidebar-bar"><div class="sidebar-bar-fill" id="sidebarBarFill"></div></div>
+      </div>
+      <div class="sidebar-stats">
+        <div class="sidebar-stat-row"><span>Answered</span><b id="statAnswered">0</b></div>
+        <div class="sidebar-stat-row"><span>Marked for Review</span><b id="statMarked">0</b></div>
+        <div class="sidebar-stat-row"><span>Not Visited</span><b id="statNotVisited">100</b></div>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><span class="legend-dot dot-answered"></span>Answered</div>
+        <div class="legend-item"><span class="legend-dot dot-notanswered"></span>Not Answered</div>
+        <div class="legend-item"><span class="legend-dot dot-notvisited"></span>Not Visited</div>
+        <div class="legend-item"><span class="legend-dot dot-marked"></span>Marked</div>
+      </div>
+      <div class="palette-title">Question Palette</div>
+      <div class="palette-grid" id="paletteGrid"></div>
+    </div>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+  </div>
+
+  <div class="nav-footer">
+    <button class="nav-btn" id="prevBtn">← Previous</button>
+    <div class="nav-footer-center">
+      <button class="nav-btn" id="clearResponseBtn">Clear Response</button>
+      <button class="nav-btn mark-btn" id="markBtn"><span>☆</span> Mark for Review</button>
+      <button class="nav-btn next-primary" id="nextBtn">Save &amp; Next</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ RESULT SCREEN ============ -->
+<div id="resultScreen" class="screen">
+  <div class="result-wrap">
+    <div class="result-header">
+      <div class="badge" id="resultBadge">PASS</div>
+      <h1>Test Completed!</h1>
+      <p id="resultSubtext">Here's a detailed breakdown of your performance.</p>
+    </div>
+
+    <div class="score-grid">
+      <div class="score-card accent"><div class="num" id="rScore">0</div><div class="lbl">Score</div></div>
+      <div class="score-card green"><div class="num" id="rCorrect">0</div><div class="lbl">Correct</div></div>
+      <div class="score-card red"><div class="num" id="rWrong">0</div><div class="lbl">Wrong</div></div>
+      <div class="score-card amber"><div class="num" id="rSkipped">0</div><div class="lbl">Unattempted</div></div>
+      <div class="score-card"><div class="num" id="rAccuracy">0%</div><div class="lbl">Accuracy</div></div>
+    </div>
+    <div class="score-grid" style="grid-template-columns:repeat(2,1fr);margin-top:-6px;">
+      <div class="score-card"><div class="num" id="rTimeTaken">00:00</div><div class="lbl">Time Taken</div></div>
+      <div class="score-card"><div class="num" id="rTotalQ">100</div><div class="lbl">Total Questions</div></div>
+    </div>
+
+    <div class="result-actions">
+      <button class="btn btn-primary" id="reviewBtn">📋 View Detailed Review</button>
+      <button class="btn btn-ghost" id="retakeBtn">↻ Retake Test</button>
+    </div>
+
+    <div class="review-section" id="reviewSection" style="display:none;">
+      <h2>📋 Detailed Review</h2>
+      <div class="review-filters">
+        <button class="filter-chip active" data-filter="all">All Questions</button>
+        <button class="filter-chip" data-filter="correct">Correct</button>
+        <button class="filter-chip" data-filter="wrong">Wrong</button>
+        <button class="filter-chip" data-filter="skip">Unattempted</button>
+        <button class="filter-chip" data-filter="marked">Marked</button>
+      </div>
+      <div id="reviewList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL ============ -->
+<div class="modal-overlay" id="submitModal">
+  <div class="modal-box">
+    <h3 id="modalTitle">Submit Test?</h3>
+    <p id="modalText">You still have unanswered questions. Are you sure you want to submit the test now? This action cannot be undone.</p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="modalCancel">Cancel</button>
+      <button class="btn btn-primary" id="modalConfirm">Yes, Submit</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* === ANALYTICS ENGINE (inline) === */
+/* ============================================================================
+   ANALYTICS ENGINE — Apna Learning Club
+   Shared module used by every mock-test file AND index.html (Performance
+   Dashboard). Centralising this logic means each mock file just calls a
+   couple of functions instead of re-implementing localStorage / topic /
+   timing logic four times.
+   ============================================================================ */
+(function (global) {
+  'use strict';
+
+  const DB_KEY = 'alc_dashboard_v1';
+
+  /* ----------------------------------------------------------------------
+   * 1. TOPIC CLASSIFICATION
+   * The raw QUESTIONS array has no `topic` field, so we infer one from the
+   * question text using a keyword map specific to the NISM-Series-IV
+   * (Interest Rate Derivatives) syllabus. If a question matches no keyword
+   * it falls back to "General Concepts". This is a heuristic — for 100%
+   * accuracy, add an explicit `topic` key to a question object and this
+   * function will respect it automatically.
+   * ------------------------------------------------------------------- */
+  const TOPIC_KEYWORDS = {
+    'Bonds & Yield Curve': ['bond', 'yield', 'coupon', 'duration', 'macaulay', 'zero coupon', 'annuity', 'consol', 'term structure'],
+    'Futures & Hedging': ['futures', 'hedge', 'hedging', 'arbitrage', 'spread', 'contract value', 'calendar spread', 'mibor'],
+    'Options & Strategies': ['option', 'premium', 'strike', 'call ', 'put ', 'strangle', 'straddle', 'itm', 'otm', 'atm', 'payoff', 'pay-off'],
+    'Risk & Margins': ['margin', 'var', 'risk', 'extreme loss', 'exposure', 'position limit', 'quantity freeze'],
+    'Clearing & Settlement': ['clearing', 'settlement', 'depositor', 'custodian', 'clearing corporation', 'clearing member', 'pay-in', 'pay-out'],
+    'Regulatory & Compliance': ['sebi', 'rbi', 'kyc', 'kra', 'regulation', 'code of conduct', 'arbitration', 'cibil', 'nsdl', 'cdsl'],
+    'Market Structure': ['exchange', 'open interest', 'trading member', 'broker', 'market size', 'capital market', 'fpi', 'foreign portfolio']
+  };
+
+  function inferTopic(question) {
+    if (!question) return 'General Concepts';
+    if (question.topic) return question.topic; // explicit override always wins
+    const text = question.question.toLowerCase();
+    for (const [topic, keywords] of Object.entries(TOPIC_KEYWORDS)) {
+      if (keywords.some(k => text.includes(k))) return topic;
+    }
+    return 'General Concepts';
+  }
+
+  /* ----------------------------------------------------------------------
+   * 2. DIFFICULTY CLASSIFICATION
+   * Heuristic based on explanation length + option count (longer / more
+   * nuanced explanations tend to correspond to trickier concepts). Again,
+   * an explicit `difficulty` field on the question object overrides this.
+   * ------------------------------------------------------------------- */
+  function inferDifficulty(question) {
+    if (!question) return 'Medium';
+    if (question.difficulty) return question.difficulty;
+    const len = (question.explanation || '').length;
+    const optCount = (question.options || []).length;
+    if (len < 160 && optCount <= 2) return 'Easy';
+    if (len > 380) return 'Hard';
+    return 'Medium';
+  }
+
+  /* ----------------------------------------------------------------------
+   * 3. DASHBOARD DATA STORE
+   * Shape:
+   * {
+   *   mockResults: [
+   *     { mockId, mockName, completedAt, timeTakenSec,
+   *       score, maxScore, correct, wrong, skipped, accuracy, percentObtained, passed,
+   *       topicStats: { [topic]: {correct, wrong, skipped, total, timeSpentSec, accuracy} },
+   *       perQuestion: [{id, topic, difficulty, timeSpentSec, status}]
+   *     }, ...
+   *   ]
+   * }
+   * ------------------------------------------------------------------- */
+  function getDB() {
+    try {
+      const raw = localStorage.getItem(DB_KEY);
+      return raw ? JSON.parse(raw) : { mockResults: [] };
+    } catch (e) {
+      console.warn('Dashboard DB read failed', e);
+      return { mockResults: [] };
+    }
+  }
+
+  function setDB(db) {
+    try {
+      localStorage.setItem(DB_KEY, JSON.stringify(db));
+    } catch (e) {
+      console.warn('Dashboard DB write failed', e);
+    }
+  }
+
+  /**
+   * Builds topic-wise stats + TPQ (Time-Per-Question) data from a finished
+   * mock attempt and persists it. Replaces any earlier attempt for the same
+   * mockId so the dashboard always reflects the latest attempt per mock,
+   * while still keeping history for score progression if called multiple
+   * times with unique mockIds (mock1..mock4).
+   *
+   * @param {Object} payload
+   *  - mockId: string, e.g. 'mock1'
+   *  - mockName: string, e.g. 'NISM-IV Mock Test 1'
+   *  - questions: the QUESTIONS array used in this mock
+   *  - perQ: array of {q, sel, status, marked} as produced by computeAndRenderResult
+   *  - timeSpent: map of questionId -> milliseconds spent (state.timeSpent)
+   *  - timeTakenSec: total time taken for the whole mock (seconds)
+   *  - score, maxScore, correct, wrong, skipped, accuracy, percentObtained, passed
+   */
+  function saveMockResult(payload) {
+    const { mockId, mockName, questions, perQ, timeSpent } = payload;
+
+    const topicStats = {};
+    const perQuestion = perQ.map(r => {
+      const topic = inferTopic(r.q);
+      const difficulty = inferDifficulty(r.q);
+      const timeSpentSec = Math.round(((timeSpent && timeSpent[r.q.id]) || 0) / 1000);
+
+      if (!topicStats[topic]) {
+        topicStats[topic] = { correct: 0, wrong: 0, skipped: 0, total: 0, timeSpentSec: 0 };
+      }
+      topicStats[topic][r.status === 'skip' ? 'skipped' : r.status === 'correct' ? 'correct' : 'wrong']++;
+      topicStats[topic].total++;
+      topicStats[topic].timeSpentSec += timeSpentSec;
+
+      return { id: r.q.id, topic, difficulty, timeSpentSec, status: r.status };
+    });
+
+    // Derive accuracy per topic now that totals are known
+    Object.values(topicStats).forEach(t => {
+      const attempted = t.correct + t.wrong;
+      t.accuracy = attempted > 0 ? Math.round((t.correct / attempted) * 100) : 0;
+    });
+
+    const result = {
+      mockId,
+      mockName,
+      completedAt: Date.now(),
+      timeTakenSec: payload.timeTakenSec,
+      score: payload.score,
+      maxScore: payload.maxScore,
+      correct: payload.correct,
+      wrong: payload.wrong,
+      skipped: payload.skipped,
+      accuracy: payload.accuracy,
+      percentObtained: payload.percentObtained,
+      passed: payload.passed,
+      topicStats,
+      perQuestion
+    };
+
+    const db = getDB();
+    db.mockResults = db.mockResults.filter(r => r.mockId !== mockId); // keep only latest attempt per mock
+    db.mockResults.push(result);
+    setDB(db);
+    return result;
+  }
+
+  /**
+   * Time-Per-Question (TPQ) calculator. Given a finished mock result (or
+   * the whole DB), returns the average seconds spent per question, overall
+   * and per topic — used by the dashboard bar chart.
+   */
+  function computeTPQ(mockResult) {
+    const total = mockResult.perQuestion.length || 1;
+    const totalTimeSec = mockResult.perQuestion.reduce((s, q) => s + q.timeSpentSec, 0);
+    const overallTPQ = Math.round((totalTimeSec / total) * 10) / 10;
+
+    const byTopic = {};
+    Object.entries(mockResult.topicStats).forEach(([topic, stats]) => {
+      byTopic[topic] = Math.round((stats.timeSpentSec / (stats.total || 1)) * 10) / 10;
+    });
+
+    return { overallTPQ, byTopic };
+  }
+
+  function clearDashboardData() {
+    try { localStorage.removeItem(DB_KEY); } catch (e) { /* ignore */ }
+  }
+
+  function formatSeconds(totalSec) {
+    const m = Math.floor(totalSec / 60).toString().padStart(2, '0');
+    const s = Math.floor(totalSec % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+  }
+
+  // Expose a small public API on window.AnalyticsEngine
+  global.AnalyticsEngine = {
+    inferTopic,
+    inferDifficulty,
+    saveMockResult,
+    computeTPQ,
+    getDashboardData: getDB,
+    clearDashboardData,
+    formatSeconds
+  };
+})(window);
+
+</script>
+<script>
+const QUESTIONS = 
+[{"question": "When a mutual fund distributor empanels with an AMC, he/she has to sign a declaration for ______.", "options": ["Ensuring that all employees who are selling mutual funds will have more than on ARN code", "Guarantee of adding a minimum of 25 investors every month", "Commitment to abide by statutory codes, guidelines and circulars", "Declaring the rebates given back to the investors"], "correctIndex": 2, "explanation": "As per the procedure for getting empaneled as a mutual fund distributor with AMC, one of the requirement is : The applicant needs to sign a declaration, which provides for the following - Commitment to abide by instructions given, as also statutory codes, guidelines and circulars.", "id": 1}, {"question": "Calculate the Average holding period if the portfolio turnover ratio is 25 percent.", "options": ["Depends on regulatory approval", "4 Years", "Cannot be determined from the given data", "Both of the above"], "correctIndex": 1, "explanation": "Average Holding Period = 12 (months) / Portfolio Turnover Ratio Here the portfolio turnover ratio is 25 percent i.e. 25/100 = 0.25 Average Holding Period = 12 / 0.25 = 48 months = 4 Years", "id": 2}, {"question": "Identify the FALSE statement/s with respect to benchmarks for mutual fund schemes A. A Multi-Cap fund can have Nifty 500 index as its benchmark B. A Multi-Cap fund can have BSE Sensex as its benchmark", "options": ["Only B is false", "All of the above", "Both of the above", "Applicable only to institutional clients"], "correctIndex": 0, "explanation": "A Multi-Cap fund invests in Large Cap, Mid Cap and Small Cap stocks as per proportions stipuated by SEBI. The Nifty500 index represents top 100 large cap companies, top 150 Mid-cap companies and top 150 small cap companies. Therefore, it can be a good benchmark for a Multi-Cap fund. The BSE Sesex has 30 large cap stocks from various sectors and it can be good benchmark for a large cap fund and not for a multi cap fund.", "id": 3}, {"question": "Which of the following is true for a monthly income distribution cum capital withdrawal plan (IDCW) of a mutual fund scheme?", "options": ["The mutual fund guarantees declaring the IDCW amount", "Only with prior exchange permission", "The mutual fund guarantees declaring the IDCW, however the amount may differ", "The mutual fund cannot guarantee declaring the IDCW amount or frequency"], "correctIndex": 3, "explanation": "The Income distribution cum capital withdrawal (dividend) pay-out option seems attractive for investors wanting a regular income. It should however be kept in mind that even in a mutual fund scheme with a monthly pay-out option, dividend declaration is a function of distributable surplus. If there is no surplus to distribute, dividend cannot be declared. Therefore, the investor is not assured of dividend in the scheme even when there is a monthly dividend option.", "id": 4}, {"question": "Identify the false statement/s with respect to a New Fund Offer (NFO). 1. A Closed-ended mutual fund NFO will have a NFO opening date, a NFO closing date and a scheme Re-opening date 2. A Open-ended mutual fund NFO will have a NFO opening date, a NFO closing date and a scheme Re-opening date", "options": ["Depends on regulatory approval", "Only 1 is false", "Only with prior exchange permission", "Applicable only to institutional clients"], "correctIndex": 1, "explanation": "A Closed-ended mutual fund will not have a Re-opening date. They offer liquidity through its listing on a stock exchange. Investors who which to invest or exit can do it through a stock exchange broker.", "id": 5}, {"question": "Identify the TRUE statement/s : 1. The Beta of a diversified stock index is greater than 1 2. An investment with a beta of 0.8 will move 8 percent when markets move by 10% 3. Beta as a measure of risk is relevant only for equity schemes.", "options": ["Neither of the above", "Both of the above", "Only 2 and 3 are true", "All 1, 2 and 3 are true"], "correctIndex": 2, "explanation": "Beta measures the fluctuation in periodic returns in a scheme, as compared to fluctuation in periodic returns of a diversified stock index (representing the market) over the same period. The diversified stock index, by definition, has a Beta of 1. Companies or schemes, whose beta is more than 1, are seen as riskier than the market. Beta less than 1 is indicative of a company or scheme that is less risky than the market. An investment with a beta of 0.8 will move 8 percent when markets move by 10 percent. This applies to increase as well as fall in values. An investment with a beta of 1.2 will move by 12 percent both on the upside and downside when markets move (up/down) by 10 percent. Beta as a measure of risk is relevant only for equity schemes.", "id": 6}, {"question": "SEBI has regulations pertaining to restrictions on the investment policies of mutual fund schemes for ensuring that _____ .", "options": ["The scheme returns are better than the benchmark returns", "The mutual fund scheme has a minimum diversification as per the requirements", "The mutual scheme can improve their ratings over a period of time", "The scheme returns are better than the Nifty/Sensex"], "correctIndex": 1, "explanation": "The investors have no control, over the investment management of the mutual fund. It is in this context that SEBI has laid down regulations pertaining to investment universe, restrictions and portfolio diversification for investment by mutual fund schemes. Such regulations intend to control the risks taken by the mutual fund managers.", "id": 7}, {"question": "Identify the false statement(s). A) When an investor wants to redeem from a scheme, the distributor must suggest redemption from the scheme with the maximum exit load B) The mutual fund distributors can ignore the impact of exit load at the time of repurchase", "options": ["Only statement A is false", "Both statements A and B are false", "Depends on regulatory approval", "Only statement B is false"], "correctIndex": 1, "explanation": "Both taxes and loads reduce investment returns. Therefore, it is important for the distributor to consider these two aspects during repurchases/redemptions. This means that when there is a need to withdraw money from a scheme, the distributor must assess the implications of capital gains tax and exit loads. When an investor wants to redeem from a scheme, the distributor must suggest redemption from the scheme with the minimum exit load.", "id": 8}, {"question": "In which of the following cases can Goods and Service Tax (GST) be charged to the mutual fund scheme over and above the Total Expense Ratio of the scheme ?", "options": ["GST applicable on AMC fees only can be charged to the scheme over and above the Total Expense Ratio", "GST applicable on any fees must be within the Total Expense Ratio", "GST applicable on AMC fees as well as distributor commission can be charged to the scheme over and above the Total Expense Ratio", "GST applicable on distributor commission only can be charged to the scheme over and above the Total Expense Ratio"], "correctIndex": 0, "explanation": "AMC(s) can charge GST, as per applicable Taxation Laws, to the schemes within the limits prescribed under SEBI (Mutual Fund) Regulations. - GST on fees paid on investment management and advisory fees shall be charged to the scheme in addition to the overall limits specified as per the Total Expense Ratio (TER) provisions. - The commission payable to the distributors of mutual funds may be subject to GST, as applicable in case of the ARN holder. Such tax cannot be charged to the scheme.", "id": 9}, {"question": "Risk Profilers are used to ascertain the risk appetite of an investor. State whether True or False?", "options": ["True", "False"], "correctIndex": 0, "explanation": "Risk Profilers usually revolve around investors answering a few questions, based on which the risk appetite score gets generated. The risk profilers try to ascertain the risk appetite of the investor so that one does not sell mutual fund schemes that carry a higher risk than what the investor can handle.", "id": 10}, {"question": "Which of the following mutual fund categories cannot be launched if a Value Fund is already launched by AMC?", "options": ["Contra Fund", "Depends on regulatory approval", "Only with prior exchange permission", "Both of the above"], "correctIndex": 0, "explanation": "As per SEBI’s Categorization and Rationalization of Mutual Fund Schemes (2017), an Asset Management Company (AMC) can launch either a Value Fund or a Contra Fund, but not both. Value Fund follows a value investing strategy, focusing on undervalued stocks with long-term growth potential. Contra Fund follows a contrarian investing strategy, investing in stocks that are currently out of favor but are expected to recover. Since both strategies overlap, SEBI does not allow an AMC to launch both. Why Other Options Are Incorrect? Dividend Yield Fund (Option 1) → Allowed, as it focuses on high-dividend-paying stocks. Large Cap Fund (Option 2) → Allowed, as it primarily invests in top 100 large-cap stocks. Large & Midcap Fund (Option 3) → Allowed, as it invests in both large-cap and mid-cap stocks. Thus, the correct answer is \"Contra Fund.\"", "id": 11}, {"question": "When a Mutual fund scheme makes profits or losses, these profits and losses belong to _______ .", "options": ["The Investor", "Neither of the above", "Only with prior exchange permission", "Cannot be determined from the given data"], "correctIndex": 0, "explanation": "The investor enjoys the profits as well as bears the losses of his investments in Mutual Funds.", "id": 12}, {"question": "Identify the FALSE statement : A. When the mutual fund distributor understands the needs of his investor, one can ignore the investment objective of the mutual fund schemes B. The best strategy in selecting a mutual fund scheme is based on its past performance", "options": ["Only with prior exchange permission", "Both A and B are false", "Neither of the above", "Depends on regulatory approval"], "correctIndex": 1, "explanation": "Statement A: False - A mutual fund distributor must match the investor's needs with the investment objective of the mutual fund scheme. Ignoring the scheme's objective can lead to a mismatch, resulting in unsuitable investments and potential losses. Statement B: False - While past performance can provide insights, it is not a guarantee of future returns. A fund's selection should consider current market conditions, fund management quality, expense ratio, and investment strategy rather than solely relying on historical performance. Conclusion: Both statements A and B are incorrect, so the correct answer is Option 3 - Both A and B are false.", "id": 13}, {"question": "Identify the true statement(s) - A) A systematic transaction cannot be cancelled B) Assuming a mutual fund scheme is profitable then the investors can keep encashing some profits through a Systematic Withdrawal Plan", "options": ["Cannot be determined from the given data", "Only B is true", "Applicable only to institutional clients", "Only with prior exchange permission"], "correctIndex": 1, "explanation": "1. A systematic transaction (like SIP etc) can be stopped. 2. Assuming the scheme is profitable, the re-purchase ensures that some of the profits are being regularly encashed by the investor.", "id": 14}, {"question": "In which of these options will the unit balance increase in the mutual fund investors folio without any transaction being done by the investor?", "options": ["Only with prior exchange permission", "Depends on regulatory approval", "Income Distribution cum Capital Withdrawal Payout option", "Income Distribution cum Capital Withdrawal Re-investment option"], "correctIndex": 3, "explanation": "In the Income Distribution cum Capital Withdrawal Re-investment option, any income or capital withdrawal that is distributed by the mutual fund is automatically reinvested into the investor's account. As a result, the unit balance in the investor's folio increases without the investor having to perform any additional transactions.", "id": 15}, {"question": "Which of these investors CANNOT do CASH investments in mutual funds up to a limit of Rs. 50,000?", "options": ["Investments made by resident Indian investors without PAN", "Investments made by a PIO (Person of Indian Origin)", "Investments made by minors", "Investments made by Sole Proprietorship firm"], "correctIndex": 1, "explanation": "Mutual funds usually do not accept cash. Small investors, who may not be taxpayers and may not have PAN/bank accounts, such as farmers, small traders/businessmen/workers are allowed cash transactions for the purchase of units in mutual funds to the extent of Rs. 50,000/-per investor, per mutual fund, per financial year. This facility is available only for resident individuals, sole proprietorships and minors investing through their guardians. PIO is not among the eligible investors.", "id": 16}, {"question": "Identify the action which needs to be taken as per the AMFI Code of Ethics for Mutual Funds when a mutual fund enters into a transaction for purchase or sale of securities with any of its associates?", "options": ["AMC should take the approval of the trustees before undertaking the transactions", "AMC should inform the mutual fund unitholders of the intent to undertake the transaction before it is done", "AMC should justify the fairness of the transaction to the Board of Trustees", "AMC should make certain that the transactions happens at a price that is better than the closing market price"], "correctIndex": 2, "explanation": "As per the AMFI Code of Ethics for Mutual Funds : Members shall in respect of transactions of purchase and sale of securities entered into with any of their associates or any significant unitholder : 1. Submit to the Board of Trustees details of such transactions, justifying its fairness to the scheme 2. Disclose to the unitholders details of the transaction in brief through annual and half yearly reports", "id": 17}, {"question": "Rising Sun Mutual Fund holds shares of AAA Ltd. in its portfolio. When the NAV of the scheme is calculated on 10th April, then each share of AAA Ltd. will be valued at ______.", "options": ["Opening price of AAA Ltd. on 10th April at BSE / NSE", "Average traded price of AAA Ltd. on 10th April across all stock exchanges", "Average traded price of AAA Ltd. on 10th April at BSE / NSE", "Closing price of AAA Ltd. on 10th April at BSE / NSE"], "correctIndex": 3, "explanation": "As per the SEBI rules of valuation for equity shares : The securities shall be valued at the last quoted closing price on the stock exchange. (When the securities are traded on more than one recognised stock exchange, the securities shall be valued at the last quoted closing price on the stock exchange where the security is principally traded. It would be left to the asset management company to select the appropriate stock exchange)", "id": 18}, {"question": "In which of the following case can a mutual fund charge the additional expense of 0.30 % of daily net assets of the scheme?", "options": ["When the new inflows from beyond top 25 cities is at least 30% of the gross new inflows", "When the new inflows from beyond top 15 cities is at least 20% of the gross new inflows", "When the new inflows from beyond top 30 cities is at least 10% of the gross new inflows", "When the new inflows from beyond top 30 cities is at least i) 30% of the gross new inflows in the scheme OR ii) 15% of the average AUM (Year To Date) of the scheme, which ever is higher"], "correctIndex": 3, "explanation": "In addition to the regular limits, the following expenses may be charged to the scheme: i. Brokerage and transaction cost which are incurred for the purpose of execution of trade up to 0.12 percent of trade value in case of cash market transactions and 0.05 percent of trade value in case of derivatives transactions. ii. If the new inflows from beyond top 30 cities are at least a) 30 percent of gross new inflows in the scheme or b) 15 percent of the average assets under management (year to date) of the scheme, whichever is higher, funds can charge the additional expense of up to 0.30 percent of the daily net assets of the scheme.", "id": 19}, {"question": "The return from a fund is 9 %, Standard Deviation is 0.75 and the Beta is 1.4. The risk free rate of return is 7%. What is the DENOMINATOR in the calculation of the Sharpe Ratio?", "options": ["Cannot be determined from the given data", "0.75", "Neither of the above", "All of the above"], "correctIndex": 1, "explanation": "In a fraction - Eg. 21 / 38 , the number above the line (21) is called the Numerator and the number below the line (the bottom number 38) is called the Denominator The formula for Sharpe Ratio is : ( Return Earned - Risk free Return ) / Standard Deviation Here the Numerator is 'Return Earned - Risk free Return' and the Denominator is 'Standard Deviation' So the Denominator is the Standard Deviation which is given as 0.75", "id": 20}, {"question": "Different investors of the similar age group should always have the same asset allocation in their investment portfolios - State whether True or False?", "options": ["True", "False"], "correctIndex": 1, "explanation": "Different investors have different financial goals at different age levels. In fact, investors in the same age group may also have different goals. Their financial situations may also differ. At the same time, many of the financial goals may pertain to the whole families and not just an individual. In such cases, it may not be prudent to categorize investors on the basis of age alone.", "id": 21}, {"question": "Which of these entities can invest in Indian mutual funds? A) Foreign portfolio investor B) Insurance company C) Salaried individual", "options": ["Both of the above", "All A, B and C", "Depends on regulatory approval", "All of the above"], "correctIndex": 1, "explanation": "All of the above can invest in Indian mutual funds.", "id": 22}, {"question": "An investor has filled up an application form for subscribing to a mutual fund scheme. However the address mentioned in the application form is different from the address provided at the time of KYC compliance. Which address will be included in the mutual funds records once the KYC compliance is validated?", "options": ["The address provided in the application form", "Investor can indicate which address is correct", "The address provided in the application form will be used for all communications", "The address provided for KYC compliance"], "correctIndex": 3, "explanation": "Once the first holder’s PAN is validated for KYC, the address provided in the KYC form will override the information provided in the application form.", "id": 23}, {"question": "Identify the False statement/s. A. Valuation gains are ignored but valuation losses need to be adjusted against the profits while calculating distributable surplus B. The Mark-to-market gains form a part of the distributable reserves in case of mutual fund Income Distribution Cum Capital Withdrawal plan", "options": ["Cannot be determined from the given data", "Depends on regulatory approval", "Only B is false", "All of the above"], "correctIndex": 2, "explanation": "SEBI guidelines stipulate dividends can be paid out of distributable reserves. Mark-to-market gains are on paper - they are not realised. They will be realized when those investments are sold. So these cannot be included in distributable reserves Also Valuation gains are ignored. But valuation losses need to be adjusted against the profits. This conservative approach to calculating distributable reserves ensures that dividend is paid out of real and realized profits, after providing for all possible losses.", "id": 24}, {"question": "Who manages the contributions from investors and takes investment decisions in a mutual fund company?", "options": ["Neither of the above", "Applicable only to institutional clients", "The Asset Management Company (AMC)", "All of the above"], "correctIndex": 2, "explanation": "Fund management is the most critical function in an Asset Management Company. The main function of this team is to invest the investors’ money in line with the stated objective of the scheme and to manage the same effectively.", "id": 25}, {"question": "________ ensures that the information contained in the scheme related documents (SID and SAI) are fully complied with.", "options": ["Cannot be determined from the given data", "The Trustees", "Depends on regulatory approval", "None of the above"], "correctIndex": 1, "explanation": "The trustees shall ensure that all transactions entered into by the AMC are in compliance with the regulations and the scheme’s objectives and intent.", "id": 26}, {"question": "______ is NOT accepted as a photo identity documentation for Micro SIP.", "options": ["Employee ID cards issued by companies registered with the Registrar of Companies", "Credit card", "Debit card with a photo", "Permanent Retirement Account Number (PRAN) card issued to National Pension System (NPS)"], "correctIndex": 1, "explanation": "Credit card is not accepted because it may not be backed up by a bank account.", "id": 27}, {"question": "Mr. Tarun is in his 30's and has a steady job. He is investing most of his savings in bank deposits. Due to low rate of return on bank deposits, he is putting his financial goals at risk. Which behavioral bias is his portfolio suffering from?", "options": ["Cannot be determined from the given data", "Applicable only to institutional clients", "Familiarity bias", "Both of the above"], "correctIndex": 2, "explanation": "The familiarity bias is when investors tend to invest in what they know and are comfortable with. An individual tends to prefer the familiar over the novel, as the popular proverb goes, “A known devil is better than an unknown angel.” This leads an investor to concentrate the investments in what is familiar, which at times prevents one from exploring better opportunities, as well as from a meaningful diversification. As a result, investors are not diversified across multiple sectors and types of investments.", "id": 28}, {"question": "The trustees of a mutual fund is appointed by the ______.", "options": ["Depends on regulatory approval", "None of the above", "Asset Management Company (AMC)", "Sponsors"], "correctIndex": 3, "explanation": "The application to SEBI for registration of a mutual fund is made by the Sponsor(s). The Sponsors then appoints the Trustees. The operations of the mutual fund trust are governed by a Trust Deed, which is executed between the sponsors and the trustees.", "id": 29}, {"question": "The investment objective of a/an _______________ is to seek capital appreciation.", "options": ["Growth Fund", "Only with prior exchange permission", "Depends on regulatory approval", "Applicable only to institutional clients"], "correctIndex": 0, "explanation": "A Growth fund is a mutual fund which invests in the stocks and aims at achieving capital appreciation through the investment of funds in growth stocks.", "id": 30}, {"question": "These debt mutual funds have been arranged from lowest risk to highest risk. Identify the risk which we are discussing : 1. Liquid Funds 2. Money market funds 3. Medium term bond funds", "options": ["All of the above", "Interest Rate Risk", "Applicable only to institutional clients", "Cannot be determined from the given data"], "correctIndex": 1, "explanation": "Interest rate risk is the risk that an investment's value will change as a result of a change in interest rates. The interest rate risk varies for bonds with different maturities. Those with longer maturity would witness higher price fluctuations in comparison to those with shorter maturities. Similarly short term debt funds will have lower interest rate risk when compared to longer term debt funds. In the above question, Liquid funds have the shortest duration and so will have less adverse effect of interest rate risk when compared to Money market funds and Medium term bond funds.", "id": 31}, {"question": "Which of these funds will generally have a higher fund management cost?", "options": ["Both of the above", "All of the above", "Active Equity Fund", "Cannot be determined from the given data"], "correctIndex": 2, "explanation": "In Active Equity Funds the fund manager does a lot of buying / selling which result in higher transaction costs. Also a lot of research work goes into it. So the cost of fund management are higher. Equity Index Funds or Passive Equity funds invest in a portfolio that mimics a market index. There is no selection risk in index funds because the fund manager has no role in creating the portfolio. For this reason, the costs that an index fund is allowed to charge is also lower since there are no research or other fund management expenses.", "id": 32}, {"question": "Ms. Apeksha invests Rs 2 crore in a Gilt scheme at 2 pm with a local cheque. What would be the applicable NAV for allotment of units?", "options": ["Closing NAV of next business day", "Closing NAV of date of application", "Closing NAV of day immediately preceding the date of application", "NAV of the business day on which the funds are available for utilization"], "correctIndex": 3, "explanation": "Irrespective of the time of receipt of application, for all equity oriented funds and debt funds (except liquid funds) in respect of transaction of any amount, the applicable NAV will be NAV of the business day on which the funds are available for utilisation.", "id": 33}, {"question": "_______ is not included in the fundamental attributes of a mutual fund scheme.", "options": ["Liquidity provisions such as listing, repurchase, redemption", "Aggregate fees and expenses charged to the scheme", "Any safety net or guarantee provided", "Exit loads"], "correctIndex": 3, "explanation": "Within the SID, there is an important section on fundamental attributes of a scheme with following parameters : 1. Type of a scheme 2. Investment Objective 3. Terms of Issue Exit loads do not form a part of the fundamental attributes of a mutual fund scheme.", "id": 34}, {"question": "What is the disadvantage of company fixed deposits when compared to bank fixed deposits?", "options": ["Only with prior exchange permission", "Cannot be determined from the given data", "None of the above", "Lower safety"], "correctIndex": 3, "explanation": "Company fixed deposits are considered to risky when compared to bank fixed deposits due to the credit risk. A company is a private entity and may default in payment of interest and principal amount. A bank is much more safer than a private company and so its fixed deposits are more safer to invest.", "id": 35}, {"question": "If a mutual fund enters into a transaction for purchase or sale of securities with any of its associates, then the members of Asset Management Company of the mutual fund have to ________.", "options": ["Inform the mutual fund unitholders of the intent to undertake the transaction before it is done", "Take the approval of the trustees before undertaking the transactions", "Justify the fairness of the transaction to the Board of Trustees", "Make certain that the transactions happens at a price that is better than the closing market price"], "correctIndex": 2, "explanation": "As per the AMFI Code of Ethics for Mutual Funds : Members shall in respect of transactions of purchase and sale of securities entered into with any of their associates or any significant unitholder : 1. Submit to the Board of Trustees details of such transactions, justifying its fairness to the scheme 2. Disclose to the unitholders details of the transaction in brief through annual and half yearly reports", "id": 36}, {"question": "In case one of the joint holders dies, than the units will ________ .", "options": ["Be transferred to nominee/s", "Continue to be held by surviving joint holders", "Cannot be determined from the given data", "Be transferred to the HUF of deceased holder"], "correctIndex": 1, "explanation": "Transmission is the process of transferring units to the person entitled to receive them in the event of the death of the unitholder. In case of joint holding, if the first holder passes away, the second holder is substituted as the first holder.", "id": 37}, {"question": "The minimum number of investors that a mutual fund scheme should have :", "options": ["Applicable only to institutional clients", "Both of the above", "None of the above", "20 investors"], "correctIndex": 3, "explanation": "Every mutual fund scheme/plan should have a minimum of 20 investors and no single investor shall account for more than 25 percent of the corpus of the Scheme/Plan(s).", "id": 38}, {"question": "Usually most investors might have invested across various asset categories. However the problem with such asset allocation is that _______.", "options": ["Such asset allocation is done without defining any objective or without any process", "Such asset allocation increases the portfolio risk", "Such asset allocation leads to payment of additional taxes", "Such asset allocation earns low returns"], "correctIndex": 0, "explanation": "The basic meaning of asset allocation is to allocate an investor’s money across asset categories in order to achieve some objective. In reality, most investors’ portfolios would have the money allocated across various asset categories. However, in many such cases, the same may be done without any process or rationale behind it. Asset Allocation is a process of allocating money across various asset categories in line with a stated objective. The underlined words are very important. First, it is a “process”, which always involves several steps, and those steps should not be ignored or skipped. Second, the whole idea behind asset allocation is to achieve some objective. Whichever approach one selects, one must go through the steps of the process in order to achieve the objective.", "id": 39}, {"question": "An investor purchases through a distributor 5000 units of a mutual fund scheme at a NAV of Rs 25. The current NAV of the scheme is Rs 43. What will be the trail commission for today if the trail commission rate is 1% per annum", "options": ["Rs. 5.8904", "None of the above", "Neither of the above", "All of the above"], "correctIndex": 0, "explanation": "Trail commission is always calculated on the current NAV. The current total value of investments in the above question is Rs. 43 X 5000 units = Rs. 2,15.000 Trail commission for the day = Current value X trail commission rate p.a./365 = 215000 X 1% / 365 days = 2150 / 365 = Rs. 5.8904", "id": 40}, {"question": "What is required for the termination of the services of an Asset Management Company (AMC) ?", "options": ["75 % of the unitholders should approve the termination of the Asset Management Company", "The custodian should approve the termination of the Asset Management Company", "75 % of the mutual funds distributors should approve the termination of the Asset Management Company", "AMFI should approve the termination of the Asset Management Company"], "correctIndex": 0, "explanation": "The appointment of the AMC for the Mutual Fund can be terminated by majority of the Directors of the Trustee Board or by 75 percent of the Unitholders of the Scheme.", "id": 41}, {"question": "The return from a mutual fund scheme is 8.3% and the Standard Deviation is 0.6. The risk-free rate of return is 5%. Calculate the Sharpe ratio.", "options": ["Both of the above", "Applicable only to institutional clients", "All of the above", "5.5"], "correctIndex": 3, "explanation": "The formula for Sharpe Ratio is : ( Rs-Rf ) / Standard Deviation ie. ( Return Earned - Risk free Return ) / Standard Deviation = (8.3 - 5) / 0.6 = 3.3 / 0.6 = 5.5", "id": 42}, {"question": "A fundamental analyst will study the Candle-Stick charts and also the financial statement of a company. State whether True or False?", "options": ["True", "False"], "correctIndex": 1, "explanation": "Fundamental analysis is a study of the business and financial statements of a firm. It does not study the charts like the Candle-Stick charts. Charts are studied by the Technical analysts.", "id": 43}, {"question": "AMFI Code of Ethics states that _______ cannot become a distributor of mutual fund.", "options": ["All of the above", "Empanelled distributors", "Depends on regulatory approval", "Employees of AMC"], "correctIndex": 3, "explanation": "Employees of Asset Management Companies (AMCs) cannot become mutual fund distributors.", "id": 44}, {"question": "The Net Asset Value (NAV) of a segregated portfolio has to be declared on a ______ .", "options": ["Daily basis after the credit event", "Weekly basis (on every Saturday) after the credit event", "NAV need not be declared", "Monthly basis after the credit event"], "correctIndex": 0, "explanation": "To ensure fair treatment to all investors in case of a credit event and to deal with the liquidity risk, in December 2018, SEBI permitted creation of segregated portfolio of debt and money market instruments by mutual funds schemes. “Segregated portfolio” means a portfolio, comprising of debt or money market instrument affected by a credit event, that has been segregated in a mutual fund scheme. The Net Asset Value (NAV) of the segregated portfolio shall be declared on a daily basis.", "id": 45}, {"question": "Where is the performance data for all schemes across the mutual fund industry available?", "options": ["Cannot be determined from the given data", "The Scheme Information Document (SID)", "Key Information Memorandum (KIM)", "AMFI Website"], "correctIndex": 3, "explanation": "Each AMC is required to publish a scheme performance dashboard on its website, and update it on a regular basis. The scheme performance data is also available on the AMFI website AMFI website (www.amfiindia.com) carries the performance data of all the mutual fund schemes.This is an exhaustive resource and one can access the same for various different periods, and fund categories.", "id": 46}, {"question": "How can the fundamental attributes of a mutual fund scheme be changed?", "options": ["The fundamental attributes can be changed with the permission of SEBI and AMFI", "The fundamental attributes can be changed but this should be communicated to all the unit holders who should be provided an option to exit the scheme", "The fundamental attributes can be changed but only with the consent of 100 percent of unit holders", "The fundamental attributes cannot be changed"], "correctIndex": 1, "explanation": "As per the rights and responsibilities of Trustees - The trustees shall not permit a change in the fundamental attributes of the scheme, the trust or fees and expenses or any other change that will affect the interests of the unitholders unless written communication is sent to each unitholder, a notice is given in the newspaper with national circulation and the unitholders are given the option to exit at NAV without paying an exit load.", "id": 47}, {"question": "The ARN is allotted to the mutual fund distributors by ______ .", "options": ["Only with prior exchange permission", "All of the above", "Neither of the above", "AMFI"], "correctIndex": 3, "explanation": "A major role of AMFI involves the registration of mutual fund distributors, by allotting them AMFI Registration Number (ARN), which is mandatory for becoming a mutual fund distributor.", "id": 48}, {"question": "Identify the FALSE statement/s. 1. Arbitrage funds have lower risk as compared to Equity Funds 2. The main objective of an Arbitrage Fund is to provide capital appreciation 3. Arbitrage funds can invest in both Futures/Options(F&O) and cash markets", "options": ["Neither of the above", "None of the above", "Only with prior exchange permission", "Only 2 is false"], "correctIndex": 3, "explanation": "Arbitrage Fund is nn open-ended scheme investing in arbitrage opportunities. Arbitrage funds work on the mispricing of equity shares in the spot and futures market. The fund manager simultaneously buys shares in the cash market and sells it in futures or derivatives markets. The difference in the cost price and the selling price is the return you earn. Their risk level is comparable with that of a pure debt fund. The returns from an Arbitrage fund is comparable to a debt fund. There is no capital appreciation.", "id": 49}, {"question": "How can the empanelment of a mutual fund distributor be terminated?", "options": ["Asset Management Company can terminate the empanelment at any time", "The empanelment gets automatically terminated on the completion of the term of empanelment", "Depends on regulatory approval", "When all the clients of the distributor shift to Direct Plans"], "correctIndex": 0, "explanation": "While empaneling with an AMC, the mutual fund distributor applicant signs a declaration which gives power to the AMC to terminate the empanelment at any time.", "id": 50}, {"question": "Opening of time stamping machine needs to be documented and reported to the Asset Management Company (AMC) - State whether True or False", "options": ["True", "False"], "correctIndex": 1, "explanation": "The points of acceptance for mutual fund transactions have time stamping machines with tamper-proof seal. Opening the machine for repairs or maintenance is permitted only by vendors or nominated persons of the mutual fund. Such opening of the machine has to be properly documented and reported to the Trustees.", "id": 51}, {"question": "According to guidelines given by SEBI, every mutual fund scheme should have a minimum of ____ investors.", "options": ["20", "None of the above", "Neither of the above", "Only with prior exchange permission"], "correctIndex": 0, "explanation": "Every mutual fund scheme/plan should have a minimum of 20 investors and no single investor shall account for more than 25 percent of the corpus of the Scheme/Plan(s).", "id": 52}, {"question": "If a investor has to change his default account, he/she has to do it with _______.", "options": ["Both of the above", "The mutual fund (AMC) directly", "The KYC Registration agency", "Depends on regulatory approval"], "correctIndex": 1, "explanation": "Mutual funds provide investors the facility to register multiple bank accounts to facilitate receiving the redemption, dividends and any other payouts from the fund. An individual investor can register up to five bank accounts. One of the accounts is designated as the default account, and unless otherwise specified all credits are made to this account by the mutual fund. Investors can change the default bank account at any time by instructing the AMC to do so.", "id": 53}, {"question": "Which of these information is not contained in the Scheme Information Document (SID)?", "options": ["Risk factors of the scheme", "Investment objective of the scheme", "None of the above", "Names of securities in the scheme's portfolio"], "correctIndex": 3, "explanation": "The names of securities in the scheme's portfolio is contained in the Fund fact sheet and not in the SID.", "id": 54}, {"question": "The difference between the yield on Gilt and the yield on a non-Government Debt security is called its ______.", "options": ["None of the above", "Applicable only to institutional clients", "Neither of the above", "Credit Spread"], "correctIndex": 3, "explanation": "The yield on Gilt (Govt. securities) is generally the lowest in the market for a given tenor. Since non-Government issuers can default, they tend to offer higher yields for the same tenor. The difference between the yield on Gilt and the yield on a non-Government Debt security is called its credit spread", "id": 55}, {"question": "Indicate which of these funds have the lowest to highest risk sequence? A) Liquid Fund B) Credit Risk Fund C) Corporate Bond Fund", "options": ["Cannot be determined from the given data", "A - C - B", "All of the above", "Only with prior exchange permission"], "correctIndex": 1, "explanation": "Liquid funds are least risky as they invest in high quality debt instruements. Corporate Bond Funds are little more risky as they predominantly invest in AA+ and above rated corporate bonds. Credit Risk Funds are much more risky as they invest in below highest rated corporate bonds. The minimum investment in corporate bonds shall be 65 percent of total assets only in AA (excludes AA+ rated corporate bonds) and below rated corporate bonds.", "id": 56}, {"question": "Which of the following function can an Asset Management Company (AMC) do in-house?", "options": ["Registrar and Transfer Agent", "Depends on regulatory approval", "Cannot be determined from the given data", "Only with prior exchange permission"], "correctIndex": 0, "explanation": "An Asset Management Company (AMC) can perform the function of a Registrar and Transfer Agent (RTA) in-house, provided it has the required infrastructure and regulatory approvals. Registrar and Transfer Agent (RTA): Handles investor record-keeping, processing transactions, and maintaining unit-holder details. Why not the other options? Custodial Services: AMCs are not allowed to offer custodial services in-house. Instead, they must appoint a separate custodian registered with SEBI to ensure independence and compliance. Broking: AMCs are not brokers and cannot provide broking services. They execute trades through registered brokers in the market. Therefore, the only function an AMC can manage in-house is acting as a Registrar and Transfer Agent (Option 3).", "id": 57}, {"question": "Identify the FALSE statement : 1. As per AMFI guidelines, the intermediary has a no right of appeal to AMFI 2. It is not the sole responsibility of the mutual fund distributors for spreading investor awareness", "options": ["Cannot be determined from the given data", "Applicable only to institutional clients", "Only 1 is false", "Only with prior exchange permission"], "correctIndex": 2, "explanation": "One of the role and function of AMFI is : To undertake a nationwide investor awareness programme to promote proper understanding of the concept and working of mutual funds. Thus, mutual fund distributors are not solely responsible for spreading investor awareness. As per the AMFI Guidelines & Norms for Intermediaries (AGNI), the intermediary has a right of appeal to AMFI.", "id": 58}, {"question": "Identify the TRUE statement with respect to ‘Jensen’s Alpha’ of a mutual fund scheme?", "options": ["It is a measure of risk and outperformance is related to returns", "It is a measure of outperformance after adjusting for the risk taken", "It is a measure of simple outperformance, irrespective of the risk taken", "Cannot be determined from the given data"], "correctIndex": 1, "explanation": "Jensen's Alpha is used to determine the abnormal return of a security or portfolio of securities over the theoretical expected return. It is a risk-adjusted performance measure that represents the average return on a portfolio or investment, above or below that predicted by the capital asset pricing model (CAPM), given the portfolio's or investment's beta and the average market return.", "id": 59}, {"question": "Smita is a young investor and her parents advice her to invest in fixed deposits of banks so that these funds can be used for her retirement. If Smita follows her parents advice, what risk does she face?", "options": ["There is a risk of low returns", "There is a high risk of default in her portfolio", "There is no risk as fixed deposits are quiet safe", "She has to select the correct bank which is financially strong"], "correctIndex": 0, "explanation": "Fixed deposits usually give a low rate of return and when adjusted against inflation, the return can sometimes be very low or even negative. This will not help in building her retirement corpus. Smita is a young investor and has plenty of time in her hand. So she should invest in growth stocks / equity mutual funds rather than fixed deposits.", "id": 60}, {"question": "Identify the false statement/s. A. Investments in mutual funds can be made on a repatriable basis by NRIs B. The mutual fund will automatically pay in Dollars when the NRI redeems his investments which were made on a repatriable basis", "options": ["Both of the above", "None of the above", "Applicable only to institutional clients", "Only B is false"], "correctIndex": 3, "explanation": "For Non-resident investors, payment is made by the AMC in Rupees. In case the investment has been made on a repatriable basis, and the investor wishes to transfer the money abroad, the costs associated with converting the rupees into any foreign currency would be to the account of the investor. Proceeds of investments made on a repatriable basis can be credited to an NRE or FCNR account, as required by the investor.", "id": 61}, {"question": "_________ would not be an originator to a special purpose vehicle, in case of securitized asset.", "options": ["Both of the above", "Reserve Bank of India (RBI)", "Non-banking finance company", "Housing finance company"], "correctIndex": 1, "explanation": "A securitization transaction involves sale of receivables by the originator (a commercial bank, non-banking finance company, housing finance company, or a manufacturing/service company) to a Special Purpose Vehicle (SPV), typically set up in the form of a trust. Investors are issued rated Pass Through Certificates (PTCs), the proceeds of which are paid as consideration to the originator. (RBI will not be an originator) In this manner, the originator, by selling his loan receivables to an SPV, receives consideration from investors much before the maturity of the underlying loans.", "id": 62}, {"question": "Who uses the information collected under the Foreign Account Tax Compliance Act (FATCA)?", "options": ["All of the above", "Only with prior exchange permission", "Depends on regulatory approval", "Foreign Government or foreign agencies"], "correctIndex": 0, "explanation": "To comply with the requirements of Foreign Account Tax Compliance Act (FATCA) and Common Reporting Standards (CRS) provisions, financial institutions, including mutual funds, are required to undertake due diligence process to identify foreign reportable accounts and collect such information as required under the said provisions and report the same to the US Internal Revenue Service/any other foreign government or to the Indian Govt / Tax Authorities for onward transmission to the concerned foreign authorities.", "id": 63}, {"question": "Identify the TRUE statements with respect to Transmission of mutual fund units - A) Before the transfer is effected, the mutual fund will insist for an indemnity against future problems for the mutual fund arising out of the transfer B) Before the transfer is effected, the mutual fund will not insist on the death certificate of the deceased unit-holder C) Before the transfer is effected, the mutual fund will insist on the KYC documentation from the nominee", "options": ["None of the above", "All A, B and C are true", "A and C are true", "Both of the above"], "correctIndex": 2, "explanation": "Transmission is the process of transferring units to the person entitled to receive it in the event of the death of the unit holder. In case of transmission, before the transfer is effected, the mutual fund will insist on the KYC documentation from the nominee, death certificate of the deceased unit-holder, and an indemnity against future problems for the mutual fund arising out of the transfer.", "id": 64}, {"question": "An Asset Management Company (AMC) can recover investment management and advisory fees on management of the unclaimed amounts, _________________ .", "options": ["Only on the actual expenses incurred in holding the funds", "No investment management and advisory fees can be charged on unclaimed amounts", "As per the fee applicable on the scheme from which the redemption was made", "At a maximum rate of 0.50 percent per annum"], "correctIndex": 3, "explanation": "AMC is expected to make a continuous effort to remind the investors through letters to claim their uncliamed amounts. AMC can recover investment management and advisory fees on management of these unclaimed amounts, at a maximum rate of 0.50 percent per annum.", "id": 65}, {"question": "Identify the TRUE statement/s. 1. The market liquidity can get impacted due to market related events and company factors 2. There cannot be a price impact on mutual fund units due to liquidity demands due to redemption or portfolio rebalancing", "options": ["Only with prior exchange permission", "Only 1 is true", "Both of the above", "Neither of the above"], "correctIndex": 1, "explanation": "Liquidity Risk is one of the general risk factor involved in Mutual Fund investments. The liquidity of investments made in the Scheme may be restricted by trading volumes, settlement periods and transfer procedures. Although the investment universe constitutes securities that will have high market liquidity, there is a possibility that market liquidity could get impacted on account of company/sector/general market-related events and there could be a price impact on account of portfolio rebalancing and/or liquidity demands on account of redemptions.", "id": 66}, {"question": "A top performing scheme within a category _______ .", "options": ["Usually remains the top performer for a long period of time", "Is the best choice for an investor to invest his funds", "May or may not be the top performer in the next years to come", "Usually be the worst performer in the next years to come"], "correctIndex": 2, "explanation": "As experience has shown time and again, the top performers during one period may not necessarily remain as a top performer forever or near the other top performers. In such a case, simply buying into a scheme due to good returns in the recent past may not be a wise approach. The mutual fund advertisements use the disclaimer: “Past performance may or may not be sustained in future”.", "id": 67}, {"question": "Which of the following is INCORRECT with respect to advertisements of Mutual Funds by AMCs?", "options": ["The advertisements can show past performance of the scheme", "The advertisements can use celebrities for endorsements", "The advertisements can show the return numbers", "All of the above are incorrect"], "correctIndex": 1, "explanation": "As per the SEBI Advertisement Code for Mutual Funds - No celebrities shall form part of the advertisement. (AMFI can use celebrities but individual mutual funds cannot use celebrities)", "id": 68}, {"question": "An Addendum has to be issued for changes in __________________ .", "options": ["Applicable only to institutional clients", "Statement of Additional Information (SAI)", "Scheme Information Document (SID)", "Half yearly results of the mutual fund"], "correctIndex": 2, "explanation": "Updation of Scheme Documents - Regulatory provisions : In case of change in fundamental attributes in terms of Regulation, an addendum to the existing SID shall be issued and displayed on AMC website immediately. In case of other changes in SID, the AMC shall be required to issue an addendum and display the same on its website immediately.", "id": 69}, {"question": "For a Sector Fund, the minimum investment in equity and equity related instruments of a particular sector/ theme shall be 90 percent of total assets. State whether True or False?", "options": ["True", "False"], "correctIndex": 1, "explanation": "Sectoral fund is an open-ended equity scheme investing in a specific sector such as bank; power etc. The minimum investment in equity and equity related instruments of a particular sector/ theme shall be 80 percent of total assets.", "id": 70}, {"question": "Which is the Source Scheme in a Systematic Transfer Plan?", "options": ["It is the scheme with the lower NAV", "It is the scheme to which funds are transferred", "It is the scheme from which funds are transferred", "It is the scheme with the higher NAV"], "correctIndex": 2, "explanation": "In a Systematic Transfer Plan (STP), the amount that is withdrawn from a scheme (called the source scheme) is re-invested in some other scheme (called the target scheme) of the same mutual fund.", "id": 71}, {"question": "Amongst the distribution channel mentioned below, which one is likely to sell funds of only a single mutual fund house?", "options": ["Institutional sales team of the Asset Management Company", "Independent financial advisor", "Depends on regulatory approval", "Only with prior exchange permission"], "correctIndex": 0, "explanation": "An independent financial advisor, a bank or a distribution company will sell mutual fund schemes of various mutual fund houses as per their clients requirements and other considerations. However, an institutional sales team of an Asset Management Company will sell schemes only of the single mutual fund house which has appointed it.", "id": 72}, {"question": "The portfolio of a fund of funds consists of ______ .", "options": ["Money market securities only", "Units of other mutual fund schemes", "Neither of the above", "Applicable only to institutional clients"], "correctIndex": 1, "explanation": "A ‘Fund Of Funds’ (FOF) is an investment strategy of holding a portfolio of other investment funds rather than investing directly in stocks, bonds or other securities. An FOF Scheme of a primarily invests in the units of another Mutual Fund scheme.", "id": 73}, {"question": "The NAV of an equity fund is Rs. 76.45 and the face value is Rs. 10. An investor invests Rs 30,000. How many units will be allotted to him? (There is no entry load)", "options": ["Only with prior exchange permission", "Depends on regulatory approval", "Both of the above", "392.41"], "correctIndex": 3, "explanation": "Units are allotted as per the current NAV. The amount invested divided by the NAV will give the units allotted. Rs 30,000 / 76.45 = 392.41", "id": 74}, {"question": "_______________ is the most relevant factor for comparing performance of liquid funds of similar category offered by various mutual fund houses.", "options": ["Neither of the above", "Expenses", "Applicable only to institutional clients", "None of the above"], "correctIndex": 1, "explanation": "Comparing the Expense Ratio of different schemes is imperative for investors looking for the best liquid mutual fund. These schemes more or less earn similar returns. Hence, a fund with a high expense ratio will significantly reduce the returns generated. For example, suppose two funds deliver returns of 5% and 5.5%, respectively. Let’s say the expense ratio of the first fund is 0.2%, and the second fund is 0.8%. Therefore, the actual yield will be 4.8% and 4.7%. Hence, a fund with a lower expense ratio may be more profitable for an investor.", "id": 75}, {"question": "From the below mentioned entities associated with a mutual fund, who has to mandatorily contribute to the corpus of the mutual fund?", "options": ["The Asset Management Company", "The Sponsors", "Cannot be determined from the given data", "Neither of the above"], "correctIndex": 1, "explanation": "The mutual fund trust is created by one or more Sponsors, who are the main persons behind the mutual fund business. The sponsor is the promoter of the mutual fund. The sponsor brings in capital and creates a mutual fund trust and sets up the AMC. The sponsor makes an application for registration of the mutual fund and contributes at least 40% of the net worth of the AMC. In other words, every MF needs a sponsor before it can commence operations.", "id": 76}, {"question": "Identify the False statement -", "options": ["Mutual funds units which have been purchased on a stock exchange have a compulsory lock-in period", "Both of the above are false", "Mutual funds units can be bought on stock exchanges but they cannot be sold there", "All of the above"], "correctIndex": 1, "explanation": "SEBI has facilitated buying and selling of the units of open-ended mutual funds through the stock exchanges. The low cost and deeper reach of the stock exchange network enable an increased level of participation of retail investors in mutual funds. Mutual fund units can be bought and sold on stock exchange and they do not have a lock-in period except some funds like ELSS.", "id": 77}, {"question": "Identify the TRUE statement - A. It is mandatory for the AMC to disclose the valuation policy B. The AMC is not accountable for policies and procedures for detecting and preventing incorrect valuation", "options": ["Only with prior exchange permission", "Neither of the above", "Both of the above", "Only A is true"], "correctIndex": 3, "explanation": "Statement A is TRUE: As per SEBI regulations, it is mandatory for the Asset Management Company (AMC) to disclose the valuation policy of mutual fund schemes. This ensures transparency and consistency in valuation across all schemes. Statement B is FALSE: The AMC is indeed accountable for having proper policies and procedures to detect and prevent incorrect valuation of assets. This responsibility ensures that investors are treated fairly and NAVs reflect the true value of scheme holdings.", "id": 78}, {"question": "Liquid Fund is an open-ended liquid scheme whose investment is into debt and money market securities with a maturity of up to ____ days only", "options": ["91", "None of the above", "Only with prior exchange permission", "Depends on regulatory approval"], "correctIndex": 0, "explanation": "Liquid Fund is an open-ended liquid scheme whose investment is into debt and money market securities with a maturity of up to 91 days only. An investor seeking the lowest risk ought to go for a liquid scheme. However, the returns in such instruments are low. These schemes are suitable for investors looking for a product to park their funds for very short periods (up to 91 days).", "id": 79}, {"question": "The additional Total Expense Ratio (TER) charged has to be credited back to the Mutual Fund in which of these situations?", "options": ["All of the above", "When the inflows from beyond the top 30 cities are redeemed within a period of 1 year from the date of investment.", "When the TER of the mutual fund exceeds the limit specified under the regulations", "When the performance of the mutual fund declines as compared to previous year"], "correctIndex": 1, "explanation": "Mutual funds can charge additional TER if the new inflows are from beyond top 30 cities (subject to some conditions) However, the additional TER on account of inflows from beyond the top 30 cities so charged shall be credited back to the scheme in case the said inflows are redeemed within a period of 1 year from the date of investment.", "id": 80}, {"question": "On whom is the compliance requirement under Foreign Account Tax Compliance Act (FATCA) applicable?", "options": ["Only on those mutual funds who have foreign institutions as their sponsors", "All financial institutions including mutual funds", "Only Indian mutual funds", "Only on those mutual funds who are registered with a foreign agency"], "correctIndex": 1, "explanation": "The Foreign Account Tax Compliance Act (FATCA) is a US law that aims to combat tax evasion by US persons opening accounts offshore. It enhances due diligence and information reporting requirements for both individual and entity accounts. On July 9, 2015, India signed Inter-Governmental Agreement (IGA) with the USA for implementation of FATCA. This is applicable to all financial institutions including mutual funds. To comply with the requirements of the Foreign Account Tax Compliance Act (FATCA) and Common Reporting Standards (CRS) provisions, financial institutions, including mutual funds, are required to undertake a due diligence process to identify foreign reportable accounts and collect such information as required under the said provisions and report the same to the US Internal Revenue Service/any other foreign government or to the Indian Tax Authorities for onward transmission to the concerned foreign authorities.", "id": 81}, {"question": "Redemption proceeds has to be paid to the mutual fund unit holders within the time specified by _____ from time to time.", "options": ["SEBI", "All of the above", "Both of the above", "Only with prior exchange permission"], "correctIndex": 0, "explanation": "The applicable redemption guidelines for mutual funds are set out in SEBI (Mutual Funds) Regulations, 1996 and as amended from time to time.", "id": 82}, {"question": "Ms Shweta purchases through a distributor 5000 units of a mutual fund scheme at a NAV of Rs 30. The current NAV of the scheme is Rs 28. What will be the trail commission for today if the trail commission rate is 1% per annum", "options": ["All of the above", "Both of the above", "Rs. 3.8356", "Cannot be determined from the given data"], "correctIndex": 2, "explanation": "Trail commission is always calculated on the current NAV. The current total value of investments in the above question is Rs. 28 X 5000 units = Rs. 1,40.000 Trail commission for the day = Current value X trail commission rate p.a./365 = 1,40,000 X 1% / 365 days = 1400 / 365 = Rs. 3.8356", "id": 83}, {"question": "Mr. Mohit has filled up a application form for subscribing to a mutual fund scheme. However the address mentioned in the application form is different from the address provided at the time of KYC compliance. Which address will be included in the mutual funds records once the KYC compliance is validated?", "options": ["The address provided in the application form will be used for all communications", "The address provided in the application form", "Mr. Mohit can indicate which address is correct", "The address provided for KYC compliance"], "correctIndex": 3, "explanation": "Once the first holder’s PAN is validated for KYC, the address provided in the KYC form will override the information provided in the application form.", "id": 84}, {"question": "What happens in the process of Indexation?", "options": ["In indexation, the impact of capital gains tax is reduced in case of both short term and long term capital gains", "Only with prior exchange permission", "In indexation, the cost of acquisition is adjusted upwards to reflect the impact of inflation", "In indexation, the mutual fund’s performance is benchmarked against a suitable index"], "correctIndex": 2, "explanation": "Indexation means that the cost of acquisition or the cost of purchase is adjusted upwards to reflect the impact of inflation. For eg. - A stock was purchased at Rs 500 and sold for Rs 800 after 5 years. The long term capital gains is Rs 300 on which tax is to paid. But when adjusted for indexation (as per data released by Central Board of Direct taxes every year), the capital gains will be reduced and the tax will have to be paid on a lower amount.", "id": 85}, {"question": "Which of these statements are TRUE with respect to time stamping on mutual fund documents? A) Time stamping is relevant for non-financial mutual fund transactions B) The daily time stamping of application does not start with serial 1 C) Breakdown of time stamping process or breaking of seal is mandated to be duly recorded and reported to the Trustees", "options": ["Cannot be determined from the given data", "Both of the above", "Only with prior exchange permission", "B and C are true"], "correctIndex": 3, "explanation": "1) Applications for non-financial transactions like change of address are stamped. However, here stamping of time is not relevant; the data stamping is pertinent. 2) Applications are sequentially numbered from the first number of the machine to the last number of the machine, before a new numbering cycle is started for the machine. The daily time stamping of application does not start with serial 1. 3) The points of acceptance have time stamping machines with tamper-proof seal. Opening the machine for repairs or maintenance is permitted only by vendors or nominated persons of the mutual fund. Such opening of the machine has to be properly documented and reported to the Trustees.", "id": 86}, {"question": "Which document is used by fund rating agencies and also by investors to check the performance of various schemes of a mutual funds?", "options": ["Fund Fact Sheet", "Annual accounts of the AMC", "Key Information Memorandum (KIM)", "Scheme Information Document (SID)"], "correctIndex": 0, "explanation": "One of the most popular documents from the mutual fund is the monthly Fund Factsheet. This document is extensively used by investors, fund distributors, fund rating agencies, research analysts, media and others to access information about the various schemes of the mutual fund.", "id": 87}, {"question": "Once the mutual fund units are pledged, the unit holder/s _______ .", "options": ["Can sell the units bit after a period of 3 months", "Cannot sell the units", "Cannot sell the units but can switch the units to another scheme", "Cannot do additional purchase in the same account"], "correctIndex": 1, "explanation": "Banks, NBFCs and other financiers often lend money against the pledge of Units by the Unitholder. Once units are pledged, the Unit-holder/s cannot sell or switch out the pledged units, until the pledgee gives a written no-objection to release the pledge.", "id": 88}, {"question": "Identify the FALSE statement(s) - A) For Index funds, the NAV is calculated upto 4 decimal points B) The AMC and a mutual fund scheme of the AMC can have the same auditor", "options": ["Applicable only to institutional clients", "Both of the above", "Neither of the above", "Only B is false"], "correctIndex": 3, "explanation": "NAV is to be calculated upto 4 decimal places in the case of index funds, liquid funds and other debt funds. Accounts of the mutual fund schemes need to be maintained independent of the accounts of the AMC. The auditor appointed to audit the mutual fund scheme accounts needs to be different from the auditor of the AMC.", "id": 89}, {"question": "Which of these statements is true with respect to Key Information Memorandum (KIM)?", "options": ["KIM provided NAV history of all mutual fund schemes", "KIM is a document that provides key information of the past performance of the scheme", "KIM is a document which must accompany all mutual fund application forms", "KIM is the annual newsletter of the mutual fund"], "correctIndex": 2, "explanation": "While an investor is expected to read all the scheme related documents, circulation of the same along with the application forms is too difficult and costly, especially if the printed forms are to be distributed. In order to ensure the investor gets access to sufficient information in spite of such a constraint, a Key Information Memorandum (KIM) is mandatorily circulated along with the application form.", "id": 90}, {"question": "Long term capital loss from an investment can be set off against _______.", "options": ["Short term capital gain or long term capital gain", "Long term capital loss cannot be set off", "Short term capital gains only", "Long term capital gains only"], "correctIndex": 3, "explanation": "As per the Income Tax Act - - Short term capital loss is to be set off against short term capital gain or long term capital gain. - Long term capital loss can only be set off against long term capital gain. - Capital loss, short term or long term, cannot be set off against any other head of income (e.g. salaries).", "id": 91}, {"question": "When does the market price of close-end mutual fund scheme converge with the NAV price?", "options": ["Before the New Fund Offer", "Toward maturity", "During the New Fund Offer", "None of the above"], "correctIndex": 1, "explanation": "A close-ended scheme offers liquidity through its listing on a stock exchange. Typically, towards the maturity of the scheme, the market price converges towards the NAV.", "id": 92}, {"question": "The investment range in debt instruments is between _________ of total assets in a Conservative Hybrid Fund.", "options": ["25 percent and 50 percent", "80 percent and 95 percent", "75 percent and 90 percent", "50 percent and 65 percent"], "correctIndex": 2, "explanation": "In a Conservative Hybrid Fund, the investment in debt instruments typically ranges between 75 percent and 90 percent of the total assets. This allocation aims to provide stability and lower risk while allowing a portion of the fund to be invested in equities for higher potential returns.", "id": 93}, {"question": "Identify the TRUE statement -", "options": ["The mutual fund investor has the complete freedom to change the distributor any time he wants", "Once an investor had invested through a distributor, he cannot invest directly with the mutual fund house", "Once an investor had invested through a distributor, he cannot change the distributor", "Once an investor had invested by online method, he cannot change the distributor"], "correctIndex": 0, "explanation": "Investors can choose to change their distributor or opt for direct investing. This needs to be done through a written request by the investor. In such cases, AMCs will need to comply, without insisting on any kind of ‘No Objection Certificate’ from the existing distributor.", "id": 94}, {"question": "'Not more than 25% of the Net Assets will be invested in the Derivatives Market' - This statement best describes the ________ of the mutual fund scheme.", "options": ["Only with prior exchange permission", "Both of the above", "Investment Policy", "Cannot be determined from the given data"], "correctIndex": 2, "explanation": "Investment objective defines the broad investment charter. Investment policy describes in greater detail, the kind of portfolio that will be maintained. The investment policy includes the scheme’s asset allocation and investment style.", "id": 95}, {"question": "The compliance requirements under the Foreign Account Tax Compliance Act (FATCA) applies only to mutual funds and not to other financial institutions - State whether True or False?", "options": ["True", "False"], "correctIndex": 1, "explanation": "The (FATCA) is a US law that aims to combat tax evasion by US persons opening accounts offshore. It enhances due diligence and information reporting requirements for both individual and entity accounts. On July 9, 2015, India signed Inter-Governmental Agreement (IGA) with the USA for implementation of FATCA. This is applicable to all financial institutions including mutual funds.", "id": 96}, {"question": "Investors who have not transacted during the previous ______ are known as dormant investors", "options": ["Depends on regulatory approval", "Cannot be determined from the given data", "6 months", "Neither of the above"], "correctIndex": 2, "explanation": "Dormant means not-active. Investors who have not transacted during the previous 6 months in a mutual fund are considered dormant investors.", "id": 97}, {"question": "Identify the TRUE statement/s with respect to the risks associated with short selling and stock lending. 1. There is counterparty risk and liquidity risk in short selling 2. There is no risk associated with stock lending as the transaction is done through an approved intermediary", "options": ["Neither of the above", "Only 1 is true", "Depends on regulatory approval", "Only with prior exchange permission"], "correctIndex": 1, "explanation": "Short-selling is the sale of shares or securities that the seller does not own at the time of trading. Instead, he borrows it from someone who already owns it. Later, the short seller buys back the stock/security he shorted and returns the stock/security to the lender to close out the loan. The inherent risks are Counterparty risk and liquidity risk of the stock/security being borrowed. The security being short sold might be illiquid or become illiquid and covering of the security might occur at a much higher price level than anticipated, leading to losses. Securities Lending is lending of securities through an approved intermediary to a borrower under an agreement for a specified period with the condition that the borrower will return equivalent securities of the same type or class at the end of the specified period along with the corporate benefits accruing on the securities borrowed. There are risks inherent in securities lending, including the risk of failure of the other party. Such failure can result in a possible loss of rights to the collateral, the inability of the approved intermediary to return the securities deposited by the lender and the possible loss of corporate benefits accruing thereon.", "id": 98}, {"question": "Identify the information which is NOT included in the Statement of Additional Information (SAI).", "options": ["SIP returns of the schemes", "Investment Valuation Norms", "Neither of the above", "Both of the above"], "correctIndex": 0, "explanation": "Statement of Additional Information (SAI), which has statutory information about the mutual fund or AMC, that is offering the scheme like the Constituents of the mutual fund, Rights of Unit-holders, Investment Valuation Norms, Rights of Unit-holders etc. It does not contain information on scheme returns etc. This information is available in the Mutual Fund Fact Sheet.", "id": 99}, {"question": "An ongoing bond fund will lose value when the interest rates in the market ______ .", "options": ["Rise", "Will be equal to yields", "Depends on regulatory approval", "Applicable only to institutional clients"], "correctIndex": 0, "explanation": "Suppose an investor has invested in a debt security that yields a return of 7 percent. Subsequently, yields in the market for similar securities rise to 8 percent. It stands to reason that the security, which was bought at 7 percent yield, is no longer such an attractive investment. It will therefore lose value.", "id": 100}];
+/* ===================== CONFIG ===================== */
+const TEST_DURATION_SEC = 3600; // 60 minutes
+const MARKS_CORRECT = 1;
+const MARKS_WRONG = -0.25;
+const PASS_PERCENT = 60;
+const STORAGE_KEY = 'nismva_revday2_state_v1';
+
+/* ===================== STATE ===================== */
+let state = {
+  current: 0,
+  answers: {},     // qid -> selected option index
+  visited: {},      // qid -> true
+  marked: {},       // qid -> true
+  timeSpent: {},    // qid -> milliseconds spent on that question (TPQ source)
+  timeLeft: TEST_DURATION_SEC,
+  startedAt: null,
+  finished: false,
+};
+
+let timerInterval = null;
+let questionEnteredAt = null;   // Date.now() timestamp when current question was shown
+let lastTrackedQId = null;      // id of the question time is currently accruing against
+
+/* ===================== ELEMENTS ===================== */
+const el = id => document.getElementById(id);
+const testScreen = el('testScreen');
+const resultScreen = el('resultScreen');
+
+/* ===================== LOCAL STORAGE ===================== */
+function saveState(){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }catch(e){ console.warn('save failed', e); }
+}
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return null;
+    return JSON.parse(raw);
+  }catch(e){ return null; }
+}
+function clearState(){
+  try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+}
+
+/* ===================== AUTO LAUNCH ON LOAD ===================== */
+(function autoLaunch(){
+  el('totalText').textContent = QUESTIONS.length;
+  const saved = loadState();
+  if(saved && !saved.finished && saved.startedAt){
+    state = saved;
+    if(!state.timeSpent) state.timeSpent = {}; // backward-compat for older saved sessions
+    questionEnteredAt = Date.now(); // resume point — don't count offline/refresh gap as question time
+    lastTrackedQId = null;
+    enterTestScreen();
+  } else {
+    beginFreshTest();
+  }
+})();
+
+function beginFreshTest(){
+  state = {
+    current: 0,
+    answers: {},
+    visited: {},
+    marked: {},
+    timeSpent: {},
+    timeLeft: TEST_DURATION_SEC,
+    startedAt: Date.now(),
+    finished: false,
+  };
+  questionEnteredAt = Date.now();
+  lastTrackedQId = null;
+  saveState();
+  enterTestScreen();
+}
+
+function enterTestScreen(){
+  testScreen.classList.add('active');
+  buildPalette();
+  renderQuestion();
+  startTimer();
+}
+
+/* ===================== TIMER (TIMESTAMP-BASED) =====================
+   Bug fix: the old version decremented timeLeft by 1 inside setInterval,
+   which drifts badly when the browser throttles timers on a background
+   tab, and on refresh it just resumed the last-saved countdown without
+   accounting for time that passed while the page was closed/inactive.
+   Fix: always derive timeLeft from Date.now() - state.startedAt, so the
+   timer is self-correcting regardless of throttling, refreshes, or the
+   user switching tabs for a while. */
+function computeTimeLeft(){
+  const elapsedSec = Math.floor((Date.now() - state.startedAt) / 1000);
+  return Math.max(0, TEST_DURATION_SEC - elapsedSec);
+}
+function startTimer(){
+  state.timeLeft = computeTimeLeft();
+  updateTimerDisplay();
+  timerInterval = setInterval(()=>{
+    state.timeLeft = computeTimeLeft();
+    updateTimerDisplay();
+    if(state.timeLeft <= 0){
+      clearInterval(timerInterval);
+      finishTest(true);
+      return;
+    }
+    if(state.timeLeft % 5 === 0) saveState();
+  }, 1000);
+  // Re-sync immediately when the tab regains focus (covers throttled/paused intervals)
+  document.addEventListener('visibilitychange', onVisibilityResync);
+}
+function onVisibilityResync(){
+  if(document.visibilityState === 'visible' && timerInterval){
+    state.timeLeft = computeTimeLeft();
+    updateTimerDisplay();
+    if(state.timeLeft <= 0){
+      clearInterval(timerInterval);
+      finishTest(true);
+    }
+  }
+}
+function updateTimerDisplay(){
+  const m = Math.floor(state.timeLeft/60).toString().padStart(2,'0');
+  const s = (state.timeLeft%60).toString().padStart(2,'0');
+  el('timerText').textContent = `${m}:${s}`;
+  const box = el('timerBox');
+  if(state.timeLeft <= 120) box.classList.add('warn'); else box.classList.remove('warn');
+}
+
+/* ===================== RENDER QUESTION ===================== */
+function accrueTimeForLastQuestion(){
+  // Adds the time spent on whichever question was on screen before this
+  // render call into state.timeSpent — the raw data source for TPQ.
+  if(lastTrackedQId !== null && questionEnteredAt !== null){
+    const delta = Date.now() - questionEnteredAt;
+    state.timeSpent[lastTrackedQId] = (state.timeSpent[lastTrackedQId] || 0) + delta;
+  }
+}
+function renderQuestion(){
+  accrueTimeForLastQuestion();
+  const idx = state.current;
+  const q = QUESTIONS[idx];
+  questionEnteredAt = Date.now();
+  lastTrackedQId = q.id;
+  state.visited[q.id] = true;
+
+  const selected = state.answers[q.id];
+  const isMarked = !!state.marked[q.id];
+
+  const optionsHtml = q.options.map((opt, i)=>{
+    const sel = selected === i ? 'selected' : '';
+    const letter = String.fromCharCode(65+i);
+    return `<div class="option ${sel}" data-idx="${i}">
+      <div class="opt-radio">${selected===i ? '✓' : letter}</div>
+      <div class="opt-text">${escapeHtml(opt)}</div>
+    </div>`;
+  }).join('');
+
+  el('questionArea').innerHTML = `
+    <div class="q-meta-row">
+      <div class="q-counter">Question <b>${idx+1}</b> of ${QUESTIONS.length}</div>
+    </div>
+    <div class="q-card">
+      <span class="q-tag">Interest Rate Derivatives</span>
+      <div class="q-text">${escapeHtml(q.question)}</div>
+      <div class="options" id="optionsWrap">${optionsHtml}</div>
+    </div>
+  `;
+
+  document.querySelectorAll('#optionsWrap .option').forEach(opt=>{
+    opt.addEventListener('click', ()=>{
+      const i = parseInt(opt.dataset.idx);
+      state.answers[q.id] = i;
+      saveState();
+      renderQuestion();
+      refreshPaletteItem(idx);
+      updateSidebarStats();
+    });
+  });
+
+  el('markBtn').classList.toggle('active', isMarked);
+  el('markBtn').innerHTML = `<span>${isMarked ? '★' : '☆'}</span> ${isMarked ? 'Marked for Review' : 'Mark for Review'}`;
+
+  el('prevBtn').disabled = idx === 0;
+  el('nextBtn').textContent = idx === QUESTIONS.length-1 ? 'Save & Submit ✓' : 'Save & Next →';
+
+  refreshPaletteItem(idx, true);
+  updateSidebarStats();
+  updateTopProgress();
+}
+
+function escapeHtml(str){
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+/* ===================== NAVIGATION ===================== */
+el('prevBtn').addEventListener('click', ()=>{
+  if(state.current > 0){ state.current--; saveState(); renderQuestion(); window.scrollTo(0,0); }
+});
+el('nextBtn').addEventListener('click', ()=>{
+  if(state.current < QUESTIONS.length-1){ state.current++; saveState(); renderQuestion(); window.scrollTo(0,0); }
+  else { openSubmitModal(); }
+});
+el('clearResponseBtn').addEventListener('click', ()=>{
+  const q = QUESTIONS[state.current];
+  delete state.answers[q.id];
+  saveState();
+  renderQuestion();
+  refreshPaletteItem(state.current);
+  updateSidebarStats();
+});
+el('markBtn').addEventListener('click', ()=>{
+  const q = QUESTIONS[state.current];
+  if(state.marked[q.id]) delete state.marked[q.id];
+  else state.marked[q.id] = true;
+  saveState();
+  renderQuestion();
+  refreshPaletteItem(state.current);
+  updateSidebarStats();
+});
+
+document.addEventListener('keydown', (e)=>{
+  if(!testScreen.classList.contains('active')) return;
+  if(e.key === 'ArrowRight'){ el('nextBtn').click(); }
+  if(e.key === 'ArrowLeft'){ el('prevBtn').click(); }
+  if(['1','2','3','4'].includes(e.key)){
+    const i = parseInt(e.key)-1;
+    const q = QUESTIONS[state.current];
+    if(i < q.options.length){
+      state.answers[q.id] = i;
+      saveState(); renderQuestion(); refreshPaletteItem(state.current); updateSidebarStats();
+    }
+  }
+});
+
+/* ===================== PALETTE ===================== */
+function buildPalette(){
+  const grid = el('paletteGrid');
+  grid.innerHTML = QUESTIONS.map((q,i)=>`<button class="pal-item" id="pal-${i}" data-idx="${i}">${i+1}</button>`).join('');
+  grid.querySelectorAll('.pal-item').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      state.current = parseInt(btn.dataset.idx);
+      saveState();
+      renderQuestion();
+      window.scrollTo(0,0);
+    });
+  });
+}
+function paletteClassFor(idx){
+  const q = QUESTIONS[idx];
+  const answered = state.answers.hasOwnProperty(q.id);
+  const visited = !!state.visited[q.id];
+  const marked = !!state.marked[q.id];
+  let cls = '';
+  if(answered) cls = 'answered';
+  else if(visited) cls = 'notanswered';
+  if(marked) cls += ' marked';
+  return cls;
+}
+function refreshPaletteItem(idx, isCurrent){
+  for(let i=0;i<QUESTIONS.length;i++){
+    const btn = el('pal-'+i);
+    if(!btn) continue;
+    btn.className = 'pal-item ' + paletteClassFor(i);
+    if(i === state.current) btn.classList.add('current');
+  }
+}
+
+/* ===================== SIDEBAR STATS ===================== */
+function updateSidebarStats(){
+  const total = QUESTIONS.length;
+  let answered=0, marked=0, visitedNotAns=0, notVisited=0;
+  QUESTIONS.forEach(q=>{
+    const isAns = state.answers.hasOwnProperty(q.id);
+    const isVis = !!state.visited[q.id];
+    const isMarked = !!state.marked[q.id];
+    if(isAns) answered++;
+    if(isMarked) marked++;
+    if(!isVis) notVisited++;
+  });
+  el('statAnswered').textContent = answered;
+  el('statMarked').textContent = marked;
+  el('statNotVisited').textContent = notVisited;
+  el('attemptedText').textContent = answered;
+  const pct = Math.round((answered/total)*100);
+  el('sidebarProgressPct').textContent = pct + '%';
+  el('sidebarBarFill').style.width = pct + '%';
+}
+function updateTopProgress(){
+  const total = QUESTIONS.length;
+  const visitedCount = Object.keys(state.visited).length;
+  const pct = Math.round((visitedCount/total)*100);
+  el('progressTopFill').style.width = pct + '%';
+}
+
+/* ===================== SUBMIT FLOW ===================== */
+function openSubmitModal(){
+  const total = QUESTIONS.length;
+  const answered = Object.keys(state.answers).length;
+  const unanswered = total - answered;
+  el('modalTitle').textContent = 'Submit Test?';
+  el('modalText').textContent = unanswered > 0
+    ? `You have ${unanswered} unanswered question(s). Are you sure you want to submit the test now? This action cannot be undone.`
+    : `You have answered all questions. Are you sure you want to submit the test now?`;
+  el('submitModal').classList.add('active');
+}
+el('submitBtnTop').addEventListener('click', openSubmitModal);
+
+/* ---- MOBILE PALETTE TOGGLE ---- */
+(function(){
+  const toggleBtn = el('paletteToggleBtn');
+  const closeBtn = el('sidebarCloseBtn');
+  const panel = el('sidebarPanel');
+  const backdrop = el('sidebarBackdrop');
+  function openPanel(){ panel.classList.add('open'); backdrop.classList.add('open'); }
+  function closePanel(){ panel.classList.remove('open'); backdrop.classList.remove('open'); }
+  if(toggleBtn) toggleBtn.addEventListener('click', openPanel);
+  if(closeBtn) closeBtn.addEventListener('click', closePanel);
+  if(backdrop) backdrop.addEventListener('click', closePanel);
+})();
+el('modalCancel').addEventListener('click', ()=> el('submitModal').classList.remove('active'));
+el('modalConfirm').addEventListener('click', ()=>{
+  el('submitModal').classList.remove('active');
+  finishTest(false);
+});
+
+function finishTest(autoSubmitted){
+  clearInterval(timerInterval);
+  document.removeEventListener('visibilitychange', onVisibilityResync);
+  accrueTimeForLastQuestion();
+  lastTrackedQId = null;
+  state.finished = true;
+  state.finishedAt = Date.now();
+  saveState();
+  computeAndRenderResult(autoSubmitted);
+  testScreen.classList.remove('active');
+  resultScreen.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* ===================== SCORING ===================== */
+let lastResultData = null;
+function computeAndRenderResult(autoSubmitted){
+  let correct=0, wrong=0, skipped=0, score=0;
+  const perQ = QUESTIONS.map(q=>{
+    const sel = state.answers.hasOwnProperty(q.id) ? state.answers[q.id] : null;
+    let status;
+    if(sel === null){ status='skip'; skipped++; }
+    else if(sel === q.correctIndex){ status='correct'; correct++; score += MARKS_CORRECT; }
+    else { status='wrong'; wrong++; score += MARKS_WRONG; }
+    return {q, sel, status, marked: !!state.marked[q.id]};
+  });
+  score = Math.round(score*100)/100;
+  const total = QUESTIONS.length;
+  const attempted = correct+wrong;
+  const accuracy = attempted>0 ? Math.round((correct/attempted)*100) : 0;
+  const maxScore = total*MARKS_CORRECT;
+  const percentObtained = (score/maxScore)*100;
+  const passed = percentObtained >= PASS_PERCENT;
+
+  const elapsed = state.startedAt ? Math.floor(((state.finishedAt||Date.now()) - state.startedAt)/1000) : (TEST_DURATION_SEC-state.timeLeft);
+  const em = Math.floor(elapsed/60).toString().padStart(2,'0');
+  const es = (elapsed%60).toString().padStart(2,'0');
+
+  el('resultBadge').textContent = passed ? '✓ PASS' : '✗ FAIL';
+  el('resultBadge').className = 'badge ' + (passed?'pass':'fail');
+  el('resultSubtext').textContent = autoSubmitted
+    ? "Time's up! Your test was submitted automatically. Here's how you performed."
+    : "Here's a detailed breakdown of your performance.";
+  el('rScore').textContent = score + ' / ' + maxScore;
+  el('rCorrect').textContent = correct;
+  el('rWrong').textContent = wrong;
+  el('rSkipped').textContent = skipped;
+  el('rAccuracy').textContent = accuracy + '%';
+  el('rTimeTaken').textContent = `${em}:${es}`;
+  el('rTotalQ').textContent = total;
+
+  lastResultData = perQ;
+  renderReviewList(perQ, 'all');
+
+  // ---- Push this attempt into the shared Performance Dashboard store ----
+  if(window.AnalyticsEngine){
+    AnalyticsEngine.saveMockResult({
+      mockId: 'nismva_revday2',
+      mockName: 'NISM V-A Revision Day 2 (Mutual Fund Distributors)',
+      questions: QUESTIONS,
+      perQ,
+      timeSpent: state.timeSpent,
+      timeTakenSec: elapsed,
+      score, maxScore, correct, wrong, skipped, accuracy, percentObtained, passed
+    });
+  }
+
+  clearState(); // test complete, clear saved in-progress state
+}
+
+/* ===================== REVIEW ===================== */
+el('reviewBtn').addEventListener('click', ()=>{
+  const sec = el('reviewSection');
+  sec.style.display = sec.style.display === 'none' ? 'block' : 'none';
+  if(sec.style.display === 'block') sec.scrollIntoView({behavior:'smooth', block:'start'});
+});
+el('retakeBtn').addEventListener('click', ()=>{
+  clearState();
+  resultScreen.classList.remove('active');
+  el('reviewSection').style.display = 'none';
+  beginFreshTest();
+});
+
+document.querySelectorAll('.filter-chip').forEach(chip=>{
+  chip.addEventListener('click', ()=>{
+    document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    renderReviewList(lastResultData, chip.dataset.filter);
+  });
+});
+
+function renderReviewList(perQ, filter){
+  let list = perQ;
+  if(filter==='correct') list = perQ.filter(r=>r.status==='correct');
+  if(filter==='wrong') list = perQ.filter(r=>r.status==='wrong');
+  if(filter==='skip') list = perQ.filter(r=>r.status==='skip');
+  if(filter==='marked') list = perQ.filter(r=>r.marked);
+
+  if(list.length===0){
+    el('reviewList').innerHTML = `<p style="color:var(--text-faint);text-align:center;padding:30px;">No questions in this category.</p>`;
+    return;
+  }
+
+  el('reviewList').innerHTML = list.map(r=>{
+    const q = r.q;
+    const qIndexGlobal = QUESTIONS.findIndex(x=>x.id===q.id)+1;
+    const statusLabel = r.status==='correct'?'Correct':r.status==='wrong'?'Wrong':'Unattempted';
+    const optsHtml = q.options.map((opt,i)=>{
+      let cls='', tag='';
+      if(i===q.correctIndex){ cls='correct-ans'; tag='✓ Correct'; }
+      if(r.sel===i && i!==q.correctIndex){ cls='wrong-ans'; tag='✗ Your Answer'; }
+      if(r.sel===i && i===q.correctIndex){ tag='✓ Your Answer'; }
+      return `<div class="mini-opt ${cls}"><span>${escapeHtml(opt)}</span>${tag?`<span class="tag" style="margin-left:auto;">${tag}</span>`:''}</div>`;
+    }).join('');
+    return `<div class="review-card">
+      <div class="review-card-head">
+        <div><b>Q${qIndexGlobal}.</b> ${escapeHtml(q.question)}</div>
+        <span class="review-status ${r.status==='skip'?'skip':r.status}">${statusLabel}</span>
+      </div>
+      <div class="mini-options">${optsHtml}</div>
+      <div class="explanation-box"><b>Explanation</b>${escapeHtml(q.explanation)}</div>
+    </div>`;
+  }).join('');
+}
+</script>
+</body>
+</html>

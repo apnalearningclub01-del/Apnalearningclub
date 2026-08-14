@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NISM Series VIII Mock Test 3 | Equity Derivatives</title>
+<style>
+:root{
+  --bg:#0a0e17; --bg2:#0f1420; --panel:#131927; --panel2:#1a2235;
+  --border:#243047; --border-light:#2e3b56;
+  --text:#e8edf7; --text-dim:#8b97b3; --text-faint:#5d6a87;
+  --accent:#4f8cff; --accent-dim:#2c5dc7; --accent-glow:rgba(79,140,255,.35);
+  --green:#2dd4a7; --green-dim:#1a8f72; --red:#ff5d7a; --red-dim:#c23854;
+  --amber:#ffb74f; --amber-dim:#cc8c2e;
+  --purple:#a78bfa;
+  --radius:14px; --radius-sm:8px;
+  --shadow:0 8px 30px rgba(0,0,0,.45);
+  --transition:.25s cubic-bezier(.4,0,.2,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{
+  background:radial-gradient(circle at 20% 0%, #15203a 0%, var(--bg) 55%);
+  color:var(--text);
+  font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+::selection{background:var(--accent-glow);}
+button{font-family:inherit;cursor:pointer;border:none;outline:none;background:none;color:inherit;}
+::-webkit-scrollbar{width:8px;height:8px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:8px;}
+::-webkit-scrollbar-thumb:hover{background:var(--accent-dim);}
+
+.screen{display:none;min-height:100vh;width:100%;animation:fadeIn .45s ease;}
+.screen.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.55;}}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes pop{0%{transform:scale(.85);opacity:0;}100%{transform:scale(1);opacity:1;}}
+@keyframes slideDown{from{transform:translateY(-12px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+@keyframes shimmer{0%{background-position:-200% 0;}100%{background-position:200% 0;}}
+
+/* ============ START SCREEN ============ */
+#startScreen{display:flex;align-items:center;justify-content:center;padding:24px;}
+.start-card{
+  width:100%;max-width:780px;background:linear-gradient(160deg,var(--panel) 0%, var(--bg2) 100%);
+  border:1px solid var(--border);border-radius:20px;padding:42px 40px;box-shadow:var(--shadow);
+  animation:pop .5s ease;
+}
+.brand-row{display:flex;align-items:center;gap:14px;margin-bottom:6px;}
+.brand-badge{
+  width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--purple));
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#fff;
+  box-shadow:0 6px 18px var(--accent-glow);flex-shrink:0;
+}
+.brand-text-sm{font-size:12px;letter-spacing:2px;color:var(--text-faint);text-transform:uppercase;font-weight:600;}
+.start-title{font-size:28px;font-weight:800;margin-top:14px;line-height:1.3;background:linear-gradient(90deg,#fff,#b9c6e6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.start-sub{color:var(--text-dim);margin-top:8px;font-size:14.5px;line-height:1.6;}
+.info-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:30px 0;}
+.info-box{
+  background:var(--panel2);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:16px 14px;text-align:center;transition:var(--transition);
+}
+.info-box:hover{border-color:var(--accent-dim);transform:translateY(-2px);}
+.info-box .ic{font-size:20px;margin-bottom:8px;}
+.info-box .val{font-size:20px;font-weight:800;color:#fff;}
+.info-box .lbl{font-size:11.5px;color:var(--text-faint);margin-top:3px;text-transform:uppercase;letter-spacing:.5px;}
+.rules-box{
+  background:rgba(255,183,79,.06);border:1px solid rgba(255,183,79,.25);border-radius:var(--radius-sm);
+  padding:16px 18px;margin-bottom:26px;
+}
+.rules-box h4{color:var(--amber);font-size:13px;margin-bottom:10px;display:flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.5px;}
+.rules-box ul{list-style:none;font-size:13.5px;color:var(--text-dim);line-height:1.95;}
+.rules-box li{display:flex;gap:8px;}
+.rules-box li::before{content:'▸';color:var(--amber);flex-shrink:0;}
+.resume-banner{
+  background:rgba(79,140,255,.08);border:1px solid rgba(79,140,255,.3);border-radius:var(--radius-sm);
+  padding:13px 16px;margin-bottom:22px;font-size:13.5px;color:var(--accent);display:flex;align-items:center;justify-content:space-between;gap:10px;
+  animation:slideDown .4s ease;
+}
+.resume-banner span b{color:#fff;}
+.resume-banner .clear-btn{font-size:12px;color:var(--text-faint);text-decoration:underline;flex-shrink:0;}
+.start-actions{display:flex;gap:14px;align-items:center;}
+.btn{
+  padding:14px 28px;border-radius:11px;font-weight:700;font-size:14.5px;transition:var(--transition);
+  display:inline-flex;align-items:center;gap:8px;letter-spacing:.2px;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--accent),#3f6fe0);color:#fff;box-shadow:0 8px 24px var(--accent-glow);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px var(--accent-glow);}
+.btn-primary:active{transform:translateY(0);}
+.btn-ghost{background:var(--panel2);color:var(--text-dim);border:1px solid var(--border);}
+.btn-ghost:hover{border-color:var(--border-light);color:var(--text);}
+.start-foot{margin-top:22px;font-size:12px;color:var(--text-faint);text-align:center;}
+
+/* ============ TEST SCREEN ============ */
+#testScreen{display:none;}
+#testScreen.active{display:flex;flex-direction:column;height:100vh;}
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;padding:0 22px;height:62px;flex-shrink:0;
+  background:var(--panel);border-bottom:1px solid var(--border);position:relative;z-index:20;
+}
+.topbar-left{display:flex;align-items:center;gap:12px;min-width:0;}
+.topbar-logo{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--purple));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0;}
+.topbar-title{font-size:14.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.topbar-title small{display:block;font-size:11px;color:var(--text-faint);font-weight:500;}
+.topbar-right{display:flex;align-items:center;gap:16px;}
+.timer-box{
+  display:flex;align-items:center;gap:9px;background:var(--panel2);border:1px solid var(--border);
+  border-radius:10px;padding:8px 16px;font-weight:700;font-size:16px;font-variant-numeric:tabular-nums;
+}
+.attempted-box{
+  background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 16px;
+  font-size:13.5px;font-weight:700;color:var(--text-dim);white-space:nowrap;
+}
+.attempted-box span{color:var(--accent);font-weight:800;}
+.attempted-box #totalText{color:var(--text);}
+.timer-box.warn{border-color:var(--red-dim);color:var(--red);animation:pulse 1.1s infinite;}
+.timer-ic{font-size:15px;}
+.submit-btn{
+  background:linear-gradient(135deg,var(--green-dim),var(--green));color:#04241c;font-weight:700;font-size:13.5px;
+  padding:10px 20px;border-radius:9px;transition:var(--transition);
+}
+.submit-btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(45,212,167,.3);}
+.progress-top{height:3px;width:100%;background:var(--border);flex-shrink:0;}
+.progress-top-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--purple));transition:width .35s ease;}
+
+.test-body{display:flex;flex:1;overflow:hidden;}
+.question-area{flex:1;display:flex;flex-direction:column;overflow-y:auto;padding:34px 44px 110px;}
+.q-meta-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.q-counter{font-size:13px;color:var(--text-faint);font-weight:600;letter-spacing:.3px;}
+.q-counter b{color:var(--accent);}
+.mark-btn{
+  display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--text-dim);
+  border:1px solid var(--border);padding:7px 14px;border-radius:20px;transition:var(--transition);
+}
+.mark-btn:hover{border-color:var(--amber-dim);color:var(--amber);}
+.mark-btn.active{background:rgba(255,183,79,.12);border-color:var(--amber-dim);color:var(--amber);}
+.q-card{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:30px 32px;
+  animation:fadeIn .3s ease; max-width:760px;
+}
+.q-text{font-size:17.5px;line-height:1.65;font-weight:600;color:#f3f6fc;margin-bottom:26px;}
+.q-tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.6px;color:var(--accent);background:rgba(79,140,255,.1);padding:3px 9px;border-radius:6px;margin-bottom:14px;text-transform:uppercase;}
+.options{display:flex;flex-direction:column;gap:12px;}
+.option{
+  display:flex;align-items:flex-start;gap:14px;padding:15px 18px;border:1.5px solid var(--border);
+  border-radius:11px;cursor:pointer;transition:var(--transition);background:var(--bg2);
+}
+.option:hover{border-color:var(--border-light);background:var(--panel2);transform:translateX(2px);}
+.option.selected{border-color:var(--accent);background:rgba(79,140,255,.1);box-shadow:0 0 0 1px var(--accent) inset;}
+.opt-radio{
+  width:22px;height:22px;border-radius:50%;border:2px solid var(--border-light);flex-shrink:0;margin-top:1px;
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;transition:var(--transition);color:transparent;
+}
+.option.selected .opt-radio{border-color:var(--accent);background:var(--accent);color:#fff;}
+.opt-text{font-size:14.8px;line-height:1.55;color:var(--text);padding-top:1px;}
+.review-mode .option{cursor:default;}
+.review-mode .option.correct-ans{border-color:var(--green);background:rgba(45,212,167,.1);}
+.review-mode .option.wrong-ans{border-color:var(--red);background:rgba(255,93,122,.1);}
+.review-mode .option.correct-ans .opt-radio{border-color:var(--green);background:var(--green);}
+.review-mode .option.wrong-ans .opt-radio{border-color:var(--red);background:var(--red);}
+.explanation-box{
+  margin-top:22px;padding:16px 18px;background:rgba(79,140,255,.06);border-left:3px solid var(--accent);
+  border-radius:8px;font-size:13.5px;line-height:1.65;color:var(--text-dim);animation:slideDown .35s ease;
+}
+.explanation-box b{color:var(--accent);display:block;margin-bottom:6px;font-size:12px;letter-spacing:.4px;text-transform:uppercase;}
+
+.nav-footer{
+  position:sticky;bottom:0;display:flex;align-items:center;justify-content:flex-start;
+  padding:16px 44px;background:linear-gradient(180deg,transparent,var(--bg) 30%);margin-top:auto;gap:18px;flex-wrap:wrap;
+}
+.nav-footer-center{display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:center;}
+.nav-btn{
+  padding:12px 24px;border-radius:10px;font-weight:700;font-size:13.5px;background:var(--panel2);
+  border:1px solid var(--border);color:var(--text);transition:var(--transition);display:flex;align-items:center;gap:8px;
+}
+.nav-btn:hover:not(:disabled){border-color:var(--accent-dim);transform:translateY(-1px);}
+.nav-btn:disabled{opacity:.35;cursor:not-allowed;}
+.nav-btn.next-primary{background:linear-gradient(135deg,var(--accent-dim),var(--accent));border:none;}
+.clear-btn-mini{font-size:12.5px;color:var(--text-faint);text-decoration:underline;}
+
+/* SIDEBAR */
+.sidebar{
+  width:300px;flex-shrink:0;background:var(--panel);border-left:1px solid var(--border);
+  display:flex;flex-direction:column;padding:20px;overflow-y:auto;
+}
+.sidebar-progress{margin-bottom:18px;}
+.sidebar-progress-label{display:flex;justify-content:space-between;font-size:11.5px;color:var(--text-faint);margin-bottom:6px;}
+.sidebar-bar{height:6px;border-radius:6px;background:var(--border);overflow:hidden;}
+.sidebar-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--purple));transition:width .35s ease;}
+.legend{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;font-size:11.5px;color:var(--text-dim);}
+.legend-item{display:flex;align-items:center;gap:7px;}
+.legend-dot{width:11px;height:11px;border-radius:4px;flex-shrink:0;}
+.dot-answered{background:var(--green);}
+.dot-notanswered{background:var(--red-dim);border:1.5px solid var(--red);}
+.dot-notvisited{background:transparent;border:1.5px solid var(--border-light);}
+.dot-marked{background:var(--amber);}
+.dot-current{background:var(--accent);}
+.palette-title{font-size:12px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;font-weight:700;}
+.palette-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-bottom:20px;
+}
+.pal-item{
+  aspect-ratio:1;border-radius:9px;display:flex;align-items:center;justify-content:center;
+  font-size:12.5px;font-weight:700;border:1.5px solid var(--border-light);background:transparent;color:var(--text-dim);
+  transition:var(--transition);position:relative;
+}
+.pal-item:hover{transform:scale(1.08);}
+.pal-item.answered{background:var(--green-dim);border-color:var(--green);color:#fff;}
+.pal-item.notanswered{background:rgba(255,93,122,.15);border-color:var(--red);color:var(--red);}
+.pal-item.marked::after{
+  content:'';position:absolute;top:-3px;right:-3px;width:9px;height:9px;border-radius:50%;background:var(--amber);
+  box-shadow:0 0 0 2px var(--panel);
+}
+.pal-item.current{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-glow);transform:scale(1.05);}
+.sidebar-submit{margin-top:auto;}
+.sidebar-stats{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;font-size:12.5px;}
+.sidebar-stat-row{display:flex;justify-content:space-between;color:var(--text-dim);}
+.sidebar-stat-row b{color:#fff;}
+
+/* MODAL */
+.modal-overlay{
+  display:none;position:fixed;inset:0;background:rgba(5,8,15,.78);backdrop-filter:blur(4px);
+  align-items:center;justify-content:center;z-index:100;animation:fadeIn .25s ease;
+}
+.modal-overlay.active{display:flex;}
+.modal-box{
+  background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:32px;max-width:420px;
+  width:90%;box-shadow:var(--shadow);animation:pop .3s ease;
+}
+.modal-box h3{font-size:18px;margin-bottom:10px;}
+.modal-box p{font-size:13.5px;color:var(--text-dim);line-height:1.6;margin-bottom:24px;}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;}
+
+/* ============ RESULT SCREEN ============ */
+#resultScreen{padding:40px 24px 80px;display:flex;justify-content:center;}
+.result-wrap{width:100%;max-width:920px;}
+.result-header{text-align:center;margin-bottom:30px;}
+.badge{
+  display:inline-flex;align-items:center;gap:10px;padding:10px 26px;border-radius:30px;font-weight:800;
+  font-size:14px;letter-spacing:.5px;margin-bottom:18px;animation:pop .5s ease;
+}
+.badge.pass{background:rgba(45,212,167,.12);color:var(--green);border:1.5px solid var(--green-dim);}
+.badge.fail{background:rgba(255,93,122,.12);color:var(--red);border:1.5px solid var(--red-dim);}
+.result-header h1{font-size:30px;font-weight:800;margin-bottom:8px;}
+.result-header p{color:var(--text-dim);font-size:14px;}
+.score-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin:32px 0;}
+.score-card{
+  background:linear-gradient(160deg,var(--panel),var(--bg2));border:1px solid var(--border);border-radius:14px;
+  padding:20px 14px;text-align:center;animation:pop .45s ease;
+}
+.score-card .num{font-size:25px;font-weight:800;color:#fff;}
+.score-card.green .num{color:var(--green);}
+.score-card.red .num{color:var(--red);}
+.score-card.amber .num{color:var(--amber);}
+.score-card.accent .num{color:var(--accent);}
+.score-card .lbl{font-size:11px;color:var(--text-faint);margin-top:5px;text-transform:uppercase;letter-spacing:.4px;}
+.result-actions{display:flex;gap:14px;justify-content:center;margin-bottom:40px;}
+.review-section h2{font-size:19px;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.review-filters{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.filter-chip{
+  padding:8px 16px;border-radius:20px;font-size:12.5px;font-weight:600;border:1px solid var(--border);
+  color:var(--text-dim);transition:var(--transition);
+}
+.filter-chip.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.filter-chip:hover:not(.active){border-color:var(--border-light);}
+.review-card{
+  background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:24px 26px;margin-bottom:16px;
+  animation:fadeIn .3s ease;
+}
+.review-card-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;gap:12px;}
+.review-status{
+  font-size:11px;font-weight:800;padding:4px 11px;border-radius:7px;letter-spacing:.4px;text-transform:uppercase;flex-shrink:0;
+}
+.review-status.correct{background:rgba(45,212,167,.15);color:var(--green);}
+.review-status.wrong{background:rgba(255,93,122,.15);color:var(--red);}
+.review-status.skip{background:rgba(139,151,179,.15);color:var(--text-faint);}
+.mini-options{display:flex;flex-direction:column;gap:8px;margin-top:14px;}
+.mini-opt{padding:10px 14px;border-radius:8px;font-size:13px;border:1px solid var(--border);background:var(--bg2);display:flex;gap:10px;}
+.mini-opt.correct-ans{border-color:var(--green);background:rgba(45,212,167,.08);color:var(--green);}
+.mini-opt.wrong-ans{border-color:var(--red);background:rgba(255,93,122,.08);color:var(--red);}
+.mini-opt .tag{font-weight:800;font-size:10.5px;flex-shrink:0;}
+
+@media (max-width:900px){
+  .test-body{flex-direction:column;}
+  .sidebar{
+    width:100%;border-left:none;border-top:1px solid var(--border);max-height:38vh;
+    order:2;
+  }
+  .question-area{padding:22px 18px 100px;order:1;}
+  .info-grid{grid-template-columns:repeat(2,1fr);}
+  .score-grid{grid-template-columns:repeat(2,1fr);}
+  .start-card{padding:28px 22px;}
+  .nav-footer{padding:14px 18px;flex-direction:column;align-items:stretch;}
+  .nav-footer-center{order:2;justify-content:space-between;width:100%;flex-wrap:wrap;}
+  .nav-footer #prevBtn{width:100%;justify-content:center;order:1;}
+  .topbar{flex-wrap:wrap;height:auto;padding:10px 14px;gap:8px;}
+  .topbar-right{flex-wrap:wrap;gap:8px;width:100%;justify-content:space-between;}
+  .attempted-box,.timer-box{font-size:12.5px;padding:7px 12px;}
+  .submit-btn{padding:8px 14px;font-size:12.5px;}
+  .q-card{padding:22px 18px;}
+}
+</style>
+</head>
+<body>
+<!-- ============ TEST SCREEN (auto-launches immediately) ============ -->
+<div id="testScreen" class="screen active">
+  <div class="progress-top"><div class="progress-top-fill" id="progressTopFill"></div></div>
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-logo">N8</div>
+      <div class="topbar-title">NISM Series VIII Mock Test 3
+        <small>Equity Derivatives Certification</small>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="attempted-box" id="attemptedBox"><span id="attemptedText">0</span> / <span id="totalText">100</span> Attempted</div>
+      <div class="timer-box" id="timerBox"><span class="timer-ic">⏱️</span><span id="timerText">60:00</span></div>
+      <button class="submit-btn" id="submitBtnTop">Submit Test</button>
+    </div>
+  </div>
+
+  <div class="test-body">
+    <div class="question-area" id="questionArea">
+      <!-- injected by JS -->
+    </div>
+
+    <div class="sidebar">
+      <div class="sidebar-progress">
+        <div class="sidebar-progress-label"><span>Progress</span><span id="sidebarProgressPct">0%</span></div>
+        <div class="sidebar-bar"><div class="sidebar-bar-fill" id="sidebarBarFill"></div></div>
+      </div>
+      <div class="sidebar-stats">
+        <div class="sidebar-stat-row"><span>Answered</span><b id="statAnswered">0</b></div>
+        <div class="sidebar-stat-row"><span>Marked for Review</span><b id="statMarked">0</b></div>
+        <div class="sidebar-stat-row"><span>Not Visited</span><b id="statNotVisited">100</b></div>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><span class="legend-dot dot-answered"></span>Answered</div>
+        <div class="legend-item"><span class="legend-dot dot-notanswered"></span>Not Answered</div>
+        <div class="legend-item"><span class="legend-dot dot-notvisited"></span>Not Visited</div>
+        <div class="legend-item"><span class="legend-dot dot-marked"></span>Marked</div>
+      </div>
+      <div class="palette-title">Question Palette</div>
+      <div class="palette-grid" id="paletteGrid"></div>
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <button class="nav-btn" id="prevBtn">← Previous</button>
+    <div class="nav-footer-center">
+      <button class="nav-btn" id="clearResponseBtn">Clear Response</button>
+      <button class="nav-btn mark-btn" id="markBtn"><span>☆</span> Mark for Review</button>
+      <button class="nav-btn next-primary" id="nextBtn">Save &amp; Next</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ RESULT SCREEN ============ -->
+<div id="resultScreen" class="screen">
+  <div class="result-wrap">
+    <div class="result-header">
+      <div class="badge" id="resultBadge">PASS</div>
+      <h1>Test Completed!</h1>
+      <p id="resultSubtext">Here's a detailed breakdown of your performance.</p>
+    </div>
+
+    <div class="score-grid">
+      <div class="score-card accent"><div class="num" id="rScore">0</div><div class="lbl">Score</div></div>
+      <div class="score-card green"><div class="num" id="rCorrect">0</div><div class="lbl">Correct</div></div>
+      <div class="score-card red"><div class="num" id="rWrong">0</div><div class="lbl">Wrong</div></div>
+      <div class="score-card amber"><div class="num" id="rSkipped">0</div><div class="lbl">Unattempted</div></div>
+      <div class="score-card"><div class="num" id="rAccuracy">0%</div><div class="lbl">Accuracy</div></div>
+    </div>
+    <div class="score-grid" style="grid-template-columns:repeat(2,1fr);margin-top:-6px;">
+      <div class="score-card"><div class="num" id="rTimeTaken">00:00</div><div class="lbl">Time Taken</div></div>
+      <div class="score-card"><div class="num" id="rTotalQ">100</div><div class="lbl">Total Questions</div></div>
+    </div>
+
+    <div class="result-actions">
+      <button class="btn btn-primary" id="reviewBtn">📋 View Detailed Review</button>
+      <button class="btn btn-ghost" id="retakeBtn">↻ Retake Test</button>
+    </div>
+
+    <div class="review-section" id="reviewSection" style="display:none;">
+      <h2>📋 Detailed Review</h2>
+      <div class="review-filters">
+        <button class="filter-chip active" data-filter="all">All Questions</button>
+        <button class="filter-chip" data-filter="correct">Correct</button>
+        <button class="filter-chip" data-filter="wrong">Wrong</button>
+        <button class="filter-chip" data-filter="skip">Unattempted</button>
+        <button class="filter-chip" data-filter="marked">Marked</button>
+      </div>
+      <div id="reviewList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL ============ -->
+<div class="modal-overlay" id="submitModal">
+  <div class="modal-box">
+    <h3 id="modalTitle">Submit Test?</h3>
+    <p id="modalText">You still have unanswered questions. Are you sure you want to submit the test now? This action cannot be undone.</p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="modalCancel">Cancel</button>
+      <button class="btn btn-primary" id="modalConfirm">Yes, Submit</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = 
+[{"id": 1, "question": "What is Tick size?", "options": ["Tick size is the size of the futures contract", "Tick size is the maximum permitted movement in the price of the contract", "Tick size is the minimum permitted movement in the price of the contract", "Tick size is the average of the high and low permitted prices"], "correctIndex": 2, "explanation": "Tick Size is the minimum move allowed in the price quotations."}, {"id": 2, "question": "An investor holds a long futures position on a stock that is expected to go ex-dividend soon. What is the likely impact on the futures price?", "options": ["Futures price will remain unchanged", "Futures price will rise by the dividend amount", "Futures price will fall by the dividend amount", "There will be no impact on futures due to dividend announcements"], "correctIndex": 2, "explanation": "Futures contracts are priced based on the cost of carry model, which includes the spot price, interest cost, storage (if applicable), and expected dividends. FuturesPrice=SpotPrice+CostofCarry−ExpectedDividends When a company declares a dividend, the spot price drops ex-dividend on the record date. Since futures are derivative instruments, the futures price also adjusts downward to reflect the dividend, ensuring no arbitrage. Traders holding long futures must account for this drop in price."}, {"id": 3, "question": "Put option seller will have the obligation to sell if the put option buyer exercises his right.", "options": ["True", "False"], "correctIndex": 1, "explanation": "A put option seller must buy, not sell, the underlying asset if the put option buyer exercises their right. The buyer of a put option has the right to sell the underlying asset, and the seller (writer) must purchase it at the strike price. Hence, the correct answer is FALSE."}, {"id": 4, "question": "An investor is long on 1 contract of Nifty futures purchased at Rs. 10,800. Nifty Futures closes at Rs. 10,620 next day. What is the mark to market for the investor? (Nifty lot size - 75).", "options": ["Rs. -13500", "Rs. +13500", "Rs. -9000", "Rs. -18000"], "correctIndex": 0, "explanation": "10800-10620 = 180 points loss 180 X75 = 13,500 Loss"}, {"id": 5, "question": "The process by which a futures contract is terminated by a transaction that is equal and opposite to the original transaction is called __________ .", "options": ["Hedging", "off setting", "Arbitraging", "Spread trading"], "correctIndex": 1, "explanation": "A closing transaction is one that reduces or eliminates an existing position by an appropriate offsetting purchase or sale."}, {"id": 6, "question": "What does ‘Gamma’ measure in options trading?", "options": ["Sensitivity of delta to changes in interest rate", "Rate of change of option price with respect to volatility", "Rate of change of delta with respect to the underlying price", "Sensitivity of option premium to time decay"], "correctIndex": 2, "explanation": "Gamma is a second-order Greek that tells us how fast delta is changing. While delta measures how much the option price changes with a ?1 move in the underlying, gamma tells us how much delta itself will change. Understanding gamma is crucial for hedging, as it impacts the effectiveness of delta-neutral strategies. Traders monitor gamma to manage portfolio risk in fast-moving markets."}, {"id": 7, "question": "Ms. Deepti is bearish on the market, so she is expecting the market to ___________ .", "options": ["Fall", "Rise", "Remain stable", "Become highly volatile"], "correctIndex": 0, "explanation": "Investors who have a bearish on the stock or index expect the stock price or index level to fall, take a short position in the stock futures or index futures contract. (Investors who have a bullish view on the underlying stock or index expect the stock price or index level to increase and they take a long position in the stock futures or index futures contract)."}, {"id": 8, "question": "Over-the-counter market is not a physical marketplace but a collection of broker-dealers scattered across the country", "options": ["True", "False"], "correctIndex": 0, "explanation": "The over-the-counter (OTC) market is not a physical marketplace; it is a decentralized network where trading occurs directly between participants, such as broker-dealers, via electronic means or over the phone. This distinguishes it from centralized exchanges with a physical location. Hence, the correct answer is TRUE."}, {"id": 9, "question": "You sold a Put option on a share. The strike price of the put was Rs.245 and you received a premium of Rs.49 from the option buyer. Theoretically, what can be the maximum loss on this position?", "options": ["196", "245", "49", "294"], "correctIndex": 0, "explanation": "The maximum loss for a seller of a put option occurs if the underlying stock price drops to zero. Strike price = Rs. 245 Premium received = Rs. 49 Maximum loss = Strike price - Premium received Maximum loss = 245 - 49 = Rs. 196 Therefore, the maximum loss on this position is Rs. 196."}, {"id": 10, "question": "The broker is compulsorily required to get a Risk Disclosure Document signed by the client, at the time of client registration - State True or False?", "options": ["True", "False"], "correctIndex": 0, "explanation": "The broker is required to get a Risk Disclosure Document signed by the client, at the time of client registration. This document informs clients about the kind of risks that derivatives can involve for the client. It makes the client aware and well informed."}, {"id": 11, "question": "A trader sells a PUT option of strike Rs 100 on ABC stock for a premium of Rs 25. On expiry day, the ABC stock closed at Rs 50. What is the trader's profit or loss in Rs. ? ( Lot size is 1000 )", "options": ["+25000", "- 25000", "-50000", "-75000"], "correctIndex": 1, "explanation": "—"}, {"id": 12, "question": "Mr P and Mr Q are clearing members of a stock exchange . Both of them have maintained Rs 7 crores of liquid assets consisting of equity shares and other assets. Both have the same exposure limits on day one. Based on this, which of the following statements is true ?", "options": ["The minimum exposure possible for the two brokers may change from time to time based on the changes in those asset valuations, even if they do not withdraw the assets deposited", "The minimum exposure possible for the two brokers will remain same for ever, even if they withdraw the asset deposited subsequently", "The minimum exposure possible for the two brokers will remain the same forever as long as they do not withdraw the assets deposited", "The minimum exposure possible for the two brokers will increase automatically every quarter regardless of asset valuation"], "correctIndex": 0, "explanation": "The exposure depends on the value of assets deposited. Although both P and Q have deposited assets worth Rs.7 crores, the assets could be different (equity shares of different companies) and the value of these will become higher or lower as time passes. So the exposure limits will also change accordingly."}, {"id": 13, "question": "On the Balance sheet date, the balance in the _____________ should be shown separately under the head 'current assets'.", "options": ["Initial margin - Equity index futures account", "Mark-to-market margin - Equity index futures account", "Debit balance in the 'mark-to-market margin - Equity index futures account'", "Provision for Equity Index Futures Losses"], "correctIndex": 0, "explanation": "On the balance sheet date, the balance in the Initial margin - Equity index futures account should be shown separately under the head 'current assets'. This reflects the margin amount that has been deposited for open positions in futures contracts."}, {"id": 14, "question": "From the various complaints against a trading member given below, identify which one can be taken up by the exchange for redressal ?", "options": ["Complaints in respect of transactions which are already subject matter of arbitration proceedings", "Non-receipt of funds or securities", "Complaints relating to land dealings between a client and a trading member", "Claims for notional loss for the disputed period"], "correctIndex": 1, "explanation": "Exchanges provide assistance if the complaints fall within the purview of the Exchange and are related to trades that are executed on the Exchange Platform. ‘Non-receipt of funds / securities’ comes under this assistance."}, {"id": 15, "question": "If a portfolio is hedged with short position in index futures, then the amount of loss made in cash market will always be fully compensated by the profits on futures positions.", "options": ["True", "False"], "correctIndex": 1, "explanation": "While hedging with a short position in index futures can reduce the risk of losses in the cash market, the amount of loss in the cash market is not always fully compensated by profits in futures positions. This is because futures prices may not perfectly track the cash market due to factors like basis risk, changes in interest rates, or differences in liquidity between the two markets. Therefore, the hedge may not fully offset the losses in the cash market."}, {"id": 16, "question": "When there is a ‘Closing buy transaction’, this will have the effect of partly or fully offsetting ________ .", "options": ["A short position", "A long position", "A hedge position", "A spread position"], "correctIndex": 0, "explanation": "Creating a Short Position means selling the asset on an exchange with a view to buy it back when the price falls. So a Closing Buy transaction will be used to buy back / offset the short position created."}, {"id": 17, "question": "In an American Put Option, the buyer gets the right but not the obligation to ______________ the writer an underlying asset at a specified price _________________ .", "options": ["Buy from ; on or before the expiry date", "Buy from ; on the expiry date", "Sell to ; on or before the expiry date", "Sell to ; on the expiry date"], "correctIndex": 2, "explanation": "American option: The owner (buyer/holder) of an American option can exercise his right at any time on or before the expiry date/day of the contract. A Put Option gives the buyer/holder a right to sell the underlying asset. Therefore an American Put Option gives the buyer the right but not the obligation to sell to the writer an underlying asset at a specified price on or before the expiry date."}, {"id": 18, "question": "_____________ options are options that can be exercised only on the expiration date itself.", "options": ["American", "European", "Bermudan", "Asian"], "correctIndex": 1, "explanation": "European options are options that can be exercised only on the expiration date itself, as opposed to American options, which can be exercised at any time before or on the expiration date."}, {"id": 19, "question": "In stock markets, Beta is a statistical measure of the sensitivity of the movement of a share price to the movement of prevailing interest rates - State True or False?", "options": ["True", "False"], "correctIndex": 1, "explanation": "Beta measures the sensitivity of a stock / portfolio vis-a-vis index movement over a period of time, on the basis of historical prices."}, {"id": 20, "question": "The strategy of _________ involves options with different strike prices but same expiry dates.", "options": ["Horizontal spreads", "Diagonal spreads", "Vertical spreads", "Calendar spreads"], "correctIndex": 2, "explanation": "Spreads are option strategies which involve combining options on the same underlying and of same type (call/ put) but with different strikes and maturities. These are limited profit and limited loss positions. Vertical spreads are created by using options having same expiry date but different strike prices. These can be created either using calls as combination or puts as combination."}, {"id": 21, "question": "The beta of ABC Company is 0.8. Assuming you have a position of Rs 10,00,000 worth of ABC shares, which of the following gives a complete hedge", "options": ["Sell 10 Lakhs worth of Nifty Futures", "Buy 10 Lakhs worth of Nifty Futures", "Sell 12 Lakhs worth of Nifty Futures", "Sell 8 Lakhs worth of Nifty Futures"], "correctIndex": 3, "explanation": "Beta measures the sensitivity of a stock's returns relative to the market. In this case, the beta of ABC Company is 0.8, which means the stock moves 80% as much as the market. To hedge the position completely, you need to offset the market risk by taking a position in the Nifty futures that has an equivalent effect: Hedge Amount: The value of your position in ABC shares is Rs 10,00,000. Since the beta is 0.8, the hedge amount should be adjusted accordingly. Hedge Calculation: To hedge the Rs 10,00,000 worth of ABC shares, the position in Nifty futures should be Rs 10,00,000 × 0.8 = Rs 8,00,000."}, {"id": 22, "question": "Its possible to draw the payoff charts for Time spreads", "options": ["True", "False"], "correctIndex": 0, "explanation": "Yes, it is possible to draw payoff charts for Time Spreads (also called Calendar Spreads). A time spread involves buying and selling options with the same strike price but different expiration dates. The payoff chart visually represents potential profits and losses at expiry and helps in understanding the strategy’s behavior under different market conditions."}, {"id": 23, "question": "A stock is currently selling at Rs. 165. The put option at Rs. 163 strike price costs Rs.3. What is the time value of the option?", "options": ["Rs. 0", "Rs. 3", "Rs. 5", "Rs. 8"], "correctIndex": 1, "explanation": "Formula: Time Value=Option Premium−Intrinsic Value Calculation: Intrinsic Value (for put option) = max(163 - 165, 0) = 0 Time Value = 3 - 0 = Rs. 3 Thus, the time value of the option is Rs. 3"}, {"id": 24, "question": "A long position in futures market can be reversed only with the same counterparty from whom the contract was initially purchased - State whether True or False?", "options": ["True", "False"], "correctIndex": 1, "explanation": "Futures contracts are traded on screen based derivatives market where the identity of the buyer and seller is unknown to each other. A trade can be squared off with any buyer or seller whose quotes are available on the screen. The Clearing Corporation acts as a legal counterparty for every contract and guarantees the trades."}, {"id": 25, "question": "What advantage does the screen based trading has over floor trading?", "options": ["There are no set up costs in screen based trading", "There is transparency in trade execution and execution price", "The technology needs are lower", "There is no need to route the order through an exchange"], "correctIndex": 1, "explanation": "Screen based (Trading thro' computers) trading is fully transparent"}, {"id": 26, "question": "Which of the following statement is TRUE about time value of options?", "options": ["Only call option has time value.", "The longer the time to expiration, the greater is an option's time value.", "The time value of an option is the sum of its premium and its intrinsic value.", "An option that is in-the-money has only time value."], "correctIndex": 1, "explanation": "The effect of time to expiration on both call and put options is similar to that of volatility on option premiums. Generally, longer the maturity of the option, greater is the uncertainty and hence the higher is the premium. Thus, an index option with a strike price of 17500 and maturing in three months will generally trade at a higher price than an option with the same strike price but expiring in one month."}, {"id": 27, "question": "Specific risk ( A component of Price Risk) cannot be completely avoided while investing in securities.", "options": ["True", "False"], "correctIndex": 0, "explanation": "Specific risk, also known as unsystematic risk, is the risk associated with an individual security or company. While diversification can help reduce specific risk, it cannot be completely eliminated. Even with a well-diversified portfolio, some level of specific risk remains."}, {"id": 28, "question": "In case of open position of any mutual fund scheme exceeding the specified limit , the penalty charged on the clearing member for each day of violation would be", "options": ["1 percent of the total quantity in violation per client or Rs.1,00,000 per client, whichever is lower", "1 percent of the value of the quantity in violation per client or Rs.1,00,000 per client, whichever is lower", "1 percent of the value of the quantity in violation per client or Rs.5,00,000 per client, whichever is lower", "1 percent of the total quantity in violation per client or Rs.1,00,000 per client, whichever is higher"], "correctIndex": 1, "explanation": "When the open position in a mutual fund scheme exceeds the specified limit, the penalty is based on the value of the quantity in violation, not the quantity itself. The penalty is calculated as 1% of the value of the excess position, or a fixed amount of Rs. 1,00,000 per client, whichever is lower."}, {"id": 29, "question": ")Adjustment for corporate actions for stock options shall be carried out __________.", "options": ["on the last trading day of the month prior to the month of corporate action", "on the last day on which a security is traded on a ‘cum’ basis in the underlying cash market, after the close of trading hours", "Any adjustment for corporate actions shall be carried out on the last day on which a security is traded on a ‘cum’ basis in the underlying cash market, before the close of trading hours", "on any of the above days"], "correctIndex": 1, "explanation": "Corporate actions such as dividends, stock splits, or rights issues often lead to adjustments in stock options to reflect the impact of these actions. The adjustment for corporate actions is typically made after the close of trading hours on the last day a security is traded on a 'cum' basis (before the ex-dividend date or other corporate action date) to ensure the option prices and strike prices reflect the change."}, {"id": 30, "question": "_________________ has issued guidance notes on accounting of stock futures and options for traders", "options": ["SEBI", "RBI", "ICAI", "NSE"], "correctIndex": 2, "explanation": "The Institute of Chartered Accountants of India (ICAI) has issued guidance notes on the accounting of stock futures and options for traders. These guidelines help traders and businesses comply with accounting standards while dealing with derivatives like futures and options."}, {"id": 31, "question": "On the derivative exchanges, all the orders entered on the Trading System are at prices exclusive of brokerage.", "options": ["True", "False"], "correctIndex": 0, "explanation": "On the derivative exchanges, all the orders entered into the Trading System are at prices exclusive of brokerage. This means the prices quoted for buying or selling are the market prices without including any brokerage fees, which are typically charged separately."}, {"id": 32, "question": "Is it true that at expiration, the value of an option is its intrinsic value?", "options": ["Yes, its true for all options", "No, its not true for all options", "Yes, its true but only for Call options", "Yes, its true but only for Put options"], "correctIndex": 0, "explanation": "At expiration, the exercise settlement value for each unit of the exercised contract is computed as follows: Call options = Closing price of the security on the day of exercise - Strike price Put options = Strike price - Closing price of the security on the day of exercise. In other words, the final settlement amount is equal to the intrinsic value of the option at expiration."}, {"id": 33, "question": "Stock JKL Limited : SPOT Rs 290. Strike Rs 280. Premium Rs 24. At what spot price of JKL ltd, will the above call option break even?", "options": ["Rs 280", "Rs 256", "Rs 304", "Rs 314"], "correctIndex": 2, "explanation": "The break-even price for a call option is calculated by adding the premium paid to the strike price. In this case: Strike Price = Rs 280 Premium = Rs 24 Break-even price = Strike Price + Premium Break-even price = Rs 280 + Rs 24 = Rs 304"}, {"id": 34, "question": "The Time value of an option is the portion of option premium that is linked to the amount of time left till expiry of the option contract and also due to the fact that the underlying components that determine the value of option may change during that time - State True or False ?", "options": ["True", "False"], "correctIndex": 0, "explanation": "Time value of the option depends upon how much time is remaining for the option to expire. If all other factors affecting an option’s price remain same, the time value portion of an option’s premium will decrease with the passage of time. This is also known as time decay."}, {"id": 35, "question": "SEBI's centralized web based complaints redress system which provides online access 24 x 7 is called ____________.", "options": ["NSDL", "SEBI Sentinel", "Investor Grievance Redressal System (IGRS)", "SCORES"], "correctIndex": 3, "explanation": "SEBI's centralized web-based complaints redress system, which provides online access 24x7, is called SCORES (SEBI Complaints Redress System). It allows investors to lodge complaints and track their status online."}, {"id": 36, "question": "Clearing Corporation of an Exchange guarantees performance of exchange traded contracts - State whether True or False?", "options": ["True", "False"], "correctIndex": 0, "explanation": "Clearing Corporation acts as a legal counterparty to all trades on this segment and also guarantees their financial settlement."}, {"id": 37, "question": "'Bulls' are those investors who believe the market will rise - State True or False?", "options": ["True", "False"], "correctIndex": 0, "explanation": "Investors who believe that the markets will rise are called Bulls and investors who believe that markets will fall are known as Bears."}, {"id": 38, "question": "Identify the FALSE statement.", "options": ["For Call Options: With the decrease in strike price, the premium on call increases", "For Call Options: With the increase in strike price, the premium on call increases", "For Put Options: With the increase in strike price, the premium on put increases", "For Put Options: With the decrease in strike price, the premium on the put decreases"], "correctIndex": 1, "explanation": "The premium of an option depends on its intrinsic value and time value. Let's analyze the statements: True – For Call Options, when the strike price decreases, the option becomes more valuable because the buyer can purchase the asset at a lower price. Hence, the premium increases. False – For Call Options, when the strike price increases, the option becomes less attractive because the buyer has to pay more for the asset. Higher strike price leads to a lower premium. True – For Put Options, when the strike price increases, the option becomes more valuable, since the buyer can sell at a higher price. Higher strike price leads to a higher premium. True – For Put Options, when the strike price decreases, the option becomes less valuable, reducing the premium. Thus, the FALSE statement is:\"For Call Options: With the increase in strike price, the premium on call increases.\""}, {"id": 39, "question": "If there is no cross margining between cash and derivative segments of an exchange, this will _________ .", "options": ["Promotes economic inefficiency", "Increase the cost of trading", "Reduces the volumes for given level of risk capital in the economy", "Has no impact on trading costs"], "correctIndex": 1, "explanation": "Cross margining is available across Cash and Derivatives segment. If a trader has credit balance in his trading account in the cash segment, he can use it to margin his derivative trading, thus reducing his overall margin level. If cross margining is not there, more margin will have to be deposited with the exchange which will increase the cost of trading."}, {"id": 40, "question": "______ is a measure of the sensitivity of an option price to changes in market volatility.", "options": ["Gamma", "Delta", "Vega", "Rho"], "correctIndex": 2, "explanation": "Vega is a measure of the sensitivity of an option's price to changes in market volatility. It indicates how much the price of an option will change with a 1% change in the volatility of the underlying asset."}, {"id": 41, "question": "A trader wants to sell stock options. But he does not own the underlying stock. Can he do it in India ?", "options": ["Yes", "No"], "correctIndex": 0, "explanation": "In India, a trader can sell (write) stock options even if they do not own the underlying stock. This is known as selling \"naked\" options. However, the trader must maintain sufficient margin with the broker to cover potential losses. If the option is exercised by the buyer, the seller will have to acquire the stock to deliver it, which could lead to significant losses if the price has moved unfavorably."}, {"id": 42, "question": "Cross margining between cash and derivative segments of an exchange helps reduce the overall margin level applicable to investors and traders - State True or False?", "options": ["True", "False"], "correctIndex": 0, "explanation": "Cross-margining allows investors and traders to offset positions in the cash and derivatives segments of an exchange, as risks in one segment may be hedged by positions in the other. This reduces the overall margin requirement since it reflects the net risk exposure instead of requiring separate margins for each segment. Hence, the correct answer is True."}, {"id": 43, "question": "Identify the True formula for Cost of Carry model.", "options": ["Price of Futures = Cost of carry", "Price of Futures = Spot price", "Price of Futures = Spot + Cost of carry", "Price of Futures = Spot - Cost of carry"], "correctIndex": 2, "explanation": "Cost of Carry is the relationship between futures prices and spot prices. For stock derivatives, carrying cost is the interest paid to finance the purchase. For example, assume the share of XYZ Ltd is trading at Rs. 500 in the cash market. A person wishes to buy the share, but does not have money. In that case he would have to borrow Rs. 500 at the rate of, say, 12% per annum. So 1% ie. Rs 5 ( 1% of Rs 500) is the per month interest cost. and this Rs 5 is the cost of carry. The future price (ideally) at the beginning of month will be Spot Price + Cost of Carry ie. Rs 500 + Rs 5 = Rs 505."}, {"id": 44, "question": "When you purchase a call option", "options": ["You are long and want the market to rally.", "You are short and want the market to fall.", "You are neutral but want the market to sit.", "You are neutral but want the market to move in either direction."], "correctIndex": 0, "explanation": "When you purchase a call option, you gain the right (but not the obligation) to buy the underlying asset at the strike price. This strategy profits from a rising market, as the value of the call option increases when the underlying asset's price moves above the strike price, making you \"long\" on the asset."}, {"id": 45, "question": "Arbitrage is basically earning a risk-free profit by simultaneous buying and selling replicating assets in two or more different markets - State True or False?", "options": ["True", "False"], "correctIndex": 0, "explanation": "Arbitrage is a deal that produces profit by exploiting a price difference in a product in two different markets. Arbitrage originates when a trader purchases an asset cheaply in one location and simultaneously arranges to sell it at a higher price in another location."}, {"id": 46, "question": "______________ is required to be paid by a buyer of an option till the premium settlement is complete", "options": ["Initial margin", "Premium margin", "Exposure margin", "Mark-to-market margin"], "correctIndex": 1, "explanation": "The Premium margin is required to be paid by a buyer of an option until the premium settlement is complete. This ensures that the buyer has sufficient funds to cover the option premium."}, {"id": 47, "question": "In case of ban on the fresh position in the process of enforcement of the market wide limits, the normal trading in that scrip is resumed after the open outstanding comes down to ______ or below of the market wide position limit", "options": ["80%", "90%", "95%", "100%"], "correctIndex": 0, "explanation": "In the case of a ban on fresh positions due to the enforcement of market-wide limits, normal trading in the scrip is resumed after the open outstanding comes down to 80% or below of the market-wide position limit."}, {"id": 48, "question": "Mr. Harish had purchased 20 call options on a stock by paying a premium of Rs 10 per call (Strike price of Rs. 125). The stock price has closed at Rs. 100 on the exercise date. Based on economic rationale alone, Mr. Harish ________________.", "options": ["Should exercise the option but he should not take delivery of the underlying", "Should exercise the option", "Should not exercise the option", "Should exercise the option as he likes the management of the company"], "correctIndex": 2, "explanation": "Mr. Harish has purchased a call option which means he believed that the price of that call will go up. Instead the price has fallen. So he should not exercise the option and the maximum loss he will suffer is the premium paid by him."}, {"id": 49, "question": "Investors who believe that the markets will fall are known as Bulls - State True or False?", "options": ["True", "False"], "correctIndex": 1, "explanation": "Investors who believe that the markets will fall are known as Bears. Investors who believe that the markets will rise are known as Bulls."}, {"id": 50, "question": "What happens to a 'Day Order' if its not executed during the day?", "options": ["The Order will be executed in the auction market", "The Order will be executed in the after-hours", "The Order will be executed on the next trading day", "The Order will be cancelled automatically at the end of the day"], "correctIndex": 3, "explanation": "A Day order is an order which is valid for a single day on which it is entered. If the order is not executed during the day, the trading system cancels the order automatically at the end of the day."}, {"id": 51, "question": "In which option is the strike price better than the market price (i.e., price difference is advantageous to the option holder) and therefore it is profitable to exercise the option?", "options": ["Higher the money option", "Out of the money option", "In the money option", "At the money option"], "correctIndex": 2, "explanation": "This occurs when the strike price is better than the market price (i.e., the option holder can exercise the option profitably). For a call option, this means the market price is higher than the strike price, and for a put option, the market price is lower than the strike price."}, {"id": 52, "question": "Which of the below statement(s) hold true for Futures Contract?", "options": ["Futures Contracts are settled through clearing corporation of the exchange", "Futures Contracts are standardized contracts", "Futures Contracts are traded on an exchange", "All of the above"], "correctIndex": 3, "explanation": "Futures contract are standardised in terms of size of the contract, time to expiry etc. They are always traded on a recognised exchange and the settlement is through a clearing corporation."}, {"id": 53, "question": "In the Options segment, if you buy a PUT, you expect the market / scrip to move ________ .", "options": ["One cannot buy a PUT in options market", "Up", "Down", "Sideways/no change"], "correctIndex": 2, "explanation": "A buyer of a PUT option has a negative / bearish view and so he expects the market / script to move down to make a profit."}, {"id": 54, "question": "Hedgers and speculators are two important participants of a securities market and they strike a balance due to their needs as ____________.", "options": ["Hedger wants to avoids risk while the speculator wants to takes risk", "Hedger wants to takes risk while speculators wants to avoids risk", "Both hedgers and speculators want to avoid risk", "Both hedgers and speculators want to take risk"], "correctIndex": 0, "explanation": "Corporations, Investing Institutions, banks and governments all use derivative products to hedge or reduce their exposures to market variables such as interest rates, share values, bond prices, currency exchange rates and commodity prices. Speculators/Traders try to predict the future movements in prices of underlying assets and based on the view, take positions in derivative contracts. They take a risk to make profits. Hedgers aim to hedge their risk where as speculators take the risk which hedgers plan to offload from their exposure."}, {"id": 55, "question": "The simultaneous purchase and sale of two different tenors futures contracts in the same underlying is known as a ______ .", "options": ["Straddle", "Strangle", "Spread trade", "Butterfly spread"], "correctIndex": 2, "explanation": "In case of a Spread Trade, two opposite positions (one long and one short) are taken either in two contracts with same maturity on different products or in two contracts with different maturities on the same product."}, {"id": 56, "question": "Theta is also referred to as the _________ of the portfolio", "options": ["price sensitivity", "volatility decay", "time decay", "interest rate sensitivity"], "correctIndex": 2, "explanation": "Theta is a measure of the sensitivity of an option's price to the passage of time. It represents how much the price of an option decreases as time passes, assuming all other factors remain constant. This time decay is often referred to as time decay."}, {"id": 57, "question": "The normal trading is resumed in a scrip banned in derivatives segment if the open interest ________", "options": ["falls below 90 percent of the market wide position limit", "falls below 80 percent of the market wide position limit", "falls below or equals 80 percent of the market wide position limit", "falls below or equals 90 percent of the market wide position limit"], "correctIndex": 2, "explanation": "When a scrip is banned in the derivatives segment due to market-wide position limits being breached, the normal trading in that scrip is resumed once the open interest falls below or equals 80 percent of the market-wide position limit."}, {"id": 58, "question": "For which type of options is it profitable to exercise the options?", "options": ["Out of the Money", "At the Money", "In the Money", "Deep Out of the Money"], "correctIndex": 2, "explanation": "IN THE MONEY - A call option with a strike price that is lower than the market price of the underlying asset, or a put option with a strike price that is higher than the market price of the underlying asset. In the money means that your stock option is worth money and you can turn around and sell or exercise it. For example, consider a stock that is trading at Rs 100. For such a stock, call options with strike prices below Rs 100 would be In the money calls ( ie Rs 80, Rs 90 calls) while put options with strike prices above Rs 100 (Rs 110 , Rs 120 calls etc.)would be In the money puts. For easy understanding, those calls or puts which are profitable are In the Money."}, {"id": 59, "question": "Which of the following contracts are automatically squared off on expiry date?", "options": ["Deep out of the money option contracts", "Deep at the money option contracts", "In the money option contracts", "At the money option contracts"], "correctIndex": 2, "explanation": "In the case of in-the-money option contracts, these are automatically squared off or exercised on the expiry date. This means the option holder will exercise the option, and the position will be settled. Out-of-the-money and at-the-money options may expire worthless, and deep out-of-the-money options may not be exercised, but they do not get automatically squared off in the same manner as in-the-money options."}, {"id": 60, "question": "What does a seller of Put Option expect?", "options": ["An increase in the price of the underlying", "No change in the price of the underlying", "A decrease in the price of the underlying", "Both 1 and 2"], "correctIndex": 3, "explanation": "A seller (writer) of a put option is obligated to buy the underlying asset at the strike price if the buyer exercises the option. Therefore, the seller benefits when the option is not exercised, which happens when: The price of the underlying goes up, making the put option out of the money, or The price of the underlying remains the same or above the strike price, so the buyer has no incentive to exercise. In both scenarios, the put seller keeps the premium and avoids the obligation to buy at a loss. But if the price falls below the strike, the put seller may incur losses."}, {"id": 61, "question": "Vertical spread is also known as Time spread.", "options": ["True", "False"], "correctIndex": 1, "explanation": "A vertical spread involves options with the same expiration date but different strike prices. In contrast, a time spread (or calendar spread) involves options with the same strike price but different expiration dates. Since vertical spreads are not the same as time spreads, the correct answer is FALSE."}, {"id": 62, "question": "When a seller SHORT SELLS a stock, it means _____ .", "options": ["He has more than a months time to deliver the stock which he sold", "He owns the stock he is supposed to deliver", "He has to deliver the stock within a short time", "He does not own the stock he is supposed to deliver"], "correctIndex": 3, "explanation": "Selling Short means Seller does not own the stock he is supposed to deliver. He has done a sale trade because he expects the price to fall and has to buy back the stock (either with a profit or loss) before the end of trading on that day."}, {"id": 63, "question": "Mr. Ganesh thinks that the markets will go down, so he sell 10 lots of index futures at 3500. His predictions come true and the index falls and Mr. Ganesh buys back the futures contract at 3410. What is the profit Mr. Ganesh has made if one lot of index is of 50.", "options": ["4500", "90000", "45000", "35000"], "correctIndex": 2, "explanation": "Mr Ganesh had sold at Rs 3500 and bought back at Rs 3410. So he made a profit of Rs 90. Total Quantity sold = 10 lots x 50 (lot size) = 500 Total Profit = Rs 90 x 500 = Rs 45,000"}, {"id": 64, "question": "In the derivatives segment, who has to pay the margins as specified by the Clearing Corporation?", "options": ["Only Clearing Members", "Only Trading Members", "Only Clients", "All of the above"], "correctIndex": 3, "explanation": "All those who trade in the derivatives segment have to pay margins without exception."}, {"id": 65, "question": "In case of a member’s default, the Clearing Corporation cannot transfer clients positions to another member or close out all open positions of defaulting member, without prior approval from SEBI – State True or False ?", "options": ["True", "False"], "correctIndex": 1, "explanation": "As per SEBI rules - The Clearing Corporation can transfer client positions from one broker member to another broker member in the event of a default by the first broker member. A report is then sent to SEBI regarding this."}, {"id": 66, "question": "________ involves combining options on the same underlying and of the same type (call/ put) but with different strikes and maturities", "options": ["Straddles", "Strangles", "Spreads", "Collars"], "correctIndex": 2, "explanation": "A spread involves combining options of the same type (either call or put) on the same underlying asset but with different strike prices or maturities. This strategy can be used to take advantage of price movements in the underlying asset while managing risk. In this case, a spread involves options that are of the same type (call or put) but have varying strike prices or expiration dates, allowing traders to create positions that hedge or capitalize on specific market conditions."}, {"id": 67, "question": "Mr X sells one ABC stock futures contract at Rs. 745. What is his profit (+) or loss (-), if he purchases the contract back at Rs. 754 ? Lot size is 1500.", "options": ["-13500", "+13500", "-9000", "-18000"], "correctIndex": 0, "explanation": "When you sell a stock future contract you make a profit if the share price falls or you make a loss if the price rises. In this case, ABC stock futures has risen by Rs. 9 (754 - 745). So there will be a loss. Rs. 9 x 1500 (Lot size) = Loss of Rs 13500"}, {"id": 68, "question": "Price that is agreed upon at the date of the contract for the delivery of an asset at a specific futures date is called _______.", "options": ["Spot Price", "Strike Price", "Futures Price", "Forward Price"], "correctIndex": 2, "explanation": "The futures price is the agreed-upon price on the date of entering the futures contract for the delivery of an asset at a specific future date. It reflects the expectations of market participants about the future value of the underlying asset, including costs like storage, interest, and other factors."}, {"id": 69, "question": "Butterfly spread is a _____________ strategy", "options": ["Unlimited Profit & Limited Loss", "Limited Profit & Limited Loss", "Unlimited Profit & unlimited Loss", "Limited Profit & unlimited Loss"], "correctIndex": 1, "explanation": "A butterfly spread is an options strategy that involves three strike prices and is designed to profit from low volatility. The strategy typically consists of buying one lower strike call, selling two at-the-money calls, and buying one higher strike call. This results in a limited profit potential and a limited loss, as the maximum profit occurs when the underlying asset price is at the middle strike price at expiration, and the maximum loss occurs if the price moves far away from the middle strike."}, {"id": 70, "question": "Delta refers to the Rate of change in the _____________.", "options": ["Option premium for a unit change in spot price of the underlying", "Option premium for a unit change in interest rate", "Option premium for a unit change in volatility of the underlying", "Option premium for a unit change in time to expiry"], "correctIndex": 0, "explanation": "Option premiums change with changes in the factors that determine option pricing i.e., factors such as strike price, volatility, term to maturity, etc. The sensitivities most commonly tracked in the market are known collectively as “Greeks” represented by Delta, Gamma, Theta, Vega and Rho. The most important of the ‘Greeks’ is the option’s “Delta”. This measures the sensitivity of the option value to a given small change in the price of the underlying asset. It may also be seen as the speed with which an option moves with respect to price of the underlying asset. Delta = Change in option premium/ Unit change in price of the underlying asset"}, {"id": 71, "question": "The Stock should be among the top ________ in terms of _______________________ & ___________________ to be considered for derivatives trading", "options": ["100, market capitalisation, av daily traded value for this month", "500 , average daily market capitalisation, avg daily traded value for previous 3 months", "100, market capitalisation, avg daily traded value for this month", "500 , average daily market capitalisation, avg daily traded value for previous 6 months"], "correctIndex": 3, "explanation": "To be considered for derivatives trading, the stock should be among the top 500 in terms of average daily market capitalization and average daily traded value for the previous 6 months. This ensures liquidity and sufficient market interest for derivatives contracts on the stock."}, {"id": 72, "question": "An open interest is the total number of contracts traded in a month for an underlying asset", "options": ["True", "False"], "correctIndex": 1, "explanation": "Open interest refers to the total number of outstanding contracts (either long or short) that have not been settled or closed. It represents the total number of open positions in derivative contracts like futures and options. It is not the total number of contracts traded in a month, which refers to trading volume."}, {"id": 73, "question": "Its not possible to draw the payoff charts for Diagonal spreads", "options": ["True", "False"], "correctIndex": 0, "explanation": "Diagonal spreads involve options with different strike prices and expiration dates. Since the expiration dates are different, the payoff charts for diagonal spreads are not as straightforward to draw as they are for other spreads like vertical or horizontal spreads. The payoff structure depends on both the time decay and the difference in strike prices."}, {"id": 74, "question": "______________ involves same strike, same type but different expiry options", "options": ["Vertical spread", "Diagonal spread", "Horizontal spread", "Box spread"], "correctIndex": 2, "explanation": "Horizontal spread involves the same strike price, same type of options (call or put), but different expiry dates. This strategy is used to take advantage of the time decay in options with different expiration periods."}, {"id": 75, "question": "At expiration, the time value of an Option will be", "options": ["Zero", "Equal to the premium", "Equal to the strike price", "Maximum"], "correctIndex": 0, "explanation": "At expiration, the time value of an option becomes zero because there is no remaining time for the option to gain value. The option's value will then be purely based on its intrinsic value, if any. Hence, the correct answer is Zero."}, {"id": 76, "question": "Excess of premium in an option over the intrinsic value is known as the time value - State True or False ?", "options": ["True", "False"], "correctIndex": 0, "explanation": "Option premium consists of two components - intrinsic value and time value. Option premium is the sum of intrinsic value and time value. Time value is the difference between premium and intrinsic value. ATM and OTM options will have only time value because the intrinsic value of such options is zero."}, {"id": 77, "question": "Impact cost is low when the liquidity in the system is poor.", "options": ["True", "False"], "correctIndex": 1, "explanation": "Impact cost is incurred due to the execution of a large order, affecting the market price. When liquidity in the system is poor, it means there are fewer buyers and sellers, making it difficult to execute large orders without significantly impacting the price. This leads to a high impact cost, not a low one. Hence, the correct answer is FALSE."}, {"id": 78, "question": "If the volatility of the underlying stock is decreasing, the premium of call option would _______ .", "options": ["Increase", "Remain unchanged", "Decrease", "Become negative"], "correctIndex": 2, "explanation": "Lower the volatility lower the risk and so lower the premium. The stocks which are highly volatile will have comparatively higher option premiums as there involves a lot of risk trading in such stocks."}, {"id": 79, "question": "The operating range applicable in the Index futures is _____", "options": ["No operating range is applicable", "10 percent only", "20 percent only", "Decided daily by the broker"], "correctIndex": 1, "explanation": "The operating range applicable in Index futures is 10 percent. This range represents the daily price movement limit for index futures, beyond which trading can be suspended or restricted."}, {"id": 80, "question": "How should a seller of an option treat the premium received in his books of accounts?", "options": ["It should be treated as an Income", "It should be treated as an Expense", "It should be treated as an Asset", "It should be treated as a Liability"], "correctIndex": 0, "explanation": "The buyer/ holder of the option is required to pay the premium. In the books of the buyer/ holder, such premium should be debited to an appropriate account, say, \"Equity Index/ Stock Option Premium Account\". In the books of the seller/ writer such premium received should be credited to an appropriate account, say, \"Equity Index/ Stock Option Premium Account\"."}, {"id": 81, "question": "A seller of call option can lose unlimited amount of money - State True or False?", "options": ["True", "False"], "correctIndex": 0, "explanation": "A seller of a Call Option expects the price to fall. But as the price of the underlying rises, he begins to make losses. Theoretically the price can rise to any levels and so the call option seller may make unlimited losses."}, {"id": 82, "question": "Identify the CORRECT statement.", "options": ["A short position in a put option can be closed out by taking a long position in a put option of any exercise price and exercise date", "A short position in a put option can be closed out by taking a long position in a call option with the same exercise price and exercise date", "A short position in a put option can be closed out by taking a long position in a put option with the same exercise price and exercise date", "A short position in a put option can be closed out by taking a short position in a call option with the same exercise price and exercise date"], "correctIndex": 2, "explanation": "A closing transaction for an option involves the sale or purchase of an option contract with the same terms (contract specifications), i.e., an option with the same strike price and same expiry date."}, {"id": 83, "question": "____________ gives the information about the ratio of trading volume of put to call options", "options": ["Open Interest ratio", "Volatility Index (VIX)", "Put/ Call ratio", "Advance Decline ratio"], "correctIndex": 2, "explanation": "The Put/Call ratio gives the information about the ratio of trading volume of put options to call options. It is often used as a sentiment indicator, with a higher ratio suggesting a bearish market outlook and a lower ratio indicating a bullish market sentiment."}, {"id": 84, "question": "What is the minimum price movement in a scrip called ?", "options": ["Lot size", "Contract multiplier", "Tick", "Settlement price"], "correctIndex": 2, "explanation": "Tick size is the minimum price movement of a trading instrument. Exchanges decide the tick sizes on traded contracts as part of contract specification. The exchange informs the lot size and the tick size for each of the contracts traded on F&O segment from time to time. For eg. Tick size for Nifty futures is 5 paisa."}, {"id": 85, "question": "An option which would give a negative cash flow to its holder if it were exercised immediately is known as _______ .", "options": ["In the money option", "At the money option", "Out of the money option", "Deep in the money option"], "correctIndex": 2, "explanation": "An option is considered \"out of the money\" when exercising it immediately would result in a negative cash flow for the holder. This means that, in the case of a call option, the market price of the underlying asset is lower than the strike price, and for a put option, the market price of the underlying asset is higher than the strike price. In either case, exercising the option would result in a loss, making it \"out of the money.\""}, {"id": 86, "question": "A person who provides two way quotes for various stocks is known as _____ .", "options": ["Broker", "Underwriter", "Market Maker", "Arbitrageur"], "correctIndex": 2, "explanation": "A person who provides two-way quotes (buy and sell prices) for various stocks is known as a Market Maker. Market makers facilitate liquidity in the market by offering to buy and sell securities at quoted prices."}, {"id": 87, "question": "Equity Index Options are a form of _________.", "options": ["Exotic Options", "Vanilla Options", "Basket Options", "Synthetic Options"], "correctIndex": 2, "explanation": "Equity Index Options are referred to as Basket Options because they derive their value from a basket of underlying securities that make up the index. Instead of being linked to a single stock, these options track the performance of an entire index, such as Nifty or Sensex."}, {"id": 88, "question": "Meghna wants to sell 34 contracts of ABC futures at Rs. 2450 (contract multiplier is 50) . Initial margin is 7%. How much will be the initial margin to be paid ?", "options": ["Rs. 4,165,000", "Rs. 145,775", "Rs. 291550", "Rs. 332,400"], "correctIndex": 2, "explanation": "Margin to be collected from Meghna : Rs 2450 X 34 contracts X 50 (Market lot) at 7% = Rs 4165000 x 7% = Rs 291550"}, {"id": 89, "question": "Identify which of these is not an application of indices?", "options": ["Index Funds", "Index Derivatives", "Benchmarking Portfolio Performance", "Private equity funds"], "correctIndex": 3, "explanation": "Private Equity Funds are not connected to any index nor are they listed on a stock exchange. Traditionally, indices were used as a measure to understand the overall direction of stock market. However, few applications on index have emerged in the investment field such as Index Funds, Index Derivatives, Exchange Traded Funds etc."}, {"id": 90, "question": "The trades done by dealers in their own account has to be totally segregated from the trades done in their clients account - State True or False ?", "options": ["True", "False"], "correctIndex": 0, "explanation": "The trades done by dealers are in the 'PRO' account ie. Proprietary account and the trades done by Clients are in the 'CLI' account. 'Proprietary Trading’ is when a member trades on exchange on its own behalf. As directed by SEBI and in pursuance of byelaws members are advised to specify the nature of the order in terms of order being a ‘Client order’ or ‘Proprietary order’."}, {"id": 91, "question": "In a calendar spread transaction, the trader takes opposite position in two futures contract with _______ .", "options": ["two different underlying assets and same delivery month", "two differently delivery months and two different underlying assets", "two differently delivery months and same underlying asset", "one stock and one index of same delivery months"], "correctIndex": 2, "explanation": "Calendar spread position is a combination of two positions in futures on the same underlying - long on one maturity contract and short on a different maturity contract. For instance, a short position in near month contract coupled with a long position in far month contract is a calendar spread position."}, {"id": 92, "question": "Naked position in futures market simply means a long or short position in any futures contract without having any position in the underlying asset.", "options": ["True", "False"], "correctIndex": 0, "explanation": "Naked position in futures market simply means a long or short position in any futures contract without having any position in the underlying asset. Calendar spread position is a combination of two positions in futures on the same underlying - long on one maturity contract and short on a different maturity contract."}, {"id": 93, "question": "What could be the maximum loss for a Seller of Options Contract", "options": ["Depends on the Strike Price", "Depends on the type of the option like CALL or PUT", "Limited to premium received", "Unlimited"], "correctIndex": 3, "explanation": "The maximum loss for a seller of an options contract is unlimited. This is because, for a call option seller, the price of the underlying asset can rise indefinitely, leading to unlimited loss potential. For a put option seller, while the loss is limited to the strike price (if the underlying asset goes to zero), in the case of a call option, the loss can continue to grow as the price of the asset increases."}, {"id": 94, "question": "Cash and Carry model for futures pricing is also known as non-arbitrage model", "options": ["True", "False"], "correctIndex": 0, "explanation": "The Cash and Carry model for futures pricing is also known as the non-arbitrage model because it assumes that there is no possibility of arbitrage opportunities. In this model, an investor buys the underlying asset in the spot market and simultaneously sells a futures contract for the same asset. The strategy ensures that there is no arbitrage profit, as the cost of holding the asset (including storage and financing) is offset by the futures price. This is based on the principle of no-arbitrage pricing, meaning that the futures price should reflect the cost of carrying (holding) the asset."}, {"id": 95, "question": "_____________ guarantees the performance of exchange traded contracts. Clearing Corporation.", "options": ["SEBI", "Depository", "Clearing Corporation", "Stock Exchange"], "correctIndex": 2, "explanation": "Clearing Corporation is responsible for clearing and settlement of all trades executed in the F&O Segment of the Exchange. According to the legal principle of ‘novation’, the Clearing Corporation becomes the central counterparty to all trades that take place on the exchange’s derivatives platform. A clearing corporation guarantees contract performance (settlement of transactions)."}, {"id": 96, "question": "If a stock is excluded from the F&O list, it shall not be considered for re-inclusion for a period of _______", "options": ["six months", "two years", "three years", "one year"], "correctIndex": 3, "explanation": "If a stock is excluded from the Futures and Options (F&O) list, it cannot be considered for re-inclusion in the segment for a minimum period of one year, as per the rules set by the exchange. This ensures a consistent evaluation of eligibility criteria before re-admission."}, {"id": 97, "question": "As per news, the Government can lose a vote of confidence and this can affect the stock markets pretty badly. If you are an active trader, what is the ideal step you will take?", "options": ["Double your portfolio holdings", "Buy more stocks at current levels", "Sell index futures", "Exit the market completely and stop trading"], "correctIndex": 2, "explanation": "In case of a negative news like fall of a Government, the stock markets generally fall. Its difficult to judge which stocks will fall more. So, the best way is to short the index futures as the index is bound to fall in response to a negative news and the active trader can profit from it."}, {"id": 98, "question": "Tick size for Nifty futures is Rs 0.05", "options": ["True", "False"], "correctIndex": 0, "explanation": "The tick size for Nifty futures is indeed Rs. 0.05, which refers to the minimum price movement for the contract."}, {"id": 99, "question": "The initial margin is always equal to the mark-to-market margin - State True or False?", "options": ["True", "False"], "correctIndex": 1, "explanation": "Mark to Market is a process by which margins are adjusted on the basis of daily price changes in the markets for underlying assets. So this margin is as per the daily price movements. Initial margin is usually fixed depending on the price volatility. Higher the volatility, higher the initial margin."}, {"id": 100, "question": "Options contracts have two types of settlements: ______ premium settlement and Final settlement", "options": ["Weekly", "Monthly", "Daily", "Instant"], "correctIndex": 2, "explanation": "Options contracts have two types of settlements: Daily premium settlement and Final settlement. Daily Premium Settlement :The buyer of an option pays the premium, while the seller receives the same. The amount payable and receivable as premium are netted to compute the net premium payable or receivable amount for each client for each option contract. The clearing members who have a premium payable position are required to pay the premium amount to the clearing corporation and in turn this amount is passed on to the members who have a premium receivable position. This is known as daily premium settlement. The premium payable amount and premium receivable amount are directly credited/ debited to the clearing member’s clearing bank account on T+1 day, where T is the trade date."}]
+;
+
+/* ===================== CONFIG ===================== */
+const TEST_DURATION_SEC = 60 * 60; // 60 minutes
+const MARKS_CORRECT = 1;
+const MARKS_WRONG = -0.25;
+const PASS_PERCENT = 50;
+const STORAGE_KEY = 'nism8_mocktest1_state_v1';
+
+/* ===================== STATE ===================== */
+let state = {
+  current: 0,
+  answers: {},     // qid -> selected option index
+  visited: {},      // qid -> true
+  marked: {},       // qid -> true
+  timeLeft: TEST_DURATION_SEC,
+  startedAt: null,
+  finished: false,
+};
+
+let timerInterval = null;
+
+/* ===================== ELEMENTS ===================== */
+const el = id => document.getElementById(id);
+const testScreen = el('testScreen');
+const resultScreen = el('resultScreen');
+
+/* ===================== LOCAL STORAGE ===================== */
+function saveState(){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }catch(e){ console.warn('save failed', e); }
+}
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return null;
+    return JSON.parse(raw);
+  }catch(e){ return null; }
+}
+function clearState(){
+  try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+}
+
+/* ===================== AUTO LAUNCH ON LOAD ===================== */
+(function autoLaunch(){
+  el('totalText').textContent = QUESTIONS.length;
+  const saved = loadState();
+  if(saved && !saved.finished && saved.startedAt){
+    state = saved;
+    enterTestScreen();
+  } else {
+    beginFreshTest();
+  }
+})();
+
+function beginFreshTest(){
+  state = {
+    current: 0,
+    answers: {},
+    visited: {},
+    marked: {},
+    timeLeft: TEST_DURATION_SEC,
+    startedAt: Date.now(),
+    finished: false,
+  };
+  saveState();
+  enterTestScreen();
+}
+
+function enterTestScreen(){
+  testScreen.classList.add('active');
+  buildPalette();
+  renderQuestion();
+  startTimer();
+}
+
+/* ===================== TIMER ===================== */
+function startTimer(){
+  updateTimerDisplay();
+  timerInterval = setInterval(()=>{
+    state.timeLeft--;
+    if(state.timeLeft <= 0){
+      state.timeLeft = 0;
+      updateTimerDisplay();
+      clearInterval(timerInterval);
+      finishTest(true);
+      return;
+    }
+    updateTimerDisplay();
+    if(state.timeLeft % 5 === 0) saveState();
+  }, 1000);
+}
+function updateTimerDisplay(){
+  const m = Math.floor(state.timeLeft/60).toString().padStart(2,'0');
+  const s = (state.timeLeft%60).toString().padStart(2,'0');
+  el('timerText').textContent = `${m}:${s}`;
+  const box = el('timerBox');
+  if(state.timeLeft <= 120) box.classList.add('warn'); else box.classList.remove('warn');
+}
+
+/* ===================== RENDER QUESTION ===================== */
+function renderQuestion(){
+  const idx = state.current;
+  const q = QUESTIONS[idx];
+  state.visited[q.id] = true;
+
+  const selected = state.answers[q.id];
+  const isMarked = !!state.marked[q.id];
+
+  const optionsHtml = q.options.map((opt, i)=>{
+    const sel = selected === i ? 'selected' : '';
+    const letter = String.fromCharCode(65+i);
+    return `<div class="option ${sel}" data-idx="${i}">
+      <div class="opt-radio">${selected===i ? '✓' : letter}</div>
+      <div class="opt-text">${escapeHtml(opt)}</div>
+    </div>`;
+  }).join('');
+
+  el('questionArea').innerHTML = `
+    <div class="q-meta-row">
+      <div class="q-counter">Question <b>${idx+1}</b> of ${QUESTIONS.length}</div>
+    </div>
+    <div class="q-card">
+      <span class="q-tag">Equity Derivatives</span>
+      <div class="q-text">${escapeHtml(q.question)}</div>
+      <div class="options" id="optionsWrap">${optionsHtml}</div>
+    </div>
+  `;
+
+  document.querySelectorAll('#optionsWrap .option').forEach(opt=>{
+    opt.addEventListener('click', ()=>{
+      const i = parseInt(opt.dataset.idx);
+      state.answers[q.id] = i;
+      saveState();
+      renderQuestion();
+      refreshPaletteItem(idx);
+      updateSidebarStats();
+    });
+  });
+
+  el('markBtn').classList.toggle('active', isMarked);
+  el('markBtn').innerHTML = `<span>${isMarked ? '★' : '☆'}</span> ${isMarked ? 'Marked for Review' : 'Mark for Review'}`;
+
+  el('prevBtn').disabled = idx === 0;
+  el('nextBtn').textContent = idx === QUESTIONS.length-1 ? 'Save & Submit ✓' : 'Save & Next →';
+
+  refreshPaletteItem(idx, true);
+  updateSidebarStats();
+  updateTopProgress();
+}
+
+function escapeHtml(str){
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+/* ===================== NAVIGATION ===================== */
+el('prevBtn').addEventListener('click', ()=>{
+  if(state.current > 0){ state.current--; saveState(); renderQuestion(); window.scrollTo(0,0); }
+});
+el('nextBtn').addEventListener('click', ()=>{
+  if(state.current < QUESTIONS.length-1){ state.current++; saveState(); renderQuestion(); window.scrollTo(0,0); }
+  else { openSubmitModal(); }
+});
+el('clearResponseBtn').addEventListener('click', ()=>{
+  const q = QUESTIONS[state.current];
+  delete state.answers[q.id];
+  saveState();
+  renderQuestion();
+  refreshPaletteItem(state.current);
+  updateSidebarStats();
+});
+el('markBtn').addEventListener('click', ()=>{
+  const q = QUESTIONS[state.current];
+  if(state.marked[q.id]) delete state.marked[q.id];
+  else state.marked[q.id] = true;
+  saveState();
+  renderQuestion();
+  refreshPaletteItem(state.current);
+  updateSidebarStats();
+});
+
+document.addEventListener('keydown', (e)=>{
+  if(!testScreen.classList.contains('active')) return;
+  if(e.key === 'ArrowRight'){ el('nextBtn').click(); }
+  if(e.key === 'ArrowLeft'){ el('prevBtn').click(); }
+  if(['1','2','3','4'].includes(e.key)){
+    const i = parseInt(e.key)-1;
+    const q = QUESTIONS[state.current];
+    if(i < q.options.length){
+      state.answers[q.id] = i;
+      saveState(); renderQuestion(); refreshPaletteItem(state.current); updateSidebarStats();
+    }
+  }
+});
+
+/* ===================== PALETTE ===================== */
+function buildPalette(){
+  const grid = el('paletteGrid');
+  grid.innerHTML = QUESTIONS.map((q,i)=>`<button class="pal-item" id="pal-${i}" data-idx="${i}">${i+1}</button>`).join('');
+  grid.querySelectorAll('.pal-item').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      state.current = parseInt(btn.dataset.idx);
+      saveState();
+      renderQuestion();
+      window.scrollTo(0,0);
+    });
+  });
+}
+function paletteClassFor(idx){
+  const q = QUESTIONS[idx];
+  const answered = state.answers.hasOwnProperty(q.id);
+  const visited = !!state.visited[q.id];
+  const marked = !!state.marked[q.id];
+  let cls = '';
+  if(answered) cls = 'answered';
+  else if(visited) cls = 'notanswered';
+  if(marked) cls += ' marked';
+  return cls;
+}
+function refreshPaletteItem(idx, isCurrent){
+  for(let i=0;i<QUESTIONS.length;i++){
+    const btn = el('pal-'+i);
+    if(!btn) continue;
+    btn.className = 'pal-item ' + paletteClassFor(i);
+    if(i === state.current) btn.classList.add('current');
+  }
+}
+
+/* ===================== SIDEBAR STATS ===================== */
+function updateSidebarStats(){
+  const total = QUESTIONS.length;
+  let answered=0, marked=0, visitedNotAns=0, notVisited=0;
+  QUESTIONS.forEach(q=>{
+    const isAns = state.answers.hasOwnProperty(q.id);
+    const isVis = !!state.visited[q.id];
+    const isMarked = !!state.marked[q.id];
+    if(isAns) answered++;
+    if(isMarked) marked++;
+    if(!isVis) notVisited++;
+  });
+  el('statAnswered').textContent = answered;
+  el('statMarked').textContent = marked;
+  el('statNotVisited').textContent = notVisited;
+  el('attemptedText').textContent = answered;
+  const pct = Math.round((answered/total)*100);
+  el('sidebarProgressPct').textContent = pct + '%';
+  el('sidebarBarFill').style.width = pct + '%';
+}
+function updateTopProgress(){
+  const total = QUESTIONS.length;
+  const visitedCount = Object.keys(state.visited).length;
+  const pct = Math.round((visitedCount/total)*100);
+  el('progressTopFill').style.width = pct + '%';
+}
+
+/* ===================== SUBMIT FLOW ===================== */
+function openSubmitModal(){
+  const total = QUESTIONS.length;
+  const answered = Object.keys(state.answers).length;
+  const unanswered = total - answered;
+  el('modalTitle').textContent = 'Submit Test?';
+  el('modalText').textContent = unanswered > 0
+    ? `You have ${unanswered} unanswered question(s). Are you sure you want to submit the test now? This action cannot be undone.`
+    : `You have answered all questions. Are you sure you want to submit the test now?`;
+  el('submitModal').classList.add('active');
+}
+el('submitBtnTop').addEventListener('click', openSubmitModal);
+el('modalCancel').addEventListener('click', ()=> el('submitModal').classList.remove('active'));
+el('modalConfirm').addEventListener('click', ()=>{
+  el('submitModal').classList.remove('active');
+  finishTest(false);
+});
+
+function finishTest(autoSubmitted){
+  clearInterval(timerInterval);
+  state.finished = true;
+  state.finishedAt = Date.now();
+  saveState();
+  computeAndRenderResult(autoSubmitted);
+  testScreen.classList.remove('active');
+  resultScreen.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* ===================== SCORING ===================== */
+let lastResultData = null;
+function computeAndRenderResult(autoSubmitted){
+  let correct=0, wrong=0, skipped=0, score=0;
+  const perQ = QUESTIONS.map(q=>{
+    const sel = state.answers.hasOwnProperty(q.id) ? state.answers[q.id] : null;
+    let status;
+    if(sel === null){ status='skip'; skipped++; }
+    else if(sel === q.correctIndex){ status='correct'; correct++; score += MARKS_CORRECT; }
+    else { status='wrong'; wrong++; score += MARKS_WRONG; }
+    return {q, sel, status, marked: !!state.marked[q.id]};
+  });
+  score = Math.round(score*100)/100;
+  const total = QUESTIONS.length;
+  const attempted = correct+wrong;
+  const accuracy = attempted>0 ? Math.round((correct/attempted)*100) : 0;
+  const maxScore = total*MARKS_CORRECT;
+  const percentObtained = (score/maxScore)*100;
+  const passed = percentObtained >= PASS_PERCENT;
+
+  const elapsed = state.startedAt ? Math.floor(((state.finishedAt||Date.now()) - state.startedAt)/1000) : (TEST_DURATION_SEC-state.timeLeft);
+  const em = Math.floor(elapsed/60).toString().padStart(2,'0');
+  const es = (elapsed%60).toString().padStart(2,'0');
+
+  el('resultBadge').textContent = passed ? '✓ PASS' : '✗ FAIL';
+  el('resultBadge').className = 'badge ' + (passed?'pass':'fail');
+  el('resultSubtext').textContent = autoSubmitted
+    ? "Time's up! Your test was submitted automatically. Here's how you performed."
+    : "Here's a detailed breakdown of your performance.";
+  el('rScore').textContent = score + ' / ' + maxScore;
+  el('rCorrect').textContent = correct;
+  el('rWrong').textContent = wrong;
+  el('rSkipped').textContent = skipped;
+  el('rAccuracy').textContent = accuracy + '%';
+  el('rTimeTaken').textContent = `${em}:${es}`;
+  el('rTotalQ').textContent = total;
+
+  lastResultData = perQ;
+  renderReviewList(perQ, 'all');
+  clearState(); // test complete, clear saved in-progress state
+}
+
+/* ===================== REVIEW ===================== */
+el('reviewBtn').addEventListener('click', ()=>{
+  const sec = el('reviewSection');
+  sec.style.display = sec.style.display === 'none' ? 'block' : 'none';
+  if(sec.style.display === 'block') sec.scrollIntoView({behavior:'smooth', block:'start'});
+});
+el('retakeBtn').addEventListener('click', ()=>{
+  clearState();
+  resultScreen.classList.remove('active');
+  el('reviewSection').style.display = 'none';
+  beginFreshTest();
+});
+
+document.querySelectorAll('.filter-chip').forEach(chip=>{
+  chip.addEventListener('click', ()=>{
+    document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    renderReviewList(lastResultData, chip.dataset.filter);
+  });
+});
+
+function renderReviewList(perQ, filter){
+  let list = perQ;
+  if(filter==='correct') list = perQ.filter(r=>r.status==='correct');
+  if(filter==='wrong') list = perQ.filter(r=>r.status==='wrong');
+  if(filter==='skip') list = perQ.filter(r=>r.status==='skip');
+  if(filter==='marked') list = perQ.filter(r=>r.marked);
+
+  if(list.length===0){
+    el('reviewList').innerHTML = `<p style="color:var(--text-faint);text-align:center;padding:30px;">No questions in this category.</p>`;
+    return;
+  }
+
+  el('reviewList').innerHTML = list.map(r=>{
+    const q = r.q;
+    const qIndexGlobal = QUESTIONS.findIndex(x=>x.id===q.id)+1;
+    const statusLabel = r.status==='correct'?'Correct':r.status==='wrong'?'Wrong':'Unattempted';
+    const optsHtml = q.options.map((opt,i)=>{
+      let cls='', tag='';
+      if(i===q.correctIndex){ cls='correct-ans'; tag='✓ Correct'; }
+      if(r.sel===i && i!==q.correctIndex){ cls='wrong-ans'; tag='✗ Your Answer'; }
+      if(r.sel===i && i===q.correctIndex){ tag='✓ Your Answer'; }
+      return `<div class="mini-opt ${cls}"><span>${escapeHtml(opt)}</span>${tag?`<span class="tag" style="margin-left:auto;">${tag}</span>`:''}</div>`;
+    }).join('');
+    return `<div class="review-card">
+      <div class="review-card-head">
+        <div><b>Q${qIndexGlobal}.</b> ${escapeHtml(q.question)}</div>
+        <span class="review-status ${r.status==='skip'?'skip':r.status}">${statusLabel}</span>
+      </div>
+      <div class="mini-options">${optsHtml}</div>
+      <div class="explanation-box"><b>Explanation</b>${escapeHtml(q.explanation)}</div>
+    </div>`;
+  }).join('');
+}
+</script>
+</body>
+</html>

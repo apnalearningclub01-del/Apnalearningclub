@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NISM Series I Mock Test 1 | Currency Derivatives</title>
+<style>
+:root{
+  --bg:#0a0e17; --bg2:#0f1420; --panel:#131927; --panel2:#1a2235;
+  --border:#243047; --border-light:#2e3b56;
+  --text:#e8edf7; --text-dim:#8b97b3; --text-faint:#5d6a87;
+  --accent:#4f8cff; --accent-dim:#2c5dc7; --accent-glow:rgba(79,140,255,.35);
+  --green:#2dd4a7; --green-dim:#1a8f72; --red:#ff5d7a; --red-dim:#c23854;
+  --amber:#ffb74f; --amber-dim:#cc8c2e;
+  --purple:#a78bfa;
+  --radius:14px; --radius-sm:8px;
+  --shadow:0 8px 30px rgba(0,0,0,.45);
+  --transition:.25s cubic-bezier(.4,0,.2,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{
+  background:radial-gradient(circle at 20% 0%, #15203a 0%, var(--bg) 55%);
+  color:var(--text);
+  font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+::selection{background:var(--accent-glow);}
+button{font-family:inherit;cursor:pointer;border:none;outline:none;background:none;color:inherit;}
+::-webkit-scrollbar{width:8px;height:8px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:8px;}
+::-webkit-scrollbar-thumb:hover{background:var(--accent-dim);}
+
+.screen{display:none;min-height:100vh;width:100%;animation:fadeIn .45s ease;}
+.screen.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.55;}}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes pop{0%{transform:scale(.85);opacity:0;}100%{transform:scale(1);opacity:1;}}
+@keyframes slideDown{from{transform:translateY(-12px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+@keyframes shimmer{0%{background-position:-200% 0;}100%{background-position:200% 0;}}
+
+/* ============ START SCREEN ============ */
+#startScreen{display:flex;align-items:center;justify-content:center;padding:24px;}
+.start-card{
+  width:100%;max-width:780px;background:linear-gradient(160deg,var(--panel) 0%, var(--bg2) 100%);
+  border:1px solid var(--border);border-radius:20px;padding:42px 40px;box-shadow:var(--shadow);
+  animation:pop .5s ease;
+}
+.brand-row{display:flex;align-items:center;gap:14px;margin-bottom:6px;}
+.brand-badge{
+  width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--purple));
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#fff;
+  box-shadow:0 6px 18px var(--accent-glow);flex-shrink:0;
+}
+.brand-text-sm{font-size:12px;letter-spacing:2px;color:var(--text-faint);text-transform:uppercase;font-weight:600;}
+.start-title{font-size:28px;font-weight:800;margin-top:14px;line-height:1.3;background:linear-gradient(90deg,#fff,#b9c6e6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.start-sub{color:var(--text-dim);margin-top:8px;font-size:14.5px;line-height:1.6;}
+.info-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:30px 0;}
+.info-box{
+  background:var(--panel2);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:16px 14px;text-align:center;transition:var(--transition);
+}
+.info-box:hover{border-color:var(--accent-dim);transform:translateY(-2px);}
+.info-box .ic{font-size:20px;margin-bottom:8px;}
+.info-box .val{font-size:20px;font-weight:800;color:#fff;}
+.info-box .lbl{font-size:11.5px;color:var(--text-faint);margin-top:3px;text-transform:uppercase;letter-spacing:.5px;}
+.rules-box{
+  background:rgba(255,183,79,.06);border:1px solid rgba(255,183,79,.25);border-radius:var(--radius-sm);
+  padding:16px 18px;margin-bottom:26px;
+}
+.rules-box h4{color:var(--amber);font-size:13px;margin-bottom:10px;display:flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.5px;}
+.rules-box ul{list-style:none;font-size:13.5px;color:var(--text-dim);line-height:1.95;}
+.rules-box li{display:flex;gap:8px;}
+.rules-box li::before{content:'▸';color:var(--amber);flex-shrink:0;}
+.resume-banner{
+  background:rgba(79,140,255,.08);border:1px solid rgba(79,140,255,.3);border-radius:var(--radius-sm);
+  padding:13px 16px;margin-bottom:22px;font-size:13.5px;color:var(--accent);display:flex;align-items:center;justify-content:space-between;gap:10px;
+  animation:slideDown .4s ease;
+}
+.resume-banner span b{color:#fff;}
+.resume-banner .clear-btn{font-size:12px;color:var(--text-faint);text-decoration:underline;flex-shrink:0;}
+.start-actions{display:flex;gap:14px;align-items:center;}
+.btn{
+  padding:14px 28px;border-radius:11px;font-weight:700;font-size:14.5px;transition:var(--transition);
+  display:inline-flex;align-items:center;gap:8px;letter-spacing:.2px;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--accent),#3f6fe0);color:#fff;box-shadow:0 8px 24px var(--accent-glow);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px var(--accent-glow);}
+.btn-primary:active{transform:translateY(0);}
+.btn-ghost{background:var(--panel2);color:var(--text-dim);border:1px solid var(--border);}
+.btn-ghost:hover{border-color:var(--border-light);color:var(--text);}
+.start-foot{margin-top:22px;font-size:12px;color:var(--text-faint);text-align:center;}
+
+/* ============ TEST SCREEN ============ */
+#testScreen{display:none;}
+#testScreen.active{display:flex;flex-direction:column;height:100vh;}
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;padding:0 22px;height:62px;flex-shrink:0;
+  background:var(--panel);border-bottom:1px solid var(--border);position:relative;z-index:20;
+}
+.topbar-left{display:flex;align-items:center;gap:12px;min-width:0;}
+.topbar-logo{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--purple));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0;}
+.topbar-title{font-size:14.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.topbar-title small{display:block;font-size:11px;color:var(--text-faint);font-weight:500;}
+.topbar-right{display:flex;align-items:center;gap:16px;}
+.timer-box{
+  display:flex;align-items:center;gap:9px;background:var(--panel2);border:1px solid var(--border);
+  border-radius:10px;padding:8px 16px;font-weight:700;font-size:16px;font-variant-numeric:tabular-nums;
+}
+.attempted-box{
+  background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 16px;
+  font-size:13.5px;font-weight:700;color:var(--text-dim);white-space:nowrap;
+}
+.attempted-box span{color:var(--accent);font-weight:800;}
+.attempted-box #totalText{color:var(--text);}
+.timer-box.warn{border-color:var(--red-dim);color:var(--red);animation:pulse 1.1s infinite;}
+.timer-ic{font-size:15px;}
+.submit-btn{
+  background:linear-gradient(135deg,var(--green-dim),var(--green));color:#04241c;font-weight:700;font-size:13.5px;
+  padding:10px 20px;border-radius:9px;transition:var(--transition);
+}
+.submit-btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(45,212,167,.3);}
+.progress-top{height:3px;width:100%;background:var(--border);flex-shrink:0;}
+.progress-top-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--purple));transition:width .35s ease;}
+
+.test-body{display:flex;flex:1;overflow:hidden;}
+.question-area{flex:1;display:flex;flex-direction:column;overflow-y:auto;padding:34px 44px 110px;}
+.q-meta-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.q-counter{font-size:13px;color:var(--text-faint);font-weight:600;letter-spacing:.3px;}
+.q-counter b{color:var(--accent);}
+.mark-btn{
+  display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--text-dim);
+  border:1px solid var(--border);padding:7px 14px;border-radius:20px;transition:var(--transition);
+}
+.mark-btn:hover{border-color:var(--purple);color:var(--purple);}
+.mark-btn.active{background:rgba(167,139,250,.14);border-color:var(--purple);color:var(--purple);}
+.q-card{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:30px 32px;
+  animation:fadeIn .3s ease; max-width:760px;
+}
+.q-text{font-size:17.5px;line-height:1.65;font-weight:600;color:#f3f6fc;margin-bottom:26px;}
+.q-tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.6px;color:var(--accent);background:rgba(79,140,255,.1);padding:3px 9px;border-radius:6px;margin-bottom:14px;text-transform:uppercase;}
+.options{display:flex;flex-direction:column;gap:12px;}
+.option{
+  display:flex;align-items:flex-start;gap:14px;padding:15px 18px;border:1.5px solid var(--border);
+  border-radius:11px;cursor:pointer;transition:var(--transition);background:var(--bg2);
+}
+.option:hover{border-color:var(--border-light);background:var(--panel2);transform:translateX(2px);}
+.option.selected{border-color:var(--accent);background:rgba(79,140,255,.1);box-shadow:0 0 0 1px var(--accent) inset;}
+.opt-radio{
+  width:22px;height:22px;border-radius:50%;border:2px solid var(--border-light);flex-shrink:0;margin-top:1px;
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;transition:var(--transition);color:transparent;
+}
+.option.selected .opt-radio{border-color:var(--accent);background:var(--accent);color:#fff;}
+.opt-text{font-size:14.8px;line-height:1.55;color:var(--text);padding-top:1px;}
+.review-mode .option{cursor:default;}
+.review-mode .option.correct-ans{border-color:var(--green);background:rgba(45,212,167,.1);}
+.review-mode .option.wrong-ans{border-color:var(--red);background:rgba(255,93,122,.1);}
+.review-mode .option.correct-ans .opt-radio{border-color:var(--green);background:var(--green);}
+.review-mode .option.wrong-ans .opt-radio{border-color:var(--red);background:var(--red);}
+.explanation-box{
+  margin-top:22px;padding:16px 18px;background:rgba(79,140,255,.06);border-left:3px solid var(--accent);
+  border-radius:8px;font-size:13.5px;line-height:1.65;color:var(--text-dim);animation:slideDown .35s ease;
+}
+.explanation-box b{color:var(--accent);display:block;margin-bottom:6px;font-size:12px;letter-spacing:.4px;text-transform:uppercase;}
+
+.nav-footer{
+  position:sticky;bottom:0;display:flex;align-items:center;justify-content:flex-start;
+  padding:16px 44px;background:linear-gradient(180deg,transparent,var(--bg) 30%);margin-top:auto;gap:18px;flex-wrap:wrap;
+}
+.nav-footer-center{display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:center;}
+.nav-btn{
+  padding:12px 24px;border-radius:10px;font-weight:700;font-size:13.5px;background:var(--panel2);
+  border:1px solid var(--border);color:var(--text);transition:var(--transition);display:flex;align-items:center;gap:8px;
+}
+.nav-btn:hover:not(:disabled){border-color:var(--accent-dim);transform:translateY(-1px);}
+.nav-btn:disabled{opacity:.35;cursor:not-allowed;}
+.nav-btn.next-primary{background:linear-gradient(135deg,var(--accent-dim),var(--accent));border:none;}
+.clear-btn-mini{font-size:12.5px;color:var(--text-faint);text-decoration:underline;}
+
+/* SIDEBAR */
+.sidebar{
+  width:300px;flex-shrink:0;background:var(--panel);border-left:1px solid var(--border);
+  display:flex;flex-direction:column;padding:20px;overflow-y:auto;
+}
+.sidebar-progress{margin-bottom:18px;}
+.sidebar-progress-label{display:flex;justify-content:space-between;font-size:11.5px;color:var(--text-faint);margin-bottom:6px;}
+.sidebar-bar{height:6px;border-radius:6px;background:var(--border);overflow:hidden;}
+.sidebar-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--purple));transition:width .35s ease;}
+.legend{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;font-size:11.5px;color:var(--text-dim);}
+.legend-item{display:flex;align-items:center;gap:7px;}
+.legend-dot{width:11px;height:11px;border-radius:4px;flex-shrink:0;}
+.dot-answered{background:var(--green);}
+.dot-notanswered{background:var(--red-dim);border:1.5px solid var(--red);}
+.dot-notvisited{background:transparent;border:1.5px solid var(--border-light);}
+.dot-marked{background:var(--purple);}
+.dot-current{background:var(--accent);}
+.palette-title{font-size:12px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;font-weight:700;}
+.palette-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-bottom:20px;
+}
+.pal-item{
+  aspect-ratio:1;border-radius:9px;display:flex;align-items:center;justify-content:center;
+  font-size:12.5px;font-weight:700;border:1.5px solid var(--border-light);background:transparent;color:var(--text-dim);
+  transition:var(--transition);position:relative;
+}
+.pal-item:hover{transform:scale(1.08);}
+.pal-item.answered{background:var(--green-dim);border-color:var(--green);color:#fff;}
+.pal-item.notanswered{background:rgba(255,93,122,.15);border-color:var(--red);color:var(--red);}
+.pal-item.marked{background:var(--purple);border-color:var(--purple);color:#1a0f2e;box-shadow:0 0 0 1px var(--purple) inset;}
+.pal-item.marked.answered{background:var(--purple);border-color:var(--purple);color:#1a0f2e;}
+.pal-item.marked.notanswered{background:var(--purple);border-color:var(--purple);color:#1a0f2e;}
+.pal-item.marked::after{
+  content:'\2605';position:absolute;top:-6px;right:-6px;width:15px;height:15px;border-radius:50%;
+  background:var(--panel);color:var(--purple);font-size:9px;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 1.5px var(--purple);
+}
+.pal-item.current{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-glow);transform:scale(1.05);}
+.sidebar-submit{margin-top:auto;}
+.sidebar-stats{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;font-size:12.5px;}
+.sidebar-stat-row{display:flex;justify-content:space-between;color:var(--text-dim);}
+.sidebar-stat-row b{color:#fff;}
+
+/* MODAL */
+.modal-overlay{
+  display:none;position:fixed;inset:0;background:rgba(5,8,15,.78);backdrop-filter:blur(4px);
+  align-items:center;justify-content:center;z-index:100;animation:fadeIn .25s ease;
+}
+.modal-overlay.active{display:flex;}
+.modal-box{
+  background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:32px;max-width:420px;
+  width:90%;box-shadow:var(--shadow);animation:pop .3s ease;
+}
+.modal-box h3{font-size:18px;margin-bottom:10px;}
+.modal-box p{font-size:13.5px;color:var(--text-dim);line-height:1.6;margin-bottom:24px;}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;}
+
+/* ============ RESULT SCREEN ============ */
+#resultScreen{padding:40px 24px 80px;display:flex;justify-content:center;}
+.result-wrap{width:100%;max-width:920px;}
+.result-header{text-align:center;margin-bottom:30px;}
+.badge{
+  display:inline-flex;align-items:center;gap:10px;padding:10px 26px;border-radius:30px;font-weight:800;
+  font-size:14px;letter-spacing:.5px;margin-bottom:18px;animation:pop .5s ease;
+}
+.badge.pass{background:rgba(45,212,167,.12);color:var(--green);border:1.5px solid var(--green-dim);}
+.badge.fail{background:rgba(255,93,122,.12);color:var(--red);border:1.5px solid var(--red-dim);}
+.result-header h1{font-size:30px;font-weight:800;margin-bottom:8px;}
+.result-header p{color:var(--text-dim);font-size:14px;}
+.score-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin:32px 0;}
+.score-card{
+  background:linear-gradient(160deg,var(--panel),var(--bg2));border:1px solid var(--border);border-radius:14px;
+  padding:20px 14px;text-align:center;animation:pop .45s ease;
+}
+.score-card .num{font-size:25px;font-weight:800;color:#fff;}
+.score-card.green .num{color:var(--green);}
+.score-card.red .num{color:var(--red);}
+.score-card.amber .num{color:var(--amber);}
+.score-card.accent .num{color:var(--accent);}
+.score-card .lbl{font-size:11px;color:var(--text-faint);margin-top:5px;text-transform:uppercase;letter-spacing:.4px;}
+.result-actions{display:flex;gap:14px;justify-content:center;margin-bottom:40px;}
+.review-section h2{font-size:19px;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.review-filters{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.filter-chip{
+  padding:8px 16px;border-radius:20px;font-size:12.5px;font-weight:600;border:1px solid var(--border);
+  color:var(--text-dim);transition:var(--transition);
+}
+.filter-chip.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.filter-chip:hover:not(.active){border-color:var(--border-light);}
+.review-card{
+  background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:24px 26px;margin-bottom:16px;
+  animation:fadeIn .3s ease;
+}
+.review-card-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;gap:12px;}
+.review-status{
+  font-size:11px;font-weight:800;padding:4px 11px;border-radius:7px;letter-spacing:.4px;text-transform:uppercase;flex-shrink:0;
+}
+.review-status.correct{background:rgba(45,212,167,.15);color:var(--green);}
+.review-status.wrong{background:rgba(255,93,122,.15);color:var(--red);}
+.review-status.skip{background:rgba(139,151,179,.15);color:var(--text-faint);}
+.mini-options{display:flex;flex-direction:column;gap:8px;margin-top:14px;}
+.mini-opt{padding:10px 14px;border-radius:8px;font-size:13px;border:1px solid var(--border);background:var(--bg2);display:flex;gap:10px;}
+.mini-opt.correct-ans{border-color:var(--green);background:rgba(45,212,167,.08);color:var(--green);}
+.mini-opt.wrong-ans{border-color:var(--red);background:rgba(255,93,122,.08);color:var(--red);}
+.mini-opt .tag{font-weight:800;font-size:10.5px;flex-shrink:0;}
+
+@media (max-width:900px){
+  .test-body{flex-direction:column;}
+  .sidebar{
+    width:100%;border-left:none;border-top:1px solid var(--border);max-height:38vh;
+    order:2;
+  }
+  .question-area{padding:22px 18px 100px;order:1;}
+  .info-grid{grid-template-columns:repeat(2,1fr);}
+  .score-grid{grid-template-columns:repeat(2,1fr);}
+  .start-card{padding:28px 22px;}
+  .nav-footer{padding:14px 18px;flex-direction:column;align-items:stretch;}
+  .nav-footer-center{order:2;justify-content:space-between;width:100%;flex-wrap:wrap;}
+  .nav-footer #prevBtn{width:100%;justify-content:center;order:1;}
+  .topbar{flex-wrap:wrap;height:auto;padding:10px 14px;gap:8px;}
+  .topbar-right{flex-wrap:wrap;gap:8px;width:100%;justify-content:space-between;}
+  .attempted-box,.timer-box{font-size:12.5px;padding:7px 12px;}
+  .submit-btn{padding:8px 14px;font-size:12.5px;}
+  .q-card{padding:22px 18px;}
+  .sidebar{display:none;max-height:none;height:100%;position:fixed;top:0;right:0;bottom:0;width:84%;z-index:50;box-shadow:-6px 0 24px rgba(0,0,0,.35);}
+  .sidebar.open{display:flex;}
+  .sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(5,8,15,.6);z-index:40;}
+  .sidebar-backdrop.open{display:block;}
+  .palette-toggle-btn{display:inline-flex;}
+  .sidebar-close-btn{display:flex;}
+}
+@media (min-width:901px){
+  .palette-toggle-btn{display:none;}
+  .sidebar-close-btn{display:none;}
+}
+</style>
+</head>
+<body>
+<!-- ============ TEST SCREEN (auto-launches immediately) ============ -->
+<div id="testScreen" class="screen active">
+  <div class="progress-top"><div class="progress-top-fill" id="progressTopFill"></div></div>
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-logo">C1</div>
+      <div class="topbar-title">NISM Series I Mock Test 1
+        <small>Currency Derivatives Certification</small>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <button class="nav-btn palette-toggle-btn" id="paletteToggleBtn" style="display:none;padding:7px 12px;font-size:12.5px;">📋 Palette</button>
+      <div class="attempted-box" id="attemptedBox"><span id="attemptedText">0</span> / <span id="totalText">50</span> Attempted</div>
+      <div class="timer-box" id="timerBox"><span class="timer-ic">⏱️</span><span id="timerText">30:00</span></div>
+      <button class="submit-btn" id="submitBtnTop">Submit Test</button>
+    </div>
+  </div>
+
+  <div class="test-body">
+    <div class="question-area" id="questionArea">
+      <!-- injected by JS -->
+    </div>
+
+    <div class="sidebar" id="sidebarPanel">
+      <button class="sidebar-close-btn" id="sidebarCloseBtn" style="display:none;margin-left:auto;margin-bottom:10px;background:none;border:none;color:var(--text-dim);font-size:20px;cursor:pointer;">✕</button>
+      <div class="sidebar-progress">
+        <div class="sidebar-progress-label"><span>Progress</span><span id="sidebarProgressPct">0%</span></div>
+        <div class="sidebar-bar"><div class="sidebar-bar-fill" id="sidebarBarFill"></div></div>
+      </div>
+      <div class="sidebar-stats">
+        <div class="sidebar-stat-row"><span>Answered</span><b id="statAnswered">0</b></div>
+        <div class="sidebar-stat-row"><span>Marked for Review</span><b id="statMarked">0</b></div>
+        <div class="sidebar-stat-row"><span>Not Visited</span><b id="statNotVisited">100</b></div>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><span class="legend-dot dot-answered"></span>Answered</div>
+        <div class="legend-item"><span class="legend-dot dot-notanswered"></span>Not Answered</div>
+        <div class="legend-item"><span class="legend-dot dot-notvisited"></span>Not Visited</div>
+        <div class="legend-item"><span class="legend-dot dot-marked"></span>Marked</div>
+      </div>
+      <div class="palette-title">Question Palette</div>
+      <div class="palette-grid" id="paletteGrid"></div>
+    </div>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+  </div>
+
+  <div class="nav-footer">
+    <button class="nav-btn" id="prevBtn">← Previous</button>
+    <div class="nav-footer-center">
+      <button class="nav-btn" id="clearResponseBtn">Clear Response</button>
+      <button class="nav-btn mark-btn" id="markBtn"><span>☆</span> Mark for Review</button>
+      <button class="nav-btn next-primary" id="nextBtn">Save &amp; Next</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ RESULT SCREEN ============ -->
+<div id="resultScreen" class="screen">
+  <div class="result-wrap">
+    <div class="result-header">
+      <div class="badge" id="resultBadge">PASS</div>
+      <h1>Test Completed!</h1>
+      <p id="resultSubtext">Here's a detailed breakdown of your performance.</p>
+    </div>
+
+    <div class="score-grid">
+      <div class="score-card accent"><div class="num" id="rScore">0</div><div class="lbl">Score</div></div>
+      <div class="score-card green"><div class="num" id="rCorrect">0</div><div class="lbl">Correct</div></div>
+      <div class="score-card red"><div class="num" id="rWrong">0</div><div class="lbl">Wrong</div></div>
+      <div class="score-card amber"><div class="num" id="rSkipped">0</div><div class="lbl">Unattempted</div></div>
+      <div class="score-card"><div class="num" id="rAccuracy">0%</div><div class="lbl">Accuracy</div></div>
+    </div>
+    <div class="score-grid" style="grid-template-columns:repeat(2,1fr);margin-top:-6px;">
+      <div class="score-card"><div class="num" id="rTimeTaken">00:00</div><div class="lbl">Time Taken</div></div>
+      <div class="score-card"><div class="num" id="rTotalQ">100</div><div class="lbl">Total Questions</div></div>
+    </div>
+
+    <div class="result-actions">
+      <button class="btn btn-primary" id="reviewBtn">📋 View Detailed Review</button>
+      <button class="btn btn-ghost" id="retakeBtn">↻ Retake Test</button>
+    </div>
+
+    <div class="review-section" id="reviewSection" style="display:none;">
+      <h2>📋 Detailed Review</h2>
+      <div class="review-filters">
+        <button class="filter-chip active" data-filter="all">All Questions</button>
+        <button class="filter-chip" data-filter="correct">Correct</button>
+        <button class="filter-chip" data-filter="wrong">Wrong</button>
+        <button class="filter-chip" data-filter="skip">Unattempted</button>
+        <button class="filter-chip" data-filter="marked">Marked</button>
+      </div>
+      <div id="reviewList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL ============ -->
+<div class="modal-overlay" id="submitModal">
+  <div class="modal-box">
+    <h3 id="modalTitle">Submit Test?</h3>
+    <p id="modalText">You still have unanswered questions. Are you sure you want to submit the test now? This action cannot be undone.</p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="modalCancel">Cancel</button>
+      <button class="btn btn-primary" id="modalConfirm">Yes, Submit</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* === ANALYTICS ENGINE (inline) === */
+/* ============================================================================
+   ANALYTICS ENGINE — Apna Learning Club
+   Shared module used by every mock-test file AND index.html (Performance
+   Dashboard). Centralising this logic means each mock file just calls a
+   couple of functions instead of re-implementing localStorage / topic /
+   timing logic four times.
+   ============================================================================ */
+(function (global) {
+  'use strict';
+
+  const DB_KEY = 'alc_dashboard_v1';
+
+  /* ----------------------------------------------------------------------
+   * 1. TOPIC CLASSIFICATION
+   * The raw QUESTIONS array has no `topic` field, so we infer one from the
+   * question text using a keyword map specific to the NISM-Series-IV
+   * (Interest Rate Derivatives) syllabus. If a question matches no keyword
+   * it falls back to "General Concepts". This is a heuristic — for 100%
+   * accuracy, add an explicit `topic` key to a question object and this
+   * function will respect it automatically.
+   * ------------------------------------------------------------------- */
+  const TOPIC_KEYWORDS = {
+    'Bonds & Yield Curve': ['bond', 'yield', 'coupon', 'duration', 'macaulay', 'zero coupon', 'annuity', 'consol', 'term structure'],
+    'Futures & Hedging': ['futures', 'hedge', 'hedging', 'arbitrage', 'spread', 'contract value', 'calendar spread', 'mibor'],
+    'Options & Strategies': ['option', 'premium', 'strike', 'call ', 'put ', 'strangle', 'straddle', 'itm', 'otm', 'atm', 'payoff', 'pay-off'],
+    'Risk & Margins': ['margin', 'var', 'risk', 'extreme loss', 'exposure', 'position limit', 'quantity freeze'],
+    'Clearing & Settlement': ['clearing', 'settlement', 'depositor', 'custodian', 'clearing corporation', 'clearing member', 'pay-in', 'pay-out'],
+    'Regulatory & Compliance': ['sebi', 'rbi', 'kyc', 'kra', 'regulation', 'code of conduct', 'arbitration', 'cibil', 'nsdl', 'cdsl'],
+    'Market Structure': ['exchange', 'open interest', 'trading member', 'broker', 'market size', 'capital market', 'fpi', 'foreign portfolio']
+  };
+
+  function inferTopic(question) {
+    if (!question) return 'General Concepts';
+    if (question.topic) return question.topic; // explicit override always wins
+    const text = question.question.toLowerCase();
+    for (const [topic, keywords] of Object.entries(TOPIC_KEYWORDS)) {
+      if (keywords.some(k => text.includes(k))) return topic;
+    }
+    return 'General Concepts';
+  }
+
+  /* ----------------------------------------------------------------------
+   * 2. DIFFICULTY CLASSIFICATION
+   * Heuristic based on explanation length + option count (longer / more
+   * nuanced explanations tend to correspond to trickier concepts). Again,
+   * an explicit `difficulty` field on the question object overrides this.
+   * ------------------------------------------------------------------- */
+  function inferDifficulty(question) {
+    if (!question) return 'Medium';
+    if (question.difficulty) return question.difficulty;
+    const len = (question.explanation || '').length;
+    const optCount = (question.options || []).length;
+    if (len < 160 && optCount <= 2) return 'Easy';
+    if (len > 380) return 'Hard';
+    return 'Medium';
+  }
+
+  /* ----------------------------------------------------------------------
+   * 3. DASHBOARD DATA STORE
+   * Shape:
+   * {
+   *   mockResults: [
+   *     { mockId, mockName, completedAt, timeTakenSec,
+   *       score, maxScore, correct, wrong, skipped, accuracy, percentObtained, passed,
+   *       topicStats: { [topic]: {correct, wrong, skipped, total, timeSpentSec, accuracy} },
+   *       perQuestion: [{id, topic, difficulty, timeSpentSec, status}]
+   *     }, ...
+   *   ]
+   * }
+   * ------------------------------------------------------------------- */
+  function getDB() {
+    try {
+      const raw = localStorage.getItem(DB_KEY);
+      return raw ? JSON.parse(raw) : { mockResults: [] };
+    } catch (e) {
+      console.warn('Dashboard DB read failed', e);
+      return { mockResults: [] };
+    }
+  }
+
+  function setDB(db) {
+    try {
+      localStorage.setItem(DB_KEY, JSON.stringify(db));
+    } catch (e) {
+      console.warn('Dashboard DB write failed', e);
+    }
+  }
+
+  /**
+   * Builds topic-wise stats + TPQ (Time-Per-Question) data from a finished
+   * mock attempt and persists it. Replaces any earlier attempt for the same
+   * mockId so the dashboard always reflects the latest attempt per mock,
+   * while still keeping history for score progression if called multiple
+   * times with unique mockIds (mock1..mock4).
+   *
+   * @param {Object} payload
+   *  - mockId: string, e.g. 'mock1'
+   *  - mockName: string, e.g. 'NISM-IV Mock Test 1'
+   *  - questions: the QUESTIONS array used in this mock
+   *  - perQ: array of {q, sel, status, marked} as produced by computeAndRenderResult
+   *  - timeSpent: map of questionId -> milliseconds spent (state.timeSpent)
+   *  - timeTakenSec: total time taken for the whole mock (seconds)
+   *  - score, maxScore, correct, wrong, skipped, accuracy, percentObtained, passed
+   */
+  function saveMockResult(payload) {
+    const { mockId, mockName, questions, perQ, timeSpent } = payload;
+
+    const topicStats = {};
+    const perQuestion = perQ.map(r => {
+      const topic = inferTopic(r.q);
+      const difficulty = inferDifficulty(r.q);
+      const timeSpentSec = Math.round(((timeSpent && timeSpent[r.q.id]) || 0) / 1000);
+
+      if (!topicStats[topic]) {
+        topicStats[topic] = { correct: 0, wrong: 0, skipped: 0, total: 0, timeSpentSec: 0 };
+      }
+      topicStats[topic][r.status === 'skip' ? 'skipped' : r.status === 'correct' ? 'correct' : 'wrong']++;
+      topicStats[topic].total++;
+      topicStats[topic].timeSpentSec += timeSpentSec;
+
+      return { id: r.q.id, topic, difficulty, timeSpentSec, status: r.status };
+    });
+
+    // Derive accuracy per topic now that totals are known
+    Object.values(topicStats).forEach(t => {
+      const attempted = t.correct + t.wrong;
+      t.accuracy = attempted > 0 ? Math.round((t.correct / attempted) * 100) : 0;
+    });
+
+    const result = {
+      mockId,
+      mockName,
+      completedAt: Date.now(),
+      timeTakenSec: payload.timeTakenSec,
+      score: payload.score,
+      maxScore: payload.maxScore,
+      correct: payload.correct,
+      wrong: payload.wrong,
+      skipped: payload.skipped,
+      accuracy: payload.accuracy,
+      percentObtained: payload.percentObtained,
+      passed: payload.passed,
+      topicStats,
+      perQuestion
+    };
+
+    const db = getDB();
+    db.mockResults = db.mockResults.filter(r => r.mockId !== mockId); // keep only latest attempt per mock
+    db.mockResults.push(result);
+    setDB(db);
+    return result;
+  }
+
+  /**
+   * Time-Per-Question (TPQ) calculator. Given a finished mock result (or
+   * the whole DB), returns the average seconds spent per question, overall
+   * and per topic — used by the dashboard bar chart.
+   */
+  function computeTPQ(mockResult) {
+    const total = mockResult.perQuestion.length || 1;
+    const totalTimeSec = mockResult.perQuestion.reduce((s, q) => s + q.timeSpentSec, 0);
+    const overallTPQ = Math.round((totalTimeSec / total) * 10) / 10;
+
+    const byTopic = {};
+    Object.entries(mockResult.topicStats).forEach(([topic, stats]) => {
+      byTopic[topic] = Math.round((stats.timeSpentSec / (stats.total || 1)) * 10) / 10;
+    });
+
+    return { overallTPQ, byTopic };
+  }
+
+  function clearDashboardData() {
+    try { localStorage.removeItem(DB_KEY); } catch (e) { /* ignore */ }
+  }
+
+  function formatSeconds(totalSec) {
+    const m = Math.floor(totalSec / 60).toString().padStart(2, '0');
+    const s = Math.floor(totalSec % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+  }
+
+  // Expose a small public API on window.AnalyticsEngine
+  global.AnalyticsEngine = {
+    inferTopic,
+    inferDifficulty,
+    saveMockResult,
+    computeTPQ,
+    getDashboardData: getDB,
+    clearDashboardData,
+    formatSeconds
+  };
+})(window);
+
+</script>
+<script>
+const QUESTIONS = 
+[{"question": "If USDJPY is 148.50 by 148.52 and USDINR is 83.00 by 83.02, approximate offer for JPYINR per 100 JPY is:", "options": ["55.89", "50.30", "67.07", "72.66"], "correctIndex": 0, "explanation": "Offer for buying yen uses USDINR offer and USDJPY bid or standard dealing convention depending route. Approximate exam method gives 100 multiplied by 83.02 divided by 148.50 which is about 55.89. Always follow market convention for quoted units.", "id": 1}, {"question": "Which of the below option is TRUE with respect to Exchange Traded derivatives ?", "options": ["Only the contracting parties are safe guarded by the risk management policies and not all the market participants.", "Exchange traded derivatives are not regulated", "The margining system is different for different set of counter parties", "All market participants are safe guarded by the risk management policies"], "correctIndex": 3, "explanation": "In exchange traded derivatives, all market participants are protected by the exchange’s risk management framework. The clearing corporation becomes the counterparty to every trade, reducing default risk. Margins, daily settlement, surveillance, and position limits safeguard all participants equally. Therefore, the statement that all market participants are safeguarded is correct.", "id": 2}, {"question": "Only American style currency options are traded on exchanges - State True or False ?", "options": ["True", "False"], "correctIndex": 1, "explanation": "In India, all the currency options in OTC market / Exchanges are of European type. European options can be exercised by the buyer of the option only on the expiration date. American options can be exercised by the buyer of the option on or before the expiration date.", "id": 3}, {"question": "The mark-to-market gains and losses are settled in cash before the start of trading on ______ day.", "options": ["T+1", "T+3", "Tom", "Spot"], "correctIndex": 0, "explanation": "Mark-to-market gains and losses in exchange traded derivatives are settled daily in cash. This settlement is completed before the start of trading on the next trading day, i.e., T+1 day. Daily MTM settlement reduces credit risk, ensures timely margin collection, and maintains the financial integrity of the derivatives market.", "id": 4}, {"question": "In Currency Market, if 'T' is the date of transaction, the T + 1 is called as _____. (With respect to Settlements)", "options": ["Tom", "T+3", "Cash", "Spot"], "correctIndex": 0, "explanation": "T : Trade / Cash Date T + 1 : Tom T + 2 : Spot For a currency pair for which spot date is at T+2 and if settlement happens on the trade date, the settlement price is called as “cash” rate and if happens one day after trade date, the price is called as “tom” rate.", "id": 5}, {"question": "A DAY ORDER means its valid ______.", "options": ["till the end of day", "Day order", "Stop-loss order", "Market order"], "correctIndex": 0, "explanation": "A Day Order remains active only for the current trading session and automatically expires at the end of the trading day if it is not executed. It does not carry forward to the next trading day. This type of order is commonly used by traders who want execution only within the same day’s market hours.", "id": 6}, {"question": "A trader buys one USDINR futures contract at Rs 82.95. Contract size is USD 1000. Settlement price falls to Rs 82.55. Mark to market result is:", "options": ["Loss Rs 400", "Loss Rs 340", "Loss Rs 460", "Loss Rs 280"], "correctIndex": 0, "explanation": "Buyer of futures loses when settlement falls below purchase rate. Difference is Rs 0.40 per dollar. Multiply by USD 1000 contract size gives Rs 400 loss. Futures exchanges collect and pay such gains or losses daily through mark to market settlement.", "id": 7}, {"question": "An vegetable oil factory owner gets into a contract with McDonalds to sell certain quantity of vegetable oil at a fixed price for a year. Which type of contract has the factory owner entered into with the McDonalds ?", "options": ["Forward", "Options", "Swap", "Depends on regulatory approval"], "correctIndex": 0, "explanation": "A forward contract is a customized contract between two parties, where settlement takes place on a specific date in the future at today's pre-agreed price. Futures is similar to forward except that it is an Exchange-trade product.", "id": 8}, {"question": "Which Greek measures rate of time decay of option premium?", "options": ["Theta", "Delta", "Rho", "Gamma"], "correctIndex": 0, "explanation": "Theta measures erosion in option value due to passage of time, assuming other factors remain constant. Buyers usually face negative time decay, while sellers may benefit. As expiry approaches, extrinsic value generally declines faster, especially for at the money options.", "id": 9}, {"question": "Which statement best defines clean float exchange regime?", "options": ["Currency fixed to another currency", "Exchange rate determined by market forces without intervention", "Currency quoted only weekly", "Central bank sets daily compulsory rate"], "correctIndex": 1, "explanation": "Clean float refers to exchange rates moving according to supply and demand with little or no official intervention. It contrasts with managed float where authorities occasionally buy or sell currency to moderate volatility or influence direction.", "id": 10}, {"question": "Which participant is most likely to hedge currency receivables?", "options": ["Exporter expecting foreign currency payment", "Tourist buying souvenirs", "Arbitrager exploiting basis difference", "Day trader with no exposure"], "correctIndex": 0, "explanation": "Exporters receive foreign currency later and face risk of domestic currency appreciation reducing conversion proceeds. They hedge receivables using futures, forwards, or options. Tourists and day traders usually do not have structured commercial receivable exposure of this nature.", "id": 11}, {"question": "A trader takes a long position in USDINR futures contract at a price of 65 by buying 40 lots. On expiry of contract the settlement price was 65.40. What is his profit or loss ?", "options": ["Profit of Rs 16000", "Profit of Rs 24000", "Profit of Rs 20800", "Profit of Rs 11200"], "correctIndex": 0, "explanation": "The trader buys at 65 and sells at 65.40 (Settlement Price). So the profit is 0.40 0.40 x 40 lots x 1000 (lot size) = Rs 16000 profit", "id": 12}, {"question": "When you buy an Option, does it means you have a right to sell the underlying asset?", "options": ["All of the above", "Applicable only to institutional clients", "Depends on whether its a Call or Put option", "Cannot be determined from the given data"], "correctIndex": 2, "explanation": "The right to buy the asset is called call option and the right to sell the asset is called put option.", "id": 13}, {"question": "The system of accounting which is used to calculate prices of currency futures contract when multiple contracts of a series are combined / squared up is __________.", "options": ["FIFO", "CDSL", "Lowest price contract are squared off first", "Profit making contracts are squared off first"], "correctIndex": 0, "explanation": "FIFO - First In First Out", "id": 14}, {"question": "Which instrument is standardized and exchange traded?", "options": ["Customized bilateral forward", "Currency futures contract", "Forward", "Swap"], "correctIndex": 1, "explanation": "Currency futures are standardized regarding contract size, expiry cycle, tick size, and settlement procedures. They trade on regulated exchanges with clearing support. Forwards are usually customized privately between counterparties for specific amounts and maturities.", "id": 15}, {"question": "A trader wants to sell GBPINR one month futures contract. The current price is 81.50 and he enters a limit order to sell at 81.70. Assume that the price moves between 81 and 82 after the limit order was entered, at what price is this order likely to be executed ?", "options": ["Any price between 81.70 and 66", "Any price between 81.70 and 82", "Any price between 81.70 and 90", "Any price between 81 and 81.50"], "correctIndex": 1, "explanation": "Limit price: An order to buy a specified quantity of a security at or below a specified price, or an order to sell it at or above a specified price (called the limit price). This ensures that a person will never pay more for the futures contract than whatever price is set as his/her limit.", "id": 16}, {"question": "If USDINR rises from 81.60 to 82.40, then:", "options": ["Cannot be determined from the given data", "Applicable only to institutional clients", "Dollar appreciated and rupee depreciated", "Both of the above"], "correctIndex": 2, "explanation": "Higher USDINR means more rupees are required to buy one dollar. Hence dollar strengthened relative to rupee, while rupee weakened relative to dollar. Currency appreciation and depreciation are always relative concepts between paired currencies.", "id": 17}, {"question": "Which statement best distinguishes options from futures?", "options": ["Options impose obligation on buyer always", "Futures buyer pays only premium", "Option buyer has right but not obligation", "None of the above"], "correctIndex": 2, "explanation": "Option buyer acquires a right to buy or sell underlying at agreed strike, not a compulsory obligation. Futures create binding obligations on both sides subject to closing out before expiry. This asymmetry explains premium payment in options.", "id": 18}, {"question": "In currency quotation USDINR, USD is:", "options": ["Base currency", "Vehicle currency", "Quote currency", "All of the above"], "correctIndex": 0, "explanation": "In pair notation first currency is base currency and second is quote currency. USDINR means one unit of US dollar priced in Indian rupees. Therefore dollar is base currency and rupee is quote currency.", "id": 19}, {"question": "A USDINR put option has strike Rs 83.50. Spot is Rs 82.70. Premium is Rs 0.60. Intrinsic value per USD is:", "options": ["Rs 0.80", "Rs -0.20", "Rs 1.80", "Rs 2.80"], "correctIndex": 0, "explanation": "Put intrinsic value equals strike minus spot when strike exceeds spot. Here value is Rs 83.50 minus Rs 82.70 equal to Rs 0.80. Premium may exceed intrinsic value because time value and volatility expectations remain until expiry.", "id": 20}, {"question": "The intrinsic value of ‘In the money' option and ‘At the money’ option is always greater then or equal to One - State whether True or False?", "options": ["True", "False"], "correctIndex": 1, "explanation": "The intrinsic value of an option is the difference between spot price and the strike price. For an 'At The Money' option, the intrinsic value is zero and for an 'In the Money' option, the intrinsic value is always greater than zero.", "id": 21}, {"question": "A bank quotes wider spreads during volatile periods mainly because:", "options": ["It wants lower turnover always", "Inventory and price risk increase", "Law requires same on all days", "Currency stops trading entirely"], "correctIndex": 1, "explanation": "Dealers widen bid offer spreads when uncertainty and rapid price movement increase risk of being adversely selected or holding unwanted inventory. Wider spread compensates for higher hedging and market making risk. In calm liquid markets, spreads usually narrow.", "id": 22}, {"question": "Assume that on 1st May, USD-INR spot was at 45, premium for June maturity put option at strike of 45.5 is INR 0.54/0.55 and premium for June maturity call option at strike of 45 is INR 0.71/0.72. A client Mr. Shah executes a trade wherein he buys put at a strike of 45.5 and sells a call at a strike of 45. On expiry the RBI reference rate is 44.75. How much net profit/loss did Mr. Shah make per USD?", "options": ["Profit of INR 0.91", "Profit of INR -1.09", "Profit of INR 2.91", "Profit of INR 3.91"], "correctIndex": 0, "explanation": "Mr. Shah has bought a PUT and Sold a CALL - In both the cases he has assumed that the USDINR will fall to make a profit. On expiry the USDINR has fallen as indicated by the RBI reference rate - so he is definitely into profits. In first case when he bought PUT for 0.55, he has paid a premium of 0.55. The strike price is 45.50 and RBI refernce rate is 44.75. So a profit of 0.75. Deducting the premium paid ( 0.75 - 0.55 ) the profit is 0.20 In the second case when he sold a CALL option, he has received a premium of 0.71. This will be his profit as USDINR has gone done. So the total profit is 0.20 + 0.71 = 0.91", "id": 23}, {"question": "As per SEBI rules, the currency exchanges have to offer ____ series monthly contracts and ____ quarterly maturity currency futures options contract.", "options": ["3 , 3", "2 , 2", "5 , 5", "1 , 1"], "correctIndex": 0, "explanation": "Exchanges have to offer three serial monthly contracts followed by three quarterly contracts of the cycle March / June / September / December.", "id": 24}, {"question": "If domestic interest rate exceeds foreign interest rate, other factors constant, futures price of foreign currency generally trades:", "options": ["At premium to spot", "Both of the above", "None of the above", "Cannot be determined from the given data"], "correctIndex": 0, "explanation": "Under interest rate parity, higher domestic interest relative to foreign tends to place foreign currency futures above spot for direct quote pairs like USDINR. Carrying domestic funds has higher opportunity cost, so future delivery of foreign currency commands premium.", "id": 25}, {"question": "If a person has bearish view on USDINR, which would be the appropriate strategy for the objective of maximizing the profit ?", "options": ["Buy USD Put option", "Bear spread", "Bull spread", "Calendar spread"], "correctIndex": 0, "explanation": "When a person is bearish he can either sell a Call option or buy a Put option. But in case of selling a Call option, his profits will be limited to the extent of premium received. So in the above case, where the trader wishes to maximise his profits, buying a Put Option is the best alternative. Please note : Buying Call - Bullish view Selling Call - Bearish / Neutral view Buying Put - Bearish view Selling Put - Bullish / Neutral view", "id": 26}, {"question": "Which pair is commonly classified as major currency pair?", "options": ["EURUSD", "AUDUSD", "USDZAR", "GBPJPY"], "correctIndex": 0, "explanation": "Major pairs generally include most actively traded currencies with deep liquidity, often involving US dollar and other reserve currencies. EURUSD is globally one of the most traded pairs. Emerging market combinations are not usually classified as majors.", "id": 27}, {"question": "Which statement best describes managed float exchange rate regime followed in many economies?", "options": ["Currency permanently fixed to gold", "Exchange rate purely market determined with no intervention", "Market determined with occasional central bank intervention", "Currency legally banned from trading"], "correctIndex": 2, "explanation": "Managed float means exchange rate generally responds to market demand and supply, but authorities may intervene to reduce excessive volatility or disorderly moves. It differs from hard pegs and from clean float where intervention is absent or minimal. India is commonly described this way.", "id": 28}, {"question": "Without vehicle currency, total exchange rates among 8 currencies are:", "options": ["28", "25", "22", "34"], "correctIndex": 0, "explanation": "Number of unique bilateral currency pairs equals n multiplied by n minus one divided by two. For eight currencies, calculation is 8 multiplied by 7 divided by 2, giving 28 pairs. Vehicle currencies reduce this complexity significantly.", "id": 29}, {"question": "A trader does the following currency futures trade - sells EURINR and Buy JPYINR for an equivalent amount. What view has he executed ?", "options": ["INR weakening against EUR", "EUR weakening against JPY", "EUR strengthening against JPY", "INR strengthening against EUR"], "correctIndex": 1, "explanation": "Selling EURINR - view is weakening of EUR against INR Buying JPYINR - view is strengthening of JPY against INR Taking a collective view - EUR weakening against JPY", "id": 30}, {"question": "When you short a PUT option, once the breakeven point is crossed, the losses keep increasing with decreasing price of underlying asset.", "options": ["Always true", "Cannot be determined from the given data", "Only with prior exchange permission", "All of the above"], "correctIndex": 0, "explanation": "When you short a PUT option, your view is that the price of underlying will rise or remain steady. For a seller of Put option, the maximum profit is the premium he has received, but his losses are unlimited if the price of the underlying falls. Option Views : Long Call - Bullish Short Call - Bearish / Steady Long Put - Bearish Short Put - Bullish / Steady", "id": 31}, {"question": "Broker Mr. A charges a brokerage of Rs 20 per lot of USDINR futures on only one leg of the transaction if its squared off the same day. Broker Mr B charges Rs 15 per lot of USDINR futures on both the legs even if its squared up on the same day. A client buys 15 lots of USDINR futures and sells of 10 lots the same day and the balance 5 lots after 4 days. What will be the brokerage charged by broker Mr A and Mr B respectively ?", "options": ["400 and 450", "400 and 675", "400 and 585", "400 and 518"], "correctIndex": 0, "explanation": "On day 1 - The client buys 15 lots and sells 10 lots the same day. So brokerage charged by broker A (who charges only on one leg) will be 15 lots X Rs 20 = Rs 300. No brokerage on sell transaction. Brokerage charged by broker B ( who charges on both legs ) will be 15 lots x Rs 15 + 10 lots X Rs 15 = Rs 375 After 4 days - The Client sells 5 lots So brokerage charged by broker A will be 5 lots X Rs 20 = Rs 100 Brokerage charged by broker B will be 5 lots X Rs 15 = Rs 75 Total Brokerge : Broker A 300 + 100 = Rs 400 Broker B 375 + 75 = Rs 450", "id": 32}, {"question": "A trader is long in EURINR Call option of strike price of 75. The current spot price of EURINR is 79. What is the moneyness of this option ?", "options": ["In the Money", "Out of the Money", "At the Money", "Depends on regulatory approval"], "correctIndex": 0, "explanation": "A call option would be in the money, if underlying price is higher than the strike price. Similarly a put option would be in the money if underlying price is lower than the strike price.", "id": 33}, {"question": "_______ has issued guidance notes on accounting of index futures contracts from the view point of parties who enter into such futures contracts as buyers or sellers.", "options": ["ICAI", "FBIL", "FIMMDA", "KRA"], "correctIndex": 0, "explanation": "ICAI - The Institute of Chartered Accountants of India", "id": 34}, {"question": "Which objective is central to hedging through currency derivatives?", "options": ["Guarantee speculative gain", "Reduce uncertainty of future exchange rates", "Increase taxes automatically", "Eliminate business demand risk"], "correctIndex": 1, "explanation": "Hedging aims to reduce adverse financial impact from uncertain future exchange movements. It stabilizes cash flows, budgeting, and margins, though it may sacrifice some favorable outcomes. Hedging does not guarantee profit or remove all business risks.", "id": 35}, {"question": "Which of the following is true with respect to settlement date for exchange traded currency futures ?", "options": ["Two calendar days before the contract expiry", "Two business days before the contract expiry", "Last working day of the month", "Two calendar days after the contract expiry"], "correctIndex": 2, "explanation": "The Settlement date is the last working day of the month (subject to holiday) at 12 noon.", "id": 36}, {"question": "Which is an example of exotic pair?", "options": ["USDTRY", "USDMXN", "USDSGD", "EURGBP"], "correctIndex": 0, "explanation": "Exotic pairs usually combine a major currency with currency of an emerging or less traded economy. USDTRY pairs US dollar with Turkish lira. Major pairs such as EURUSD or USDJPY have deeper liquidity and tighter spreads.", "id": 37}, {"question": "Which of the following correctly describes the closing price of USDINR futures contract ?", "options": ["The average price for last half hour trading", "The weighted average price for last half an hour trading", "Options", "The average price of bid and ask price for last half an hour of trading"], "correctIndex": 1, "explanation": "The closing price for a futures contract is calculated as the last half an hour weighted average price of the contract. However if a futures contract is not traded on a day or not traded during the last half hour, a 'theoretical settlement price' is computed as may be decided by the relevant authority.", "id": 38}, {"question": "Mr. Amit is working with a of a currency broking house is an expert in currency movements. As per his view, INR should appreciate against EUR in next 6 months and accordingly he advised some of his clients to take a short position by selling EUR against INR and also he guaranteed against any losses. The manager of the employee takes an action against Mr. Amit for violating some trading guidelines. What should Mr. Amit have done to avoid the punishment ?", "options": ["Amit should have advised the clients correctly to take short position for 1 months and not 6 months as 6 month is a long period", "Amit should have also clearly mentioned the risk to his view", "Amit should not have guaranteed against losses", "Amit should have advised the clients correctly to take short position for 12 months and not 6 months as 6 month is a short period"], "correctIndex": 2, "explanation": "Exchange regulations specify codes of conduct related to the currency derivatives segment. All trading members must comply with these. One of the code of conduct is : - No Trading Member or person associated with the Trading Member shall guarantee a client against a loss in any transactions effected by the Trading Member for such client.", "id": 39}, {"question": "Which of the following best describes the guidelines for brokers with respect to issuing of contract notes for execution of orders?", "options": ["Broker should have a separate audit team which inspects the process of issuing contract notes at all his sub-brokers", "Brokers should promptly issue contract notes to his clients every week on Friday", "Brokers should promptly issue contract notes to his clients and clients of his sub brokers.", "Broker should ensure that his sub-brokers issue contract notes every week to their clients"], "correctIndex": 2, "explanation": "A Broker has to issue contract notes every trading day to his clients as well as clients of his sub brokers. As per the SEBI’s Code of Conduct for Brokers - A stock-broker shall issue without delay to his client a contract note for all transactions in the format specified by the stock exchange.", "id": 40}, {"question": "A put option buyer on USDINR expects:", "options": ["Dollar appreciation against rupee", "Dollar depreciation against rupee", "None of the above", "Increase in interest income only"], "correctIndex": 1, "explanation": "Put on USDINR gives right to sell dollars at strike price. This benefits when market rate falls below strike, meaning dollar weakens against rupee. Therefore buyer is generally bearish on dollar or seeks hedge against falling USD value.", "id": 41}, {"question": "A trader sells one USDINR futures contract at Rs 82.75. Contract size is USD 1000. Settlement price rises to Rs 83.10. What is mark to market result?", "options": ["Loss Rs 350", "Loss Rs 402", "Loss Rs 525", "Loss Rs 245"], "correctIndex": 0, "explanation": "Seller of futures loses when settlement price rises above sale price. Difference is Rs 0.35 per dollar. Multiply by contract size of USD 1000 gives Rs 350 loss. Futures positions are settled daily through mark to market mechanism, reducing accumulation of unpaid obligations.", "id": 42}, {"question": "If spot transaction is agreed today and settled same day, it is commonly called:", "options": ["Cash or ready", "Tom", "Spot", "T+2"], "correctIndex": 0, "explanation": "Same day settlement in foreign exchange is commonly called cash or ready transaction. Tom refers to next business day settlement, while standard spot often refers to second business day settlement subject to holiday conventions.", "id": 43}, {"question": "If option delta of call is 0.60, premium may rise approximately by how much when underlying rises Rs 1, all else same?", "options": ["Rs 0.60", "Rs 3.60", "Rs -0.40", "Rs -1.40"], "correctIndex": 0, "explanation": "Delta approximates first order sensitivity of option premium to small change in underlying price. Call delta 0.60 suggests premium may rise around Rs 0.60 for Rs 1 increase, assuming other variables remain constant.", "id": 44}, {"question": "Mr. Vaibhav believes that USDINR will appreciate and accordingly he enters into a derivative contract to execute his view of appreciating USDINR. His view proved correct but he observed that his profits are not increasing along with the USDINR appreciation. What type of derivative contract would he have entered in ?", "options": ["Short Put option", "Both of the above", "All of the above", "Depends on regulatory approval"], "correctIndex": 0, "explanation": "Buying a Call option or Selling a Put option - both have similar view ie. appreciation of the underlying. However in Selling a Put option, the gains are limited to the premium received. So Mr. Vaibhav must have shorted a Put Option and received the premium. Now even if the USDINR appreciates by a huge extent, his profits will be restricted to the premium received. If he had gone long on a call option, he would have paid a premium buy his gains would have been much more in co-relation to the rise in USDINR.", "id": 45}, {"question": "Which strategy limits downside while retaining upside potential for exporter?", "options": ["Sell USDINR futures", "Buy put on foreign currency receivable pair", "Borrow unrelated currency", "Buy USDINR call option"], "correctIndex": 1, "explanation": "Exporter fearing fall in foreign currency may buy put option to secure minimum conversion level while retaining benefit if currency rises. Unlike fixed futures hedge, option preserves upside after payment of premium.", "id": 46}, {"question": "If foreign interest rate exceeds domestic interest rate in direct quote pair, futures price generally trades:", "options": ["At discount to spot", "USDSGD", "USDTRY", "GBPJPY"], "correctIndex": 0, "explanation": "When foreign interest rate exceeds domestic rate, carrying foreign currency has relatively lower forward premium in direct quote terms, often causing futures to trade below spot. Interest rate parity links spot, interest differentials, and forward or futures pricing.", "id": 47}, {"question": "A speculator buys one call option paying premium Rs 0.40 on USDINR strike 82.50. Expiry spot is 82.10. Net result per USD is:", "options": ["Loss Rs 0.40", "Loss Rs 3.40", "Loss Rs 1.40", "Loss Rs -0.60"], "correctIndex": 0, "explanation": "Since expiry spot is below strike, call expires worthless because buying dollars at strike is unattractive. Buyer loses only premium paid, not unlimited amount. Therefore maximum loss equals Rs 0.40 per USD, demonstrating limited downside nature of option buying.", "id": 48}, {"question": "Which option Greek measures sensitivity of option premium to change in volatility?", "options": ["Vega", "Theta", "Rho", "Delta"], "correctIndex": 0, "explanation": "Vega estimates how much option premium changes when implied volatility changes by one unit. Higher expected volatility usually increases option value because probability of favorable movement rises. Delta tracks spot sensitivity, theta time decay, and gamma change in delta.", "id": 49}, {"question": "Which participant is most likely to use currency derivatives primarily for arbitrage?", "options": ["Importer with payable exposure", "Exporter with receivable exposure", "Trader exploiting price mismatch between spot and futures", "Tourist buying travel currency"], "correctIndex": 2, "explanation": "Arbitragers seek risk controlled profit from temporary price inconsistencies across markets or instruments. They may simultaneously buy in one market and sell in another. Importers and exporters mainly hedge exposure, while tourists transact for consumption needs rather than structured market opportunities.", "id": 50}, {"question": "An Indian exporter wishes to completely hedge the 10,000 GBP he is expecting to receive on 70th day from today. On the exchange the contracts available are for 30,60 and 90 maturity days. He does not to take any risk. What kind of action is he likely to take ?", "options": ["Short GBPINR on an Exchange", "Long GBPINR on an Exchange", "Long GBPINR on OTC market", "Short GBPINR on OTC market"], "correctIndex": 3, "explanation": "He will short (sell) 10,000 GBPINR for 70 days future on OTC market, for eg - with a Bank etc. as 70 days maturity is not available on exchange.", "id": 51}, {"question": "Mr X buys GBPINR futures at various price points over two days. He buys 20 lots at 80.00 at 11.30 am and 15 lots at 80.25 at 1.30 pm on Day 1. On Day 2 he buys 25 lots at 80.50 at 11 am and 10 lots at 80.40 at 2 pm. On day 3 he sell 50 lots at 80.60. Calculate his Profit / loss on the squared off position using FIFO method.", "options": ["+ 18750", "+ 24375", "+ 21562", "+ 13125"], "correctIndex": 0, "explanation": "FIFO means First In First Out. So lets see the buying cost of the first 50 lots [20 x 80] + [15 x 80.25] + [15 x 80.50] = 4011.25 He has squared up 50 lots The sale price of 50 lots is 80.60 = 4030 Total Profit = 4030 - 4011.25 X 1000 ( Lot size of GBPINR ) = 18750", "id": 52}, {"question": "Buyer of USDINR call option expects:", "options": ["Dollar rise against rupee", "Dollar fall against rupee", "Applicable only to institutional clients", "Interest rates unchanged only"], "correctIndex": 0, "explanation": "Call option on USDINR gives right to buy dollars at strike price. This gains when market rises above strike. Therefore buyer generally expects dollar appreciation or seeks protection against future rise in import payment cost.", "id": 53}, {"question": "A company has imported machinery and must pay EUR 200000 after three months. It buys EURINR futures at Rs 92.80. On maturity, spot rate is Rs 94.10 and futures settle at Rs 94.05. Approximate effective rupee outflow is:", "options": ["Rs 1,85,60,000", "Rs 24128000", "Rs 21344000", "Rs 12992000"], "correctIndex": 0, "explanation": "Importer pays higher spot value but gains on long futures. Cash market outflow equals Rs 94.10 multiplied by EUR 200000. Futures gain equals difference between 94.05 and 92.80 multiplied by 200000. Net hedge adjusted outflow becomes about Rs 1,85,60,000, reducing adverse currency movement impact.", "id": 54}, {"question": "A person sells a USD Put option at strike of 60.50 and receives a premium of INR 0.40. What would be the breakeven point for the transaction?", "options": ["60.10", "78.13", "66.11", "54.09"], "correctIndex": 0, "explanation": "The breakeven point for a short put is the strike price of the option minus the premium. So 60.50 - 0.40 = 60.10", "id": 55}, {"question": "An importer has to pay USD 500000 after two months. He buys two month currency futures at Rs 83.40. On maturity, spot rate is Rs 84.10 and futures settle at Rs 84.08. Ignoring basis risk, what is approximate effective rupee outflow?", "options": ["Rs 4,17,00,000", "Rs 35445000", "Rs 29190000", "Rs 47955000"], "correctIndex": 0, "explanation": "The importer pays higher spot price in cash market but gains on long futures position. Spot purchase cost is Rs 84.10 multiplied by USD 500000. Futures gain is difference between 84.08 and 83.40 multiplied by USD 500000. Net outflow becomes approximately Rs 4,17,00,000, showing how hedging reduces exchange rate risk.", "id": 56}, {"question": "Which market participant generally provides two way quotes?", "options": ["Market maker dealer", "Arbitrageur", "Hedger", "Speculator"], "correctIndex": 0, "explanation": "Market makers continuously quote bid and offer prices, standing ready to buy and sell subject to limits. Their activity supports liquidity and price discovery. Ordinary users like tourists usually accept quotes rather than provide them.", "id": 57}, {"question": "In a two way quote USDINR 83.1050 by 83.1100, bank buys USD at:", "options": ["83.1050", "66.4840", "99.7260", "91.4155"], "correctIndex": 0, "explanation": "In market making quotes, first number is bid and second is offer. Bid is the rate at which dealer buys base currency from customer. Since USD is base currency in USDINR pair, bank buys dollars at Rs 83.1050 and sells at Rs 83.1100.", "id": 58}, {"question": "Identify the appropriate strategy for a BULLISH view on USDINR and trade objective of zero cash outgo.", "options": ["Sell USDINR Call option", "Sell USDINR Put option", "Bull spread", "Straddle"], "correctIndex": 1, "explanation": "When you buy an option (either Call or Put), you have to pay a premium - so buying an option is not a zero cash outgo strategy. When you sell a Put, you have a bullish view and you receive a premium When you sell a Call, you have a bearish view and you receive a premium So when there is a bullish view and zero cash outgo strategy, one should sell PUT option.", "id": 59}, {"question": "If futures price equals spot plus carry, the pricing principle is mainly based on:", "options": ["Political voting theory", "Interest rate parity and cost of carry", "Neither of the above", "Only with prior exchange permission"], "correctIndex": 1, "explanation": "Currency futures pricing commonly reflects no arbitrage relationship connecting spot rate, domestic interest rate, foreign interest rate, and time to maturity. This is often summarized through interest rate parity or cost of carry framework.", "id": 60}, {"question": "A sub-broker has to execute a bipartite agreement between him and his client clearly specifying rights and obligations of each party - State True or False ?", "options": ["True", "False"], "correctIndex": 1, "explanation": "A sub-broker should enter into a tripartite agreement with his client and with the main broker specifying the scope of rights and obligations of the broker, sub-broker and such client of the sub-broker. (Bipartite is a two party agreement and a tripartite is a agreement between three parties)", "id": 61}, {"question": "The minimum net worth for a company to be eligible for applying to become an authorized exchange for currency futures is Rs __________.", "options": ["Rs 100 crore", "Rs 130 crore", "Rs 80 crore", "Rs 90 crore"], "correctIndex": 0, "explanation": "A recognized stock exchange having nationwide terminals or a new exchange recognized by SEBI may set up currency futures segment after obtaining SEBI’s approval. The exchange shall have a balance sheet networth of at least Rs. 100 crores", "id": 62}, {"question": "As per the Foreign Exchange Management Act an 'AD Category 1' bank can have a maximum net NPA of _____ % to become a Trading and Clearing Member of currency futures segment at a recognised stock exchange.", "options": ["3%", "1%", "6%", "5%"], "correctIndex": 0, "explanation": "Authorised Dealer Category I Banks AD Category I Banks are permitted to become trading and clearing members of the currency derivatives market of recognized stock exchanges, on their own account and on behalf of their clients, subject to fulfilling the following minimum prudential requirements: i) Minimum net worth of Rs. 500 crores. ii) Minimum CRAR of 10 per cent. iii) Net NPA should not exceed 3 per cent. iv) Net profit for last 3 years.", "id": 63}, {"question": "Which market is primarily over the counter globally?", "options": ["Interbank foreign exchange spot market", "Listed equity market only", "Commodity warehouse receipts only", "Government census market"], "correctIndex": 0, "explanation": "Global foreign exchange developed as decentralized dealer network where banks and institutions transact bilaterally or through electronic platforms. Though exchange traded currency derivatives exist, spot and many forwards or swaps remain largely over the counter in structure.", "id": 64}, {"question": "A trader in currency markets buys a long position in EURINR futures contract at a price of 65.40 and he buys 40 lots of the same. On expiry the settlement price is announced at 65.60. How much profit (+) or loss (-) does he make ?", "options": ["Profit of 8000", "Profit of 6800", "Profit of 9200", "Profit of 10400"], "correctIndex": 0, "explanation": "The trader buys at 65.40 and the settlement price is 65.60. So he makes a profit of 0.20 He has bought 40 lots and each lot of EURINR is of 1000. So his total profit is 0.20 X 40 X 1000 = 8000.", "id": 65}, {"question": "In quote EURUSD 1.1220 by 1.1224, dealer sells euro at:", "options": ["1.1224", "3.1224", "-0.8776", "0.1224"], "correctIndex": 0, "explanation": "In two way quote first figure is bid and second is offer. Dealer sells base currency, euro, at offer rate. Since euro is base currency in EURUSD, selling euro to customer occurs at 1.1224 dollars per euro.", "id": 66}, {"question": "The current EURINR spot is 80. The current future price of EUR is at a premium to INR. A trader believes that on expiry of one month EURINR futures, the spot may remain at 80. What currency futures trade strategy would be profitable to the trader if his views comes correct?", "options": ["Sell EURINR for one month and buy for 2 month", "Buy EURINR for one month and sell for 2 month", "Sell EURINR", "Straddle"], "correctIndex": 2, "explanation": "On expiry the spot and future prices tend to merge ie. become same. So the trader should sell the EURINR future which are at a premium (lets assume it at 83) to spot price (80). On expiry, the future price will be around 80 and he will square up his position and make a profit (83 - 80 = 3 )", "id": 67}, {"question": "An importer must pay dollars after one month and fears rupee depreciation. Suitable hedge is:", "options": ["Buy USDINR futures", "Buy USDINR call option", "Sell USDINR put option", "Neither of the above"], "correctIndex": 0, "explanation": "Importer needs dollars later. If rupee depreciates, USDINR rises and payment cost increases. Buying USDINR futures creates gain when dollar rises, offsetting higher spot purchase cost. This is standard hedge for future foreign currency payable exposure.", "id": 68}, {"question": "The initial deposit which is required for initiating a currency future position is known as ___________.", "options": ["Initial Margin", "Extreme Loss Margin", "Calendar Spread Margin", "Mark to Market Margin"], "correctIndex": 0, "explanation": "The initial security deposit paid by a member is considered as his initial margin for the purpose of allowable exposure limits. Initially, every member is allowed to take exposures up to the level permissible on the basis of the initial deposit.", "id": 69}, {"question": "_______ best describes the total open interest which is used for the purpose of monitoring open position during the day.", "options": ["Total open interest at 12.00", "Total open interest at the time of monitoring", "Total open interest at the end of previous day", "Maximum open interest in the previous day"], "correctIndex": 2, "explanation": "Positions during the day are monitored based on the total open interest at the end of the previous day’s trade. Monitoring of position limits: Clearing corporation end of day provides Exchange wise position limit applicable to various clients and member for next day.", "id": 70}, {"question": "If USDJPY is 150.20 by 150.22 and USDINR is 83.40 by 83.42, approximate bid for JPYINR per 100 JPY is:", "options": ["55.52", "72.18", "49.97", "44.42"], "correctIndex": 0, "explanation": "Convention often quotes JPYINR per 100 yen. Bid uses conservative dealing side. Approximate calculation is 100 multiplied by USDINR bid divided by USDJPY offer. Thus 100 multiplied by 83.40 divided by 150.22 gives around 55.52. Cross calculations depend on quote conventions.", "id": 71}, {"question": "Major benefit of margins in derivatives market is:", "options": ["Liquidity risk", "Reduce counterparty default risk", "Operational risk", "Remove all speculation forever"], "correctIndex": 1, "explanation": "Margins act as performance security collected from market participants. Daily revaluation and margin collection help absorb losses promptly, reducing probability that one participant defaults and harms the broader market settlement chain.", "id": 72}, {"question": "As per SEBI rules, the Exchange has to offer how many minimum number of 'OUT OF THE MONEY' currency option contracts for each maturity ?", "options": ["3", "6", "5", "1"], "correctIndex": 0, "explanation": "SEBI has instructed that for every available contract - 3 out of the money (OTM) strike, 3 in the money (ITM) strike and 1 at the money (ATM) strike contracts will be available on the exchange terminal.", "id": 73}, {"question": "As a trader you believe USDJPY will move from 90 to 95 in the next one month. You are a trader based in India where there is no trading in USDJPY. Therefore which of the following would you do to execute this view using currency future contracts of JPYINR and USDINR.", "options": ["Short JPYINR and Long USDINR", "Short USDINR and Long JPYINR", "Both of the above", "Cannot be determined from the given data"], "correctIndex": 0, "explanation": "This strategy involves selling Japanese Yen (JPY) against Indian Rupee (INR) and buying US Dollars (USD) against Indian Rupee (INR). Here's the rationale behind this strategy: 1. Short JPYINR: By selling JPYINR futures contracts, you're essentially betting that the value of Japanese Yen will decrease relative to Indian Rupee. This aligns with your belief that USDJPY will move from 90 to 95, as a decrease in JPYINR indicates the depreciation of Japanese Yen against Indian Rupee. 2. Long USDINR: Buying USDINR futures contracts means you're expecting the value of US Dollar to increase compared to Indian Rupee. As you anticipate USDJPY to move from 90 to 95, an increase in USDINR reflects the appreciation of US Dollar against Indian Rupee. By combining these positions, you're effectively capturing both aspects of your view on USDJPY: the expected depreciation of Japanese Yen against Indian Rupee and the anticipated appreciation of US Dollar against Indian Rupee. Therefore, this strategy allows you to profit from the expected movement of USDJPY from 90 to 95 within the next one month, despite not having direct access to trade USDJPY in India.", "id": 74}, {"question": "The minimum networth required for a company for applying to become a authorised exchange of currency futures is Rs ______ crores.", "options": ["100", "130", "110", "90"], "correctIndex": 0, "explanation": "This is the minimum net worth required by a company to apply for authorization to become an exchange for currency futures in India, as mandated by the Securities and Exchange Board of India (SEBI). This requirement ensures that the company possesses sufficient financial strength and stability to manage the operations and risks associated with currency futures trading.", "id": 75}, {"question": "What is the ISO Currency Symbol of SWISS FRANC?", "options": ["CHF", "JPY", "AUD", "CAD"], "correctIndex": 0, "explanation": "The symbol for Swiss Franc is CHF.", "id": 76}, {"question": "If USDINR moves from 82.00 to 81.25, which statement is correct?", "options": ["USD appreciated and INR depreciated", "USD depreciated and INR appreciated", "Only with prior exchange permission", "Neither changed in value"], "correctIndex": 1, "explanation": "USDINR expresses rupees per dollar. Fall from 82.00 to 81.25 means one dollar now buys fewer rupees. Therefore dollar weakened or depreciated, while rupee strengthened or appreciated against the dollar during the same period.", "id": 77}, {"question": "A futures contract nearing expiry generally converges toward:", "options": ["Spot price", "Forward", "Highest historical price", "Swap"], "correctIndex": 0, "explanation": "As expiry approaches, time value in futures basis declines and futures price converges with spot price through arbitrage and settlement mechanics. Persistent divergence would create near riskless trading opportunities for market participants.", "id": 78}, {"question": "A trader feels that INR should depreciate against the USD in the next few months. What currency future transaction will be profitable to him if his view comes true ? ( Assume everything else remaining the same )", "options": ["Buy USDINR", "None of the above", "Depends on regulatory approval", "All of the above"], "correctIndex": 0, "explanation": "When INR depreciates against USD, the currency pair USDINR prices go up. For example if USDINR is trading at 60, a fall in INR will lead to a rise in this price to 60.50 ...61 etc. So one should buy USDINR.", "id": 79}, {"question": "In OTC currency derivative market in India, is it possible for a corporate to write an option and receive a net premium?", "options": ["Not possible", "Depends on regulatory approval", "Possible, if he can give to the bank a copy of underlying trade transaction against which option has been written", "Only with prior exchange permission"], "correctIndex": 0, "explanation": "In India’s OTC currency derivatives market, a corporate can write an option only when it has a genuine underlying foreign exchange exposure. The company must submit documentary proof of the underlying trade transaction to the bank. Naked option writing for speculative premium income is not permitted under RBI guidelines. Hence, option writing is allowed only against valid exposure.", "id": 80}, {"question": "If one vehicle currency is used among 10 currencies, how many exchange rates are needed?", "options": ["9", "7", "10", "12"], "correctIndex": 0, "explanation": "Without vehicle currency, combinations rise sharply. With one selected vehicle currency, each remaining currency is quoted against that vehicle. Therefore for ten currencies total required rates become nine only. This simplifies operations, improves liquidity concentration, and reduces information requirements.", "id": 81}, {"question": "What is true with respect to Governing Council of currency futures segment of an exchange ?", "options": ["Governing council of currency futures and equity derivative /cash segment can have maximum 25% common members", "Governing council of currency futures and equity derivative /cash segment can have maximum 40% common members", "Governing council of currency futures and equity derivative /cash segment can have maximum 50% common members", "Governing council of currency futures and equity derivative /cash segment can have maximum 10% common members"], "correctIndex": 2, "explanation": "The currency futures segment of the Exchange should have a separate Governing Council on which the representation of Trading /Clearing Members of the currency futures segment should not exceed 25%. Further, 50% of the public representatives on the Governing Council of the currency futures segment can be common with the Governing Council of the cash/equity derivatives segments of the Exchange.", "id": 82}, {"question": "A client buys a EUR Put option at strike of 60 and pays a premium of INR 0.45. What would be the breakeven point for the transaction?", "options": ["59.55", "77.41", "53.59", "65.50"], "correctIndex": 0, "explanation": "Breakeven point for a buyer of Put option = Strike Price - Premium = 60.00 - 0.45 = 59.55", "id": 83}, {"question": "Which entity disseminates benchmark forward premia curves in India?", "options": ["Stock brokers association only", "Financial Benchmarks India Private Limited", "SEBI", "Insurance companies council"], "correctIndex": 1, "explanation": "Financial Benchmarks India Private Limited publishes important benchmark reference rates and forward premia related benchmarks based on prescribed methodologies. Such benchmarks assist valuation, treasury operations, and market transparency for participants.", "id": 84}, {"question": "If EURUSD is 1.1240 by 1.1245 and USDINR is 83.2000 by 83.2100, the approximate offer rate for EURINR is:", "options": ["93.63", "74.90", "102.99", "112.36"], "correctIndex": 0, "explanation": "Offer side cross rate uses offer of both legs because buyer of euro must buy dollars first and then euro. Therefore EURINR offer equals 1.1245 multiplied by 83.2100. This gives approximately 93.56 to 93.63 depending on rounding convention. Closest valid exam answer is 93.63.", "id": 85}, {"question": "If more than one contract in a series are outstanding at the time of expiry/ squaring off, the contract price of the contract so squared off should be determined using __________ method for calculating profit/loss on squaring-up.", "options": ["FIFO", "NSDL", "RBI", "ICSI"], "correctIndex": 0, "explanation": "If more than one contract in a series are outstanding at the time of expiry/ squaring off, the contract price of the contract so squared off should be determined using First-in, First-out (FIFO) method for calculating profit/loss on squaring-up.", "id": 86}, {"question": "An exporter expects USD receipts after one month and fears rupee appreciation. Suitable hedge is:", "options": ["Sell USDINR futures", "Buy USDINR futures", "Buy call on USDINR only", "Buy USDINR call option"], "correctIndex": 0, "explanation": "Exporter will receive dollars later and convert into rupees. If rupee appreciates, USDINR may fall, reducing rupee receipts. Selling USDINR futures locks a higher conversion level and offsets adverse fall in dollar value. This is a classic receivable hedge.", "id": 87}, {"question": "A wheat flour manufacturer gets into a contract with a five star hotel chain to sell certain quantity of wheat flour at a fixed price for a year. However after a few months, the price of wheat rises much above the contracted price and the manufacturer refuses to sell to the five star hotel chain. What is the type of risk highlighted in this contract ?", "options": ["Counter Party Risk", "Credit risk", "Market risk", "Liquidity risk"], "correctIndex": 0, "explanation": "Counter Party Risk - The risk to each party of a contract that the counterparty will not live up to its contractual obligations.", "id": 88}, {"question": "What is the process of actual pay in / pay out of mark to market margin or profit / loss on cancellation or on maturity of futures contract called ?", "options": ["Settlement", "Extreme Loss Margin", "Delivery Margin", "Initial Margin"], "correctIndex": 0, "explanation": "Clearing means computing open positions and obligations of clearing members in the trading system. Whereas, settlement means actual pay in or pay out to settle the contract.", "id": 89}, {"question": "Mr. Amit sells a USD put option at a strike of 66 and receives a premium of INR 0.4. What would be the break-even point for the two transactions?", "options": ["65.60", "78.72", "52.48", "59.04"], "correctIndex": 0, "explanation": "The breakeven point for a short put is the strike price of the option minus the premium. So 66 - 0.40 = 65.60 (In easier terms, when a person sells PUT, he has a bullish view and believes that price will rise. He has bought at 66 and he receives .40 premium so his buying price reduces by .40 ie. 65.60 which is break even price)", "id": 90}, {"question": "If GBPUSD is 1.3050 by 1.3055 and USDINR is 83.4000 by 83.4100, approximate bid rate for GBPINR is:", "options": ["108.84", "97.96", "87.07", "130.61"], "correctIndex": 0, "explanation": "Bid cross uses bid of both relevant legs when selling pound into rupee through dollar route. Multiply 1.3050 by 83.4000. Result is approximately 108.84. Cross rate logic depends on correct dealing side and identifying conversion path through common currency.", "id": 91}, {"question": "Which institution computes and disseminates important Indian reference rates such as USDINR benchmark?", "options": ["SEBI directly every minute", "Financial Benchmarks India Private Limited", "RBI", "Insurance regulator only"], "correctIndex": 1, "explanation": "Indian benchmark reference rates for major currency pairs involving rupee are disseminated by Financial Benchmarks India Private Limited. It functions as benchmark administrator recognized for such purposes. These rates are widely used for valuation, accounting, and settlement references.", "id": 92}, {"question": "A 'DERIVATIVE PRODUCT' can be best described as a ______ .", "options": ["complex product which is traded only amongst banks and large institutions", "product whose value is derived from value of one or more underlying variables", "product which can be from Equity / Currency or Commodity markets and are traded on a recognised stock exchange", "None of the above"], "correctIndex": 1, "explanation": "Derivative is a product whose value is derived from the value of one or more basic variables, called bases (underlying asset, index, or reference rate). The underlying asset can be equity, foreign exchange, commodity or any other asset. It can be traded on an exchange or on OTC.", "id": 93}, {"question": "Which contract feature distinguishes futures from forwards most clearly?", "options": ["Customized bilateral terms only", "Daily mark to market and exchange trading", "No underlying asset reference", "Mandatory physical gold backing"], "correctIndex": 1, "explanation": "Futures are standardized contracts traded on exchanges with clearing corporation support. Positions are revalued daily through mark to market and margins. Forwards are typically customized over the counter contracts settled mainly at maturity with greater counterparty dependence.", "id": 94}, {"question": "A call option buyer pays premium Rs 0.35. Strike is 82.00. Expiry spot is 82.20. Net result per USD is:", "options": ["Loss Rs 0.15", "Loss Rs 3.15", "Loss Rs 2.15", "Loss Rs -0.85"], "correctIndex": 0, "explanation": "Intrinsic value at expiry is spot minus strike equal to Rs 0.20. Buyer paid premium Rs 0.35. Net result equals 0.20 minus 0.35, producing Rs 0.15 loss per dollar. Positive intrinsic value does not always guarantee overall profit.", "id": 95}, {"question": "For the same maturity, the premium on 'In The Money' option will be lower than the premium for 'Out of The Money' option - State True or False ?", "options": ["True", "False"], "correctIndex": 1, "explanation": "In the Money options are profitable options where as Out of the Money options are loss making. So the premium on In the Money options will be higher the Out of the Money options. In the money (ITM) option: An option is said to be in the money, if on exercising it, the option buyer gets a positive cash flow. Out of the money (OTM) option: An option is said to be out of the money, if on exercising it, the option buyer gets a negative cash flow.", "id": 96}, {"question": "An Indian investor has invested Rs 390000 in US securities. At the time of investment, the exchange rate was 65. Two years later he noticed that his investments have gained 25% in USD terms and liquidated his investments. He repatriated the money to India at the then existing rate of Rs 62. What would be his real returns( returns in INR terms) ?", "options": ["19.23%", "21.23%", "18.23%", "20.23%"], "correctIndex": 0, "explanation": "The investor invested Rs 390000 in US Stock when the USDINR rate was 65 So he had invested 390000 / 65 = 6000 Dollars in US Stocks. His investment grew by 25% : 6000 x 25% = 6000 + 1500 = 7500 He is repatriating at USDINR rate of 62 : 7500 x 62 = 465000 Therefore his investment in INR terms have grown from Rs 390000 to Rs 465000 465000 x 100 / 390000 = 119.23 This is an increase of 19.23 %", "id": 97}, {"question": "A call option on USDINR has strike Rs 83.00. Spot is Rs 84.20. Premium is Rs 0.55. Intrinsic value per USD is:", "options": ["Rs 1.20", "Rs 4.20", "Rs 3.20", "Rs -0.80"], "correctIndex": 0, "explanation": "Call intrinsic value equals spot minus strike when spot exceeds strike. Here intrinsic value is Rs 84.20 minus Rs 83.00 which equals Rs 1.20. Premium includes intrinsic value plus time value. Since option is in the money, buyer has immediate exercise value.", "id": 98}, {"question": "Which is most relevant benefit of clearing corporation in exchange traded derivatives?", "options": ["Removes need for prices", "Becomes central counterparty reducing default risk", "Guarantees profit to traders", "Fixes currency values permanently"], "correctIndex": 1, "explanation": "Clearing corporation interposes itself between buyer and seller, becoming counterparty to each side. Through margining, settlement discipline, and risk controls it substantially reduces bilateral default risk. It does not guarantee profits or permanently control market prices.", "id": 99}, {"question": "Dealers often narrow spreads when market liquidity is high because:", "options": ["Competition and lower inventory risk increase", "Currency becomes illegal", "Operational risk", "Settlement stops entirely"], "correctIndex": 0, "explanation": "In liquid markets dealers can hedge positions quickly and face lower risk of holding unwanted inventory. Strong competition among market makers also compresses bid offer spreads, improving pricing efficiency for customers and institutions.", "id": 100}];
+
+/* ===================== CONFIG ===================== */
+const TEST_DURATION_SEC = 3600; // 60 minutes
+const MARKS_CORRECT = 1;
+const MARKS_WRONG = -0.25;
+const PASS_PERCENT = 60;
+const STORAGE_KEY = 'nism1cd_mocktest1_state_v1';
+
+/* ===================== STATE ===================== */
+let state = {
+  current: 0,
+  answers: {},     // qid -> selected option index
+  visited: {},      // qid -> true
+  marked: {},       // qid -> true
+  timeSpent: {},    // qid -> milliseconds spent on that question (TPQ source)
+  timeLeft: TEST_DURATION_SEC,
+  startedAt: null,
+  finished: false,
+};
+
+let timerInterval = null;
+let questionEnteredAt = null;   // Date.now() timestamp when current question was shown
+let lastTrackedQId = null;      // id of the question time is currently accruing against
+
+/* ===================== ELEMENTS ===================== */
+const el = id => document.getElementById(id);
+const testScreen = el('testScreen');
+const resultScreen = el('resultScreen');
+
+/* ===================== LOCAL STORAGE ===================== */
+function saveState(){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }catch(e){ console.warn('save failed', e); }
+}
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return null;
+    return JSON.parse(raw);
+  }catch(e){ return null; }
+}
+function clearState(){
+  try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+}
+
+/* ===================== AUTO LAUNCH ON LOAD ===================== */
+(function autoLaunch(){
+  el('totalText').textContent = QUESTIONS.length;
+  const saved = loadState();
+  if(saved && !saved.finished && saved.startedAt){
+    state = saved;
+    if(!state.timeSpent) state.timeSpent = {}; // backward-compat for older saved sessions
+    questionEnteredAt = Date.now(); // resume point — don't count offline/refresh gap as question time
+    lastTrackedQId = null;
+    enterTestScreen();
+  } else {
+    beginFreshTest();
+  }
+})();
+
+function beginFreshTest(){
+  state = {
+    current: 0,
+    answers: {},
+    visited: {},
+    marked: {},
+    timeSpent: {},
+    timeLeft: TEST_DURATION_SEC,
+    startedAt: Date.now(),
+    finished: false,
+  };
+  questionEnteredAt = Date.now();
+  lastTrackedQId = null;
+  saveState();
+  enterTestScreen();
+}
+
+function enterTestScreen(){
+  testScreen.classList.add('active');
+  buildPalette();
+  renderQuestion();
+  startTimer();
+}
+
+/* ===================== TIMER (TIMESTAMP-BASED) =====================
+   Bug fix: the old version decremented timeLeft by 1 inside setInterval,
+   which drifts badly when the browser throttles timers on a background
+   tab, and on refresh it just resumed the last-saved countdown without
+   accounting for time that passed while the page was closed/inactive.
+   Fix: always derive timeLeft from Date.now() - state.startedAt, so the
+   timer is self-correcting regardless of throttling, refreshes, or the
+   user switching tabs for a while. */
+function computeTimeLeft(){
+  const elapsedSec = Math.floor((Date.now() - state.startedAt) / 1000);
+  return Math.max(0, TEST_DURATION_SEC - elapsedSec);
+}
+function startTimer(){
+  state.timeLeft = computeTimeLeft();
+  updateTimerDisplay();
+  timerInterval = setInterval(()=>{
+    state.timeLeft = computeTimeLeft();
+    updateTimerDisplay();
+    if(state.timeLeft <= 0){
+      clearInterval(timerInterval);
+      finishTest(true);
+      return;
+    }
+    if(state.timeLeft % 5 === 0) saveState();
+  }, 1000);
+  // Re-sync immediately when the tab regains focus (covers throttled/paused intervals)
+  document.addEventListener('visibilitychange', onVisibilityResync);
+}
+function onVisibilityResync(){
+  if(document.visibilityState === 'visible' && timerInterval){
+    state.timeLeft = computeTimeLeft();
+    updateTimerDisplay();
+    if(state.timeLeft <= 0){
+      clearInterval(timerInterval);
+      finishTest(true);
+    }
+  }
+}
+function updateTimerDisplay(){
+  const m = Math.floor(state.timeLeft/60).toString().padStart(2,'0');
+  const s = (state.timeLeft%60).toString().padStart(2,'0');
+  el('timerText').textContent = `${m}:${s}`;
+  const box = el('timerBox');
+  if(state.timeLeft <= 120) box.classList.add('warn'); else box.classList.remove('warn');
+}
+
+/* ===================== RENDER QUESTION ===================== */
+function accrueTimeForLastQuestion(){
+  // Adds the time spent on whichever question was on screen before this
+  // render call into state.timeSpent — the raw data source for TPQ.
+  if(lastTrackedQId !== null && questionEnteredAt !== null){
+    const delta = Date.now() - questionEnteredAt;
+    state.timeSpent[lastTrackedQId] = (state.timeSpent[lastTrackedQId] || 0) + delta;
+  }
+}
+function renderQuestion(){
+  accrueTimeForLastQuestion();
+  const idx = state.current;
+  const q = QUESTIONS[idx];
+  questionEnteredAt = Date.now();
+  lastTrackedQId = q.id;
+  state.visited[q.id] = true;
+
+  const selected = state.answers[q.id];
+  const isMarked = !!state.marked[q.id];
+
+  const optionsHtml = q.options.map((opt, i)=>{
+    const sel = selected === i ? 'selected' : '';
+    const letter = String.fromCharCode(65+i);
+    return `<div class="option ${sel}" data-idx="${i}">
+      <div class="opt-radio">${selected===i ? '✓' : letter}</div>
+      <div class="opt-text">${escapeHtml(opt)}</div>
+    </div>`;
+  }).join('');
+
+  el('questionArea').innerHTML = `
+    <div class="q-meta-row">
+      <div class="q-counter">Question <b>${idx+1}</b> of ${QUESTIONS.length}</div>
+    </div>
+    <div class="q-card">
+      <span class="q-tag">Interest Rate Derivatives</span>
+      <div class="q-text">${escapeHtml(q.question)}</div>
+      <div class="options" id="optionsWrap">${optionsHtml}</div>
+    </div>
+  `;
+
+  document.querySelectorAll('#optionsWrap .option').forEach(opt=>{
+    opt.addEventListener('click', ()=>{
+      const i = parseInt(opt.dataset.idx);
+      state.answers[q.id] = i;
+      saveState();
+      renderQuestion();
+      refreshPaletteItem(idx);
+      updateSidebarStats();
+    });
+  });
+
+  el('markBtn').classList.toggle('active', isMarked);
+  el('markBtn').innerHTML = `<span>${isMarked ? '★' : '☆'}</span> ${isMarked ? 'Marked for Review' : 'Mark for Review'}`;
+
+  el('prevBtn').disabled = idx === 0;
+  el('nextBtn').textContent = idx === QUESTIONS.length-1 ? 'Save & Submit ✓' : 'Save & Next →';
+
+  refreshPaletteItem(idx, true);
+  updateSidebarStats();
+  updateTopProgress();
+}
+
+function escapeHtml(str){
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+/* ===================== NAVIGATION ===================== */
+el('prevBtn').addEventListener('click', ()=>{
+  if(state.current > 0){ state.current--; saveState(); renderQuestion(); window.scrollTo(0,0); }
+});
+el('nextBtn').addEventListener('click', ()=>{
+  if(state.current < QUESTIONS.length-1){ state.current++; saveState(); renderQuestion(); window.scrollTo(0,0); }
+  else { openSubmitModal(); }
+});
+el('clearResponseBtn').addEventListener('click', ()=>{
+  const q = QUESTIONS[state.current];
+  delete state.answers[q.id];
+  saveState();
+  renderQuestion();
+  refreshPaletteItem(state.current);
+  updateSidebarStats();
+});
+el('markBtn').addEventListener('click', ()=>{
+  const q = QUESTIONS[state.current];
+  if(state.marked[q.id]) delete state.marked[q.id];
+  else state.marked[q.id] = true;
+  saveState();
+  renderQuestion();
+  refreshPaletteItem(state.current);
+  updateSidebarStats();
+});
+
+document.addEventListener('keydown', (e)=>{
+  if(!testScreen.classList.contains('active')) return;
+  if(e.key === 'ArrowRight'){ el('nextBtn').click(); }
+  if(e.key === 'ArrowLeft'){ el('prevBtn').click(); }
+  if(['1','2','3','4'].includes(e.key)){
+    const i = parseInt(e.key)-1;
+    const q = QUESTIONS[state.current];
+    if(i < q.options.length){
+      state.answers[q.id] = i;
+      saveState(); renderQuestion(); refreshPaletteItem(state.current); updateSidebarStats();
+    }
+  }
+});
+
+/* ===================== PALETTE ===================== */
+function buildPalette(){
+  const grid = el('paletteGrid');
+  grid.innerHTML = QUESTIONS.map((q,i)=>`<button class="pal-item" id="pal-${i}" data-idx="${i}">${i+1}</button>`).join('');
+  grid.querySelectorAll('.pal-item').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      state.current = parseInt(btn.dataset.idx);
+      saveState();
+      renderQuestion();
+      window.scrollTo(0,0);
+    });
+  });
+}
+function paletteClassFor(idx){
+  const q = QUESTIONS[idx];
+  const answered = state.answers.hasOwnProperty(q.id);
+  const visited = !!state.visited[q.id];
+  const marked = !!state.marked[q.id];
+  let cls = '';
+  if(answered) cls = 'answered';
+  else if(visited) cls = 'notanswered';
+  if(marked) cls += ' marked';
+  return cls;
+}
+function refreshPaletteItem(idx, isCurrent){
+  for(let i=0;i<QUESTIONS.length;i++){
+    const btn = el('pal-'+i);
+    if(!btn) continue;
+    btn.className = 'pal-item ' + paletteClassFor(i);
+    if(i === state.current) btn.classList.add('current');
+  }
+}
+
+/* ===================== SIDEBAR STATS ===================== */
+function updateSidebarStats(){
+  const total = QUESTIONS.length;
+  let answered=0, marked=0, visitedNotAns=0, notVisited=0;
+  QUESTIONS.forEach(q=>{
+    const isAns = state.answers.hasOwnProperty(q.id);
+    const isVis = !!state.visited[q.id];
+    const isMarked = !!state.marked[q.id];
+    if(isAns) answered++;
+    if(isMarked) marked++;
+    if(!isVis) notVisited++;
+  });
+  el('statAnswered').textContent = answered;
+  el('statMarked').textContent = marked;
+  el('statNotVisited').textContent = notVisited;
+  el('attemptedText').textContent = answered;
+  const pct = Math.round((answered/total)*100);
+  el('sidebarProgressPct').textContent = pct + '%';
+  el('sidebarBarFill').style.width = pct + '%';
+}
+function updateTopProgress(){
+  const total = QUESTIONS.length;
+  const visitedCount = Object.keys(state.visited).length;
+  const pct = Math.round((visitedCount/total)*100);
+  el('progressTopFill').style.width = pct + '%';
+}
+
+/* ===================== SUBMIT FLOW ===================== */
+function openSubmitModal(){
+  const total = QUESTIONS.length;
+  const answered = Object.keys(state.answers).length;
+  const unanswered = total - answered;
+  el('modalTitle').textContent = 'Submit Test?';
+  el('modalText').textContent = unanswered > 0
+    ? `You have ${unanswered} unanswered question(s). Are you sure you want to submit the test now? This action cannot be undone.`
+    : `You have answered all questions. Are you sure you want to submit the test now?`;
+  el('submitModal').classList.add('active');
+}
+el('submitBtnTop').addEventListener('click', openSubmitModal);
+
+/* ---- MOBILE PALETTE TOGGLE ---- */
+(function(){
+  const toggleBtn = el('paletteToggleBtn');
+  const closeBtn = el('sidebarCloseBtn');
+  const panel = el('sidebarPanel');
+  const backdrop = el('sidebarBackdrop');
+  function openPanel(){ panel.classList.add('open'); backdrop.classList.add('open'); }
+  function closePanel(){ panel.classList.remove('open'); backdrop.classList.remove('open'); }
+  if(toggleBtn) toggleBtn.addEventListener('click', openPanel);
+  if(closeBtn) closeBtn.addEventListener('click', closePanel);
+  if(backdrop) backdrop.addEventListener('click', closePanel);
+})();
+el('modalCancel').addEventListener('click', ()=> el('submitModal').classList.remove('active'));
+el('modalConfirm').addEventListener('click', ()=>{
+  el('submitModal').classList.remove('active');
+  finishTest(false);
+});
+
+function finishTest(autoSubmitted){
+  clearInterval(timerInterval);
+  document.removeEventListener('visibilitychange', onVisibilityResync);
+  accrueTimeForLastQuestion();
+  lastTrackedQId = null;
+  state.finished = true;
+  state.finishedAt = Date.now();
+  saveState();
+  computeAndRenderResult(autoSubmitted);
+  testScreen.classList.remove('active');
+  resultScreen.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* ===================== SCORING ===================== */
+let lastResultData = null;
+function computeAndRenderResult(autoSubmitted){
+  let correct=0, wrong=0, skipped=0, score=0;
+  const perQ = QUESTIONS.map(q=>{
+    const sel = state.answers.hasOwnProperty(q.id) ? state.answers[q.id] : null;
+    let status;
+    if(sel === null){ status='skip'; skipped++; }
+    else if(sel === q.correctIndex){ status='correct'; correct++; score += MARKS_CORRECT; }
+    else { status='wrong'; wrong++; score += MARKS_WRONG; }
+    return {q, sel, status, marked: !!state.marked[q.id]};
+  });
+  score = Math.round(score*100)/100;
+  const total = QUESTIONS.length;
+  const attempted = correct+wrong;
+  const accuracy = attempted>0 ? Math.round((correct/attempted)*100) : 0;
+  const maxScore = total*MARKS_CORRECT;
+  const percentObtained = (score/maxScore)*100;
+  const passed = percentObtained >= PASS_PERCENT;
+
+  const elapsed = state.startedAt ? Math.floor(((state.finishedAt||Date.now()) - state.startedAt)/1000) : (TEST_DURATION_SEC-state.timeLeft);
+  const em = Math.floor(elapsed/60).toString().padStart(2,'0');
+  const es = (elapsed%60).toString().padStart(2,'0');
+
+  el('resultBadge').textContent = passed ? '✓ PASS' : '✗ FAIL';
+  el('resultBadge').className = 'badge ' + (passed?'pass':'fail');
+  el('resultSubtext').textContent = autoSubmitted
+    ? "Time's up! Your test was submitted automatically. Here's how you performed."
+    : "Here's a detailed breakdown of your performance.";
+  el('rScore').textContent = score + ' / ' + maxScore;
+  el('rCorrect').textContent = correct;
+  el('rWrong').textContent = wrong;
+  el('rSkipped').textContent = skipped;
+  el('rAccuracy').textContent = accuracy + '%';
+  el('rTimeTaken').textContent = `${em}:${es}`;
+  el('rTotalQ').textContent = total;
+
+  lastResultData = perQ;
+  renderReviewList(perQ, 'all');
+
+  // ---- Push this attempt into the shared Performance Dashboard store ----
+  if(window.AnalyticsEngine){
+    AnalyticsEngine.saveMockResult({
+      mockId: 'nism1cd_mock1',
+      mockName: 'NISM-I Mock Test 1 (Currency Derivatives)',
+      questions: QUESTIONS,
+      perQ,
+      timeSpent: state.timeSpent,
+      timeTakenSec: elapsed,
+      score, maxScore, correct, wrong, skipped, accuracy, percentObtained, passed
+    });
+  }
+
+  clearState(); // test complete, clear saved in-progress state
+}
+
+/* ===================== REVIEW ===================== */
+el('reviewBtn').addEventListener('click', ()=>{
+  const sec = el('reviewSection');
+  sec.style.display = sec.style.display === 'none' ? 'block' : 'none';
+  if(sec.style.display === 'block') sec.scrollIntoView({behavior:'smooth', block:'start'});
+});
+el('retakeBtn').addEventListener('click', ()=>{
+  clearState();
+  resultScreen.classList.remove('active');
+  el('reviewSection').style.display = 'none';
+  beginFreshTest();
+});
+
+document.querySelectorAll('.filter-chip').forEach(chip=>{
+  chip.addEventListener('click', ()=>{
+    document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    renderReviewList(lastResultData, chip.dataset.filter);
+  });
+});
+
+function renderReviewList(perQ, filter){
+  let list = perQ;
+  if(filter==='correct') list = perQ.filter(r=>r.status==='correct');
+  if(filter==='wrong') list = perQ.filter(r=>r.status==='wrong');
+  if(filter==='skip') list = perQ.filter(r=>r.status==='skip');
+  if(filter==='marked') list = perQ.filter(r=>r.marked);
+
+  if(list.length===0){
+    el('reviewList').innerHTML = `<p style="color:var(--text-faint);text-align:center;padding:30px;">No questions in this category.</p>`;
+    return;
+  }
+
+  el('reviewList').innerHTML = list.map(r=>{
+    const q = r.q;
+    const qIndexGlobal = QUESTIONS.findIndex(x=>x.id===q.id)+1;
+    const statusLabel = r.status==='correct'?'Correct':r.status==='wrong'?'Wrong':'Unattempted';
+    const optsHtml = q.options.map((opt,i)=>{
+      let cls='', tag='';
+      if(i===q.correctIndex){ cls='correct-ans'; tag='✓ Correct'; }
+      if(r.sel===i && i!==q.correctIndex){ cls='wrong-ans'; tag='✗ Your Answer'; }
+      if(r.sel===i && i===q.correctIndex){ tag='✓ Your Answer'; }
+      return `<div class="mini-opt ${cls}"><span>${escapeHtml(opt)}</span>${tag?`<span class="tag" style="margin-left:auto;">${tag}</span>`:''}</div>`;
+    }).join('');
+    return `<div class="review-card">
+      <div class="review-card-head">
+        <div><b>Q${qIndexGlobal}.</b> ${escapeHtml(q.question)}</div>
+        <span class="review-status ${r.status==='skip'?'skip':r.status}">${statusLabel}</span>
+      </div>
+      <div class="mini-options">${optsHtml}</div>
+      <div class="explanation-box"><b>Explanation</b>${escapeHtml(q.explanation)}</div>
+    </div>`;
+  }).join('');
+}
+</script>
+</body>
+</html>

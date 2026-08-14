@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NISM Series IV Mock Test 2 | Interest Rate Derivatives</title>
+<style>
+:root{
+  --bg:#0a0e17; --bg2:#0f1420; --panel:#131927; --panel2:#1a2235;
+  --border:#243047; --border-light:#2e3b56;
+  --text:#e8edf7; --text-dim:#8b97b3; --text-faint:#5d6a87;
+  --accent:#4f8cff; --accent-dim:#2c5dc7; --accent-glow:rgba(79,140,255,.35);
+  --green:#2dd4a7; --green-dim:#1a8f72; --red:#ff5d7a; --red-dim:#c23854;
+  --amber:#ffb74f; --amber-dim:#cc8c2e;
+  --purple:#a78bfa;
+  --radius:14px; --radius-sm:8px;
+  --shadow:0 8px 30px rgba(0,0,0,.45);
+  --transition:.25s cubic-bezier(.4,0,.2,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{
+  background:radial-gradient(circle at 20% 0%, #15203a 0%, var(--bg) 55%);
+  color:var(--text);
+  font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+::selection{background:var(--accent-glow);}
+button{font-family:inherit;cursor:pointer;border:none;outline:none;background:none;color:inherit;}
+::-webkit-scrollbar{width:8px;height:8px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:8px;}
+::-webkit-scrollbar-thumb:hover{background:var(--accent-dim);}
+
+.screen{display:none;min-height:100vh;width:100%;animation:fadeIn .45s ease;}
+.screen.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.55;}}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes pop{0%{transform:scale(.85);opacity:0;}100%{transform:scale(1);opacity:1;}}
+@keyframes slideDown{from{transform:translateY(-12px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+@keyframes shimmer{0%{background-position:-200% 0;}100%{background-position:200% 0;}}
+
+/* ============ START SCREEN ============ */
+#startScreen{display:flex;align-items:center;justify-content:center;padding:24px;}
+.start-card{
+  width:100%;max-width:780px;background:linear-gradient(160deg,var(--panel) 0%, var(--bg2) 100%);
+  border:1px solid var(--border);border-radius:20px;padding:42px 40px;box-shadow:var(--shadow);
+  animation:pop .5s ease;
+}
+.brand-row{display:flex;align-items:center;gap:14px;margin-bottom:6px;}
+.brand-badge{
+  width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--purple));
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#fff;
+  box-shadow:0 6px 18px var(--accent-glow);flex-shrink:0;
+}
+.brand-text-sm{font-size:12px;letter-spacing:2px;color:var(--text-faint);text-transform:uppercase;font-weight:600;}
+.start-title{font-size:28px;font-weight:800;margin-top:14px;line-height:1.3;background:linear-gradient(90deg,#fff,#b9c6e6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.start-sub{color:var(--text-dim);margin-top:8px;font-size:14.5px;line-height:1.6;}
+.info-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:30px 0;}
+.info-box{
+  background:var(--panel2);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:16px 14px;text-align:center;transition:var(--transition);
+}
+.info-box:hover{border-color:var(--accent-dim);transform:translateY(-2px);}
+.info-box .ic{font-size:20px;margin-bottom:8px;}
+.info-box .val{font-size:20px;font-weight:800;color:#fff;}
+.info-box .lbl{font-size:11.5px;color:var(--text-faint);margin-top:3px;text-transform:uppercase;letter-spacing:.5px;}
+.rules-box{
+  background:rgba(255,183,79,.06);border:1px solid rgba(255,183,79,.25);border-radius:var(--radius-sm);
+  padding:16px 18px;margin-bottom:26px;
+}
+.rules-box h4{color:var(--amber);font-size:13px;margin-bottom:10px;display:flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.5px;}
+.rules-box ul{list-style:none;font-size:13.5px;color:var(--text-dim);line-height:1.95;}
+.rules-box li{display:flex;gap:8px;}
+.rules-box li::before{content:'▸';color:var(--amber);flex-shrink:0;}
+.resume-banner{
+  background:rgba(79,140,255,.08);border:1px solid rgba(79,140,255,.3);border-radius:var(--radius-sm);
+  padding:13px 16px;margin-bottom:22px;font-size:13.5px;color:var(--accent);display:flex;align-items:center;justify-content:space-between;gap:10px;
+  animation:slideDown .4s ease;
+}
+.resume-banner span b{color:#fff;}
+.resume-banner .clear-btn{font-size:12px;color:var(--text-faint);text-decoration:underline;flex-shrink:0;}
+.start-actions{display:flex;gap:14px;align-items:center;}
+.btn{
+  padding:14px 28px;border-radius:11px;font-weight:700;font-size:14.5px;transition:var(--transition);
+  display:inline-flex;align-items:center;gap:8px;letter-spacing:.2px;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--accent),#3f6fe0);color:#fff;box-shadow:0 8px 24px var(--accent-glow);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px var(--accent-glow);}
+.btn-primary:active{transform:translateY(0);}
+.btn-ghost{background:var(--panel2);color:var(--text-dim);border:1px solid var(--border);}
+.btn-ghost:hover{border-color:var(--border-light);color:var(--text);}
+.start-foot{margin-top:22px;font-size:12px;color:var(--text-faint);text-align:center;}
+
+/* ============ TEST SCREEN ============ */
+#testScreen{display:none;}
+#testScreen.active{display:flex;flex-direction:column;height:100vh;}
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;padding:0 22px;height:62px;flex-shrink:0;
+  background:var(--panel);border-bottom:1px solid var(--border);position:relative;z-index:20;
+}
+.topbar-left{display:flex;align-items:center;gap:12px;min-width:0;}
+.topbar-logo{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--purple));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0;}
+.topbar-title{font-size:14.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.topbar-title small{display:block;font-size:11px;color:var(--text-faint);font-weight:500;}
+.topbar-right{display:flex;align-items:center;gap:16px;}
+.timer-box{
+  display:flex;align-items:center;gap:9px;background:var(--panel2);border:1px solid var(--border);
+  border-radius:10px;padding:8px 16px;font-weight:700;font-size:16px;font-variant-numeric:tabular-nums;
+}
+.attempted-box{
+  background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 16px;
+  font-size:13.5px;font-weight:700;color:var(--text-dim);white-space:nowrap;
+}
+.attempted-box span{color:var(--accent);font-weight:800;}
+.attempted-box #totalText{color:var(--text);}
+.timer-box.warn{border-color:var(--red-dim);color:var(--red);animation:pulse 1.1s infinite;}
+.timer-ic{font-size:15px;}
+.submit-btn{
+  background:linear-gradient(135deg,var(--green-dim),var(--green));color:#04241c;font-weight:700;font-size:13.5px;
+  padding:10px 20px;border-radius:9px;transition:var(--transition);
+}
+.submit-btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(45,212,167,.3);}
+.progress-top{height:3px;width:100%;background:var(--border);flex-shrink:0;}
+.progress-top-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--purple));transition:width .35s ease;}
+
+.test-body{display:flex;flex:1;overflow:hidden;}
+.question-area{flex:1;display:flex;flex-direction:column;overflow-y:auto;padding:34px 44px 110px;}
+.q-meta-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.q-counter{font-size:13px;color:var(--text-faint);font-weight:600;letter-spacing:.3px;}
+.q-counter b{color:var(--accent);}
+.mark-btn{
+  display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--text-dim);
+  border:1px solid var(--border);padding:7px 14px;border-radius:20px;transition:var(--transition);
+}
+.mark-btn:hover{border-color:var(--purple);color:var(--purple);}
+.mark-btn.active{background:rgba(167,139,250,.14);border-color:var(--purple);color:var(--purple);}
+.q-card{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:30px 32px;
+  animation:fadeIn .3s ease; max-width:760px;
+}
+.q-text{font-size:17.5px;line-height:1.65;font-weight:600;color:#f3f6fc;margin-bottom:26px;}
+.q-tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.6px;color:var(--accent);background:rgba(79,140,255,.1);padding:3px 9px;border-radius:6px;margin-bottom:14px;text-transform:uppercase;}
+.options{display:flex;flex-direction:column;gap:12px;}
+.option{
+  display:flex;align-items:flex-start;gap:14px;padding:15px 18px;border:1.5px solid var(--border);
+  border-radius:11px;cursor:pointer;transition:var(--transition);background:var(--bg2);
+}
+.option:hover{border-color:var(--border-light);background:var(--panel2);transform:translateX(2px);}
+.option.selected{border-color:var(--accent);background:rgba(79,140,255,.1);box-shadow:0 0 0 1px var(--accent) inset;}
+.opt-radio{
+  width:22px;height:22px;border-radius:50%;border:2px solid var(--border-light);flex-shrink:0;margin-top:1px;
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;transition:var(--transition);color:transparent;
+}
+.option.selected .opt-radio{border-color:var(--accent);background:var(--accent);color:#fff;}
+.opt-text{font-size:14.8px;line-height:1.55;color:var(--text);padding-top:1px;}
+.review-mode .option{cursor:default;}
+.review-mode .option.correct-ans{border-color:var(--green);background:rgba(45,212,167,.1);}
+.review-mode .option.wrong-ans{border-color:var(--red);background:rgba(255,93,122,.1);}
+.review-mode .option.correct-ans .opt-radio{border-color:var(--green);background:var(--green);}
+.review-mode .option.wrong-ans .opt-radio{border-color:var(--red);background:var(--red);}
+.explanation-box{
+  margin-top:22px;padding:16px 18px;background:rgba(79,140,255,.06);border-left:3px solid var(--accent);
+  border-radius:8px;font-size:13.5px;line-height:1.65;color:var(--text-dim);animation:slideDown .35s ease;
+}
+.explanation-box b{color:var(--accent);display:block;margin-bottom:6px;font-size:12px;letter-spacing:.4px;text-transform:uppercase;}
+
+.nav-footer{
+  position:sticky;bottom:0;display:flex;align-items:center;justify-content:flex-start;
+  padding:16px 44px;background:linear-gradient(180deg,transparent,var(--bg) 30%);margin-top:auto;gap:18px;flex-wrap:wrap;
+}
+.nav-footer-center{display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:center;}
+.nav-btn{
+  padding:12px 24px;border-radius:10px;font-weight:700;font-size:13.5px;background:var(--panel2);
+  border:1px solid var(--border);color:var(--text);transition:var(--transition);display:flex;align-items:center;gap:8px;
+}
+.nav-btn:hover:not(:disabled){border-color:var(--accent-dim);transform:translateY(-1px);}
+.nav-btn:disabled{opacity:.35;cursor:not-allowed;}
+.nav-btn.next-primary{background:linear-gradient(135deg,var(--accent-dim),var(--accent));border:none;}
+.clear-btn-mini{font-size:12.5px;color:var(--text-faint);text-decoration:underline;}
+
+/* SIDEBAR */
+.sidebar{
+  width:300px;flex-shrink:0;background:var(--panel);border-left:1px solid var(--border);
+  display:flex;flex-direction:column;padding:20px;overflow-y:auto;
+}
+.sidebar-progress{margin-bottom:18px;}
+.sidebar-progress-label{display:flex;justify-content:space-between;font-size:11.5px;color:var(--text-faint);margin-bottom:6px;}
+.sidebar-bar{height:6px;border-radius:6px;background:var(--border);overflow:hidden;}
+.sidebar-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--purple));transition:width .35s ease;}
+.legend{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;font-size:11.5px;color:var(--text-dim);}
+.legend-item{display:flex;align-items:center;gap:7px;}
+.legend-dot{width:11px;height:11px;border-radius:4px;flex-shrink:0;}
+.dot-answered{background:var(--green);}
+.dot-notanswered{background:var(--red-dim);border:1.5px solid var(--red);}
+.dot-notvisited{background:transparent;border:1.5px solid var(--border-light);}
+.dot-marked{background:var(--purple);}
+.dot-current{background:var(--accent);}
+.palette-title{font-size:12px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;font-weight:700;}
+.palette-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-bottom:20px;
+}
+.pal-item{
+  aspect-ratio:1;border-radius:9px;display:flex;align-items:center;justify-content:center;
+  font-size:12.5px;font-weight:700;border:1.5px solid var(--border-light);background:transparent;color:var(--text-dim);
+  transition:var(--transition);position:relative;
+}
+.pal-item:hover{transform:scale(1.08);}
+.pal-item.answered{background:var(--green-dim);border-color:var(--green);color:#fff;}
+.pal-item.notanswered{background:rgba(255,93,122,.15);border-color:var(--red);color:var(--red);}
+.pal-item.marked{background:var(--purple);border-color:var(--purple);color:#1a0f2e;box-shadow:0 0 0 1px var(--purple) inset;}
+.pal-item.marked.answered{background:var(--purple);border-color:var(--purple);color:#1a0f2e;}
+.pal-item.marked.notanswered{background:var(--purple);border-color:var(--purple);color:#1a0f2e;}
+.pal-item.marked::after{
+  content:'\2605';position:absolute;top:-6px;right:-6px;width:15px;height:15px;border-radius:50%;
+  background:var(--panel);color:var(--purple);font-size:9px;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 1.5px var(--purple);
+}
+.pal-item.current{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-glow);transform:scale(1.05);}
+.sidebar-submit{margin-top:auto;}
+.sidebar-stats{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;font-size:12.5px;}
+.sidebar-stat-row{display:flex;justify-content:space-between;color:var(--text-dim);}
+.sidebar-stat-row b{color:#fff;}
+
+/* MODAL */
+.modal-overlay{
+  display:none;position:fixed;inset:0;background:rgba(5,8,15,.78);backdrop-filter:blur(4px);
+  align-items:center;justify-content:center;z-index:100;animation:fadeIn .25s ease;
+}
+.modal-overlay.active{display:flex;}
+.modal-box{
+  background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:32px;max-width:420px;
+  width:90%;box-shadow:var(--shadow);animation:pop .3s ease;
+}
+.modal-box h3{font-size:18px;margin-bottom:10px;}
+.modal-box p{font-size:13.5px;color:var(--text-dim);line-height:1.6;margin-bottom:24px;}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;}
+
+/* ============ RESULT SCREEN ============ */
+#resultScreen{padding:40px 24px 80px;display:flex;justify-content:center;}
+.result-wrap{width:100%;max-width:920px;}
+.result-header{text-align:center;margin-bottom:30px;}
+.badge{
+  display:inline-flex;align-items:center;gap:10px;padding:10px 26px;border-radius:30px;font-weight:800;
+  font-size:14px;letter-spacing:.5px;margin-bottom:18px;animation:pop .5s ease;
+}
+.badge.pass{background:rgba(45,212,167,.12);color:var(--green);border:1.5px solid var(--green-dim);}
+.badge.fail{background:rgba(255,93,122,.12);color:var(--red);border:1.5px solid var(--red-dim);}
+.result-header h1{font-size:30px;font-weight:800;margin-bottom:8px;}
+.result-header p{color:var(--text-dim);font-size:14px;}
+.score-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin:32px 0;}
+.score-card{
+  background:linear-gradient(160deg,var(--panel),var(--bg2));border:1px solid var(--border);border-radius:14px;
+  padding:20px 14px;text-align:center;animation:pop .45s ease;
+}
+.score-card .num{font-size:25px;font-weight:800;color:#fff;}
+.score-card.green .num{color:var(--green);}
+.score-card.red .num{color:var(--red);}
+.score-card.amber .num{color:var(--amber);}
+.score-card.accent .num{color:var(--accent);}
+.score-card .lbl{font-size:11px;color:var(--text-faint);margin-top:5px;text-transform:uppercase;letter-spacing:.4px;}
+.result-actions{display:flex;gap:14px;justify-content:center;margin-bottom:40px;}
+.review-section h2{font-size:19px;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.review-filters{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.filter-chip{
+  padding:8px 16px;border-radius:20px;font-size:12.5px;font-weight:600;border:1px solid var(--border);
+  color:var(--text-dim);transition:var(--transition);
+}
+.filter-chip.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.filter-chip:hover:not(.active){border-color:var(--border-light);}
+.review-card{
+  background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:24px 26px;margin-bottom:16px;
+  animation:fadeIn .3s ease;
+}
+.review-card-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;gap:12px;}
+.review-status{
+  font-size:11px;font-weight:800;padding:4px 11px;border-radius:7px;letter-spacing:.4px;text-transform:uppercase;flex-shrink:0;
+}
+.review-status.correct{background:rgba(45,212,167,.15);color:var(--green);}
+.review-status.wrong{background:rgba(255,93,122,.15);color:var(--red);}
+.review-status.skip{background:rgba(139,151,179,.15);color:var(--text-faint);}
+.mini-options{display:flex;flex-direction:column;gap:8px;margin-top:14px;}
+.mini-opt{padding:10px 14px;border-radius:8px;font-size:13px;border:1px solid var(--border);background:var(--bg2);display:flex;gap:10px;}
+.mini-opt.correct-ans{border-color:var(--green);background:rgba(45,212,167,.08);color:var(--green);}
+.mini-opt.wrong-ans{border-color:var(--red);background:rgba(255,93,122,.08);color:var(--red);}
+.mini-opt .tag{font-weight:800;font-size:10.5px;flex-shrink:0;}
+
+@media (max-width:900px){
+  .test-body{flex-direction:column;}
+  .sidebar{
+    width:100%;border-left:none;border-top:1px solid var(--border);max-height:38vh;
+    order:2;
+  }
+  .question-area{padding:22px 18px 100px;order:1;}
+  .info-grid{grid-template-columns:repeat(2,1fr);}
+  .score-grid{grid-template-columns:repeat(2,1fr);}
+  .start-card{padding:28px 22px;}
+  .nav-footer{padding:14px 18px;flex-direction:column;align-items:stretch;}
+  .nav-footer-center{order:2;justify-content:space-between;width:100%;flex-wrap:wrap;}
+  .nav-footer #prevBtn{width:100%;justify-content:center;order:1;}
+  .topbar{flex-wrap:wrap;height:auto;padding:10px 14px;gap:8px;}
+  .topbar-right{flex-wrap:wrap;gap:8px;width:100%;justify-content:space-between;}
+  .attempted-box,.timer-box{font-size:12.5px;padding:7px 12px;}
+  .submit-btn{padding:8px 14px;font-size:12.5px;}
+  .q-card{padding:22px 18px;}
+  .sidebar{display:none;max-height:none;height:100%;position:fixed;top:0;right:0;bottom:0;width:84%;z-index:50;box-shadow:-6px 0 24px rgba(0,0,0,.35);}
+  .sidebar.open{display:flex;}
+  .sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(5,8,15,.6);z-index:40;}
+  .sidebar-backdrop.open{display:block;}
+  .palette-toggle-btn{display:inline-flex;}
+  .sidebar-close-btn{display:flex;}
+}
+@media (min-width:901px){
+  .palette-toggle-btn{display:none;}
+  .sidebar-close-btn{display:none;}
+}
+</style>
+</head>
+<body>
+<!-- ============ TEST SCREEN (auto-launches immediately) ============ -->
+<div id="testScreen" class="screen active">
+  <div class="progress-top"><div class="progress-top-fill" id="progressTopFill"></div></div>
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-logo">N2</div>
+      <div class="topbar-title">NISM Series IV Mock Test 2
+        <small>Interest Rate Derivatives Certification</small>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <button class="nav-btn palette-toggle-btn" id="paletteToggleBtn" style="display:none;padding:7px 12px;font-size:12.5px;">📋 Palette</button>
+      <div class="attempted-box" id="attemptedBox"><span id="attemptedText">0</span> / <span id="totalText">50</span> Attempted</div>
+      <div class="timer-box" id="timerBox"><span class="timer-ic">⏱️</span><span id="timerText">30:00</span></div>
+      <button class="submit-btn" id="submitBtnTop">Submit Test</button>
+    </div>
+  </div>
+
+  <div class="test-body">
+    <div class="question-area" id="questionArea">
+      <!-- injected by JS -->
+    </div>
+
+    <div class="sidebar" id="sidebarPanel">
+      <button class="sidebar-close-btn" id="sidebarCloseBtn" style="display:none;margin-left:auto;margin-bottom:10px;background:none;border:none;color:var(--text-dim);font-size:20px;cursor:pointer;">✕</button>
+      <div class="sidebar-progress">
+        <div class="sidebar-progress-label"><span>Progress</span><span id="sidebarProgressPct">0%</span></div>
+        <div class="sidebar-bar"><div class="sidebar-bar-fill" id="sidebarBarFill"></div></div>
+      </div>
+      <div class="sidebar-stats">
+        <div class="sidebar-stat-row"><span>Answered</span><b id="statAnswered">0</b></div>
+        <div class="sidebar-stat-row"><span>Marked for Review</span><b id="statMarked">0</b></div>
+        <div class="sidebar-stat-row"><span>Not Visited</span><b id="statNotVisited">100</b></div>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><span class="legend-dot dot-answered"></span>Answered</div>
+        <div class="legend-item"><span class="legend-dot dot-notanswered"></span>Not Answered</div>
+        <div class="legend-item"><span class="legend-dot dot-notvisited"></span>Not Visited</div>
+        <div class="legend-item"><span class="legend-dot dot-marked"></span>Marked</div>
+      </div>
+      <div class="palette-title">Question Palette</div>
+      <div class="palette-grid" id="paletteGrid"></div>
+    </div>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+  </div>
+
+  <div class="nav-footer">
+    <button class="nav-btn" id="prevBtn">← Previous</button>
+    <div class="nav-footer-center">
+      <button class="nav-btn" id="clearResponseBtn">Clear Response</button>
+      <button class="nav-btn mark-btn" id="markBtn"><span>☆</span> Mark for Review</button>
+      <button class="nav-btn next-primary" id="nextBtn">Save &amp; Next</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ RESULT SCREEN ============ -->
+<div id="resultScreen" class="screen">
+  <div class="result-wrap">
+    <div class="result-header">
+      <div class="badge" id="resultBadge">PASS</div>
+      <h1>Test Completed!</h1>
+      <p id="resultSubtext">Here's a detailed breakdown of your performance.</p>
+    </div>
+
+    <div class="score-grid">
+      <div class="score-card accent"><div class="num" id="rScore">0</div><div class="lbl">Score</div></div>
+      <div class="score-card green"><div class="num" id="rCorrect">0</div><div class="lbl">Correct</div></div>
+      <div class="score-card red"><div class="num" id="rWrong">0</div><div class="lbl">Wrong</div></div>
+      <div class="score-card amber"><div class="num" id="rSkipped">0</div><div class="lbl">Unattempted</div></div>
+      <div class="score-card"><div class="num" id="rAccuracy">0%</div><div class="lbl">Accuracy</div></div>
+    </div>
+    <div class="score-grid" style="grid-template-columns:repeat(2,1fr);margin-top:-6px;">
+      <div class="score-card"><div class="num" id="rTimeTaken">00:00</div><div class="lbl">Time Taken</div></div>
+      <div class="score-card"><div class="num" id="rTotalQ">100</div><div class="lbl">Total Questions</div></div>
+    </div>
+
+    <div class="result-actions">
+      <button class="btn btn-primary" id="reviewBtn">📋 View Detailed Review</button>
+      <button class="btn btn-ghost" id="retakeBtn">↻ Retake Test</button>
+    </div>
+
+    <div class="review-section" id="reviewSection" style="display:none;">
+      <h2>📋 Detailed Review</h2>
+      <div class="review-filters">
+        <button class="filter-chip active" data-filter="all">All Questions</button>
+        <button class="filter-chip" data-filter="correct">Correct</button>
+        <button class="filter-chip" data-filter="wrong">Wrong</button>
+        <button class="filter-chip" data-filter="skip">Unattempted</button>
+        <button class="filter-chip" data-filter="marked">Marked</button>
+      </div>
+      <div id="reviewList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL ============ -->
+<div class="modal-overlay" id="submitModal">
+  <div class="modal-box">
+    <h3 id="modalTitle">Submit Test?</h3>
+    <p id="modalText">You still have unanswered questions. Are you sure you want to submit the test now? This action cannot be undone.</p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="modalCancel">Cancel</button>
+      <button class="btn btn-primary" id="modalConfirm">Yes, Submit</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* === ANALYTICS ENGINE (inline) === */
+/* ============================================================================
+   ANALYTICS ENGINE — Apna Learning Club
+   Shared module used by every mock-test file AND index.html (Performance
+   Dashboard). Centralising this logic means each mock file just calls a
+   couple of functions instead of re-implementing localStorage / topic /
+   timing logic four times.
+   ============================================================================ */
+(function (global) {
+  'use strict';
+
+  const DB_KEY = 'alc_dashboard_v1';
+
+  /* ----------------------------------------------------------------------
+   * 1. TOPIC CLASSIFICATION
+   * The raw QUESTIONS array has no `topic` field, so we infer one from the
+   * question text using a keyword map specific to the NISM-Series-IV
+   * (Interest Rate Derivatives) syllabus. If a question matches no keyword
+   * it falls back to "General Concepts". This is a heuristic — for 100%
+   * accuracy, add an explicit `topic` key to a question object and this
+   * function will respect it automatically.
+   * ------------------------------------------------------------------- */
+  const TOPIC_KEYWORDS = {
+    'Bonds & Yield Curve': ['bond', 'yield', 'coupon', 'duration', 'macaulay', 'zero coupon', 'annuity', 'consol', 'term structure'],
+    'Futures & Hedging': ['futures', 'hedge', 'hedging', 'arbitrage', 'spread', 'contract value', 'calendar spread', 'mibor'],
+    'Options & Strategies': ['option', 'premium', 'strike', 'call ', 'put ', 'strangle', 'straddle', 'itm', 'otm', 'atm', 'payoff', 'pay-off'],
+    'Risk & Margins': ['margin', 'var', 'risk', 'extreme loss', 'exposure', 'position limit', 'quantity freeze'],
+    'Clearing & Settlement': ['clearing', 'settlement', 'depositor', 'custodian', 'clearing corporation', 'clearing member', 'pay-in', 'pay-out'],
+    'Regulatory & Compliance': ['sebi', 'rbi', 'kyc', 'kra', 'regulation', 'code of conduct', 'arbitration', 'cibil', 'nsdl', 'cdsl'],
+    'Market Structure': ['exchange', 'open interest', 'trading member', 'broker', 'market size', 'capital market', 'fpi', 'foreign portfolio']
+  };
+
+  function inferTopic(question) {
+    if (!question) return 'General Concepts';
+    if (question.topic) return question.topic; // explicit override always wins
+    const text = question.question.toLowerCase();
+    for (const [topic, keywords] of Object.entries(TOPIC_KEYWORDS)) {
+      if (keywords.some(k => text.includes(k))) return topic;
+    }
+    return 'General Concepts';
+  }
+
+  /* ----------------------------------------------------------------------
+   * 2. DIFFICULTY CLASSIFICATION
+   * Heuristic based on explanation length + option count (longer / more
+   * nuanced explanations tend to correspond to trickier concepts). Again,
+   * an explicit `difficulty` field on the question object overrides this.
+   * ------------------------------------------------------------------- */
+  function inferDifficulty(question) {
+    if (!question) return 'Medium';
+    if (question.difficulty) return question.difficulty;
+    const len = (question.explanation || '').length;
+    const optCount = (question.options || []).length;
+    if (len < 160 && optCount <= 2) return 'Easy';
+    if (len > 380) return 'Hard';
+    return 'Medium';
+  }
+
+  /* ----------------------------------------------------------------------
+   * 3. DASHBOARD DATA STORE
+   * Shape:
+   * {
+   *   mockResults: [
+   *     { mockId, mockName, completedAt, timeTakenSec,
+   *       score, maxScore, correct, wrong, skipped, accuracy, percentObtained, passed,
+   *       topicStats: { [topic]: {correct, wrong, skipped, total, timeSpentSec, accuracy} },
+   *       perQuestion: [{id, topic, difficulty, timeSpentSec, status}]
+   *     }, ...
+   *   ]
+   * }
+   * ------------------------------------------------------------------- */
+  function getDB() {
+    try {
+      const raw = localStorage.getItem(DB_KEY);
+      return raw ? JSON.parse(raw) : { mockResults: [] };
+    } catch (e) {
+      console.warn('Dashboard DB read failed', e);
+      return { mockResults: [] };
+    }
+  }
+
+  function setDB(db) {
+    try {
+      localStorage.setItem(DB_KEY, JSON.stringify(db));
+    } catch (e) {
+      console.warn('Dashboard DB write failed', e);
+    }
+  }
+
+  /**
+   * Builds topic-wise stats + TPQ (Time-Per-Question) data from a finished
+   * mock attempt and persists it. Replaces any earlier attempt for the same
+   * mockId so the dashboard always reflects the latest attempt per mock,
+   * while still keeping history for score progression if called multiple
+   * times with unique mockIds (mock1..mock4).
+   *
+   * @param {Object} payload
+   *  - mockId: string, e.g. 'mock1'
+   *  - mockName: string, e.g. 'NISM-IV Mock Test 1'
+   *  - questions: the QUESTIONS array used in this mock
+   *  - perQ: array of {q, sel, status, marked} as produced by computeAndRenderResult
+   *  - timeSpent: map of questionId -> milliseconds spent (state.timeSpent)
+   *  - timeTakenSec: total time taken for the whole mock (seconds)
+   *  - score, maxScore, correct, wrong, skipped, accuracy, percentObtained, passed
+   */
+  function saveMockResult(payload) {
+    const { mockId, mockName, questions, perQ, timeSpent } = payload;
+
+    const topicStats = {};
+    const perQuestion = perQ.map(r => {
+      const topic = inferTopic(r.q);
+      const difficulty = inferDifficulty(r.q);
+      const timeSpentSec = Math.round(((timeSpent && timeSpent[r.q.id]) || 0) / 1000);
+
+      if (!topicStats[topic]) {
+        topicStats[topic] = { correct: 0, wrong: 0, skipped: 0, total: 0, timeSpentSec: 0 };
+      }
+      topicStats[topic][r.status === 'skip' ? 'skipped' : r.status === 'correct' ? 'correct' : 'wrong']++;
+      topicStats[topic].total++;
+      topicStats[topic].timeSpentSec += timeSpentSec;
+
+      return { id: r.q.id, topic, difficulty, timeSpentSec, status: r.status };
+    });
+
+    // Derive accuracy per topic now that totals are known
+    Object.values(topicStats).forEach(t => {
+      const attempted = t.correct + t.wrong;
+      t.accuracy = attempted > 0 ? Math.round((t.correct / attempted) * 100) : 0;
+    });
+
+    const result = {
+      mockId,
+      mockName,
+      completedAt: Date.now(),
+      timeTakenSec: payload.timeTakenSec,
+      score: payload.score,
+      maxScore: payload.maxScore,
+      correct: payload.correct,
+      wrong: payload.wrong,
+      skipped: payload.skipped,
+      accuracy: payload.accuracy,
+      percentObtained: payload.percentObtained,
+      passed: payload.passed,
+      topicStats,
+      perQuestion
+    };
+
+    const db = getDB();
+    db.mockResults = db.mockResults.filter(r => r.mockId !== mockId); // keep only latest attempt per mock
+    db.mockResults.push(result);
+    setDB(db);
+    return result;
+  }
+
+  /**
+   * Time-Per-Question (TPQ) calculator. Given a finished mock result (or
+   * the whole DB), returns the average seconds spent per question, overall
+   * and per topic — used by the dashboard bar chart.
+   */
+  function computeTPQ(mockResult) {
+    const total = mockResult.perQuestion.length || 1;
+    const totalTimeSec = mockResult.perQuestion.reduce((s, q) => s + q.timeSpentSec, 0);
+    const overallTPQ = Math.round((totalTimeSec / total) * 10) / 10;
+
+    const byTopic = {};
+    Object.entries(mockResult.topicStats).forEach(([topic, stats]) => {
+      byTopic[topic] = Math.round((stats.timeSpentSec / (stats.total || 1)) * 10) / 10;
+    });
+
+    return { overallTPQ, byTopic };
+  }
+
+  function clearDashboardData() {
+    try { localStorage.removeItem(DB_KEY); } catch (e) { /* ignore */ }
+  }
+
+  function formatSeconds(totalSec) {
+    const m = Math.floor(totalSec / 60).toString().padStart(2, '0');
+    const s = Math.floor(totalSec % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+  }
+
+  // Expose a small public API on window.AnalyticsEngine
+  global.AnalyticsEngine = {
+    inferTopic,
+    inferDifficulty,
+    saveMockResult,
+    computeTPQ,
+    getDashboardData: getDB,
+    clearDashboardData,
+    formatSeconds
+  };
+})(window);
+
+</script>
+<script>
+const QUESTIONS = 
+[{"question": "________ are hybrid assets.", "options": ["Structured revenue products", "Interest Rate Derivatives", "Structured investment products"], "correctIndex": 2, "explanation": "Structured investment products (SIP) are hybrid assets and derived by combining a bond with option whose underlying is one of the four financial underlyings or a physical asset.", "id": 1}, {"question": "Currently, the underlying for Interest Rate Derivatives in India is/are ________ .", "options": ["Notional 10-Year, 6-Year Govt Bonds", "91-Day Treasury Bill", "Both Notional Govt Bonds and 91-Day T-Bill", "Corporate Bonds"], "correctIndex": 2, "explanation": "Reserve Bank of India has permitted futures on the following underlying securities: 91-day Treasury Bill , 2-year and 5-year central government bond and 10-year central government bond.", "id": 2}, {"question": "Insurance companies are allowed to participate in interest rate futures only for _____.", "options": ["Short Hedge", "Speculation", "Long Hedge", "Arbitrage"], "correctIndex": 2, "explanation": "As per regulatory norms, insurance companies are permitted to use interest rate derivatives for hedging long positions in their bond portfolios. This is referred to as a “long hedge.” It protects the value of existing debt investments from interest rate rises (which lead to bond price falls). Speculative use or short hedging is not permitted for insurance firms due to their fiduciary responsibilities and the conservative investment approach mandated by regulators to safeguard policyholder funds.", "id": 3}, {"question": "_________ are traded only in the OTC market.", "options": ["Forward Rate Agreements (FRA)", "Interest Rate Swaps (IRS)", "Both FRA and IRS", "Exchange-traded Futures"], "correctIndex": 2, "explanation": "OTC market instrument means its privately negotiated contract between two parties. No Exchange is involved in the execution, clearing, and settlement of trade.4 Both Forward and SWAPs are traded only on OTC.", "id": 4}, {"question": "'Day Order' is also known as __________ .", "options": ["Good Till Cancelled order", "Good Till Day order", "Immediate or Cancel order", "Stop Loss order"], "correctIndex": 1, "explanation": "Good Till Day order is also known as “day order”. It is a limit order that is kept in the market until the close of trading hours, at which any unexecuted portion will be automatically cancelled.", "id": 5}, {"question": "The price of a bond (of Rs 100 face value) is Rs 98. It has a coupon rate of 8.7%. What is the current yield ?", "options": ["8.87%", "8.70%", "9.13%", "8.50%"], "correctIndex": 0, "explanation": "Current Yield = Coupon / Current Price x 100 = 8.7 / 98 x 100 = 8.87 %", "id": 6}, {"question": "A coupon paying bond is issued by a government ( sovereign ). Which risk(s) is/are associated with such bonds ?", "options": ["Default Risk", "Reinvestment Risk", "Currency Risk", "Operational Risk"], "correctIndex": 1, "explanation": "If the issuer is a sovereign government, there will be no credit risk because the government will not default in its currency. However, there will be Reinvestment risk, ie, the uncertainty of reinvestment rate for cash flows received before maturity (e.g., coupons). For example, if the interest rates fall in an economy, the interest received on bonds will have to be reinvested at lower rates, ie, it faces reinvestment risk.", "id": 7}, {"question": "Which of the following is true with respect to the regulations on buying and selling of T Bill and T Bond futures for Non-residents and Foreign Institutional Investors ?", "options": ["They can short-sell freely.", "They can short sell only with the prior permission of SEBI.", "They cannot short-sell."], "correctIndex": 2, "explanation": "For Non-residents and Foreign Institutional Investors, a short position can be maintained only for hedging (and not for speculation)", "id": 8}, {"question": "One Basis Point is equal to _________ .", "options": [".01%", ".1%", "1%", ".001%"], "correctIndex": 0, "explanation": "The change in YTM of 0.01% (or 0.0001) is called a basis point (BP) or “bp”.", "id": 9}, {"question": "When one trades in SWAP derivatives, he buys and sells the _______ .", "options": ["futures of the underlying", "rights of the underlying", "returns from the underlying"], "correctIndex": 2, "explanation": "Swap differs from all other derivatives in the sense that it does not involve the exchange of cash for an underlying asset: it involves the exchange of returns from the underlying against returns from money.", "id": 10}, {"question": "What is Term Structure?", "options": ["Its the change of rates over a period of time", "Its a snapshot of rates at a point of time"], "correctIndex": 1, "explanation": "Term structure is a snapshot of rates at a point in time. How the term structure changes over Time is called “shifts”.", "id": 11}, {"question": "As a Risk Reduction Measure, all unexecuted orders shall be cancelled once stock broker breaches ________ collateral utilization level.", "options": ["75 percent", "90 percent", "95 percent", "100 percent"], "correctIndex": 1, "explanation": "This is a risk mitigation mechanism implemented by exchanges to ensure financial safety in derivative markets. When a stockbroker's collateral usage hits 90%, the system automatically cancels unexecuted orders to prevent over-leveraging or exceeding limits. This helps control systemic risk and ensures brokers don’t take positions beyond their financial capability. It protects both brokers and clients from exposure to significant losses due to high leverage or market volatility.", "id": 12}, {"question": "A client can place orders in exchange traded interest rate derivatives through _______.", "options": ["A trading member only", "A clearing member only", "An authorized person only", "None of the above"], "correctIndex": 3, "explanation": "Clients can place orders using multiple channels—Direct Market Access (DMA), internet trading platforms, or by phone—based on their access and trading privileges. This multi-channel access ensures flexibility and efficiency in executing trades in interest rate derivatives. DMA allows institutional clients to place orders directly into the market without manual intervention. Internet and phone trading serve both retail and institutional clients, making it inclusive. Regulatory compliance and proper authentication are mandatory across all these modes.", "id": 13}, {"question": "In Bullish vertical spread using put strategy, trader _________.", "options": ["buy call with lower strike and sell a put option with higher strike", "buy put option with lower strike and sell a put option with higher strike", "buy put option with higher strike and sell a put option with lower strike"], "correctIndex": 1, "explanation": "A bullish vertical spread using puts is a limited-risk, limited-reward options strategy where a trader expects moderate upward movement in the underlying asset. The trader buys a put with a lower strike (cheaper and more out-of-the-money) and sells a put with a higher strike (more expensive). This generates a net credit, profiting when the price rises above the higher strike. It is a bullish strategy that reduces risk and cost compared to buying shares outright or using naked options.", "id": 14}, {"question": "Which of the following is a correct measure of the realized return for a coupon bond ?", "options": ["Coupon rate", "Current yield", "Face value", "None of the above"], "correctIndex": 3, "explanation": "All three have some deficiency as they do not consider the Price Risk and Reinvestment risks.", "id": 15}, {"question": "Among Modified Duration (MD) and Price Value of Basic Point (PVBP), which one is A better risk measure?", "options": ["Price Value of Basic Point", "Both of them are similar, but in different contexts."], "correctIndex": 1, "explanation": "Modified Duration (MD) and Price Value of a Basis Point (PVBP) are both measures of interest rate risk, but they serve different analytical purposes. MD measures the percentage change in a bond’s price for a 1% change in yield, assuming no change in cash flows, and is useful for relative comparisons across bonds. PVBP (also called DV01) tells us the actual monetary change in the bond’s price for a 1 basis point (0.01%) change in yield, making it more suitable for absolute risk quantification and hedging. Thus, both are valuable — MD for understanding sensitivity, and PVBP for practical risk calculations.", "id": 16}, {"question": "The price of derivatives is determined by the demand and supply factors - State True or False ?", "options": ["True", "False"], "correctIndex": 1, "explanation": "Derivative is something that is derived from another, called the underlying. The price of derivatives is determined by the price of the underlying, and not by the demand and supply for derivatives. The underlying is the raw material, and the derivative is the finished product. If the underlying price goes up (or down), the derivative price will go up (or down) regardless of the demand-supply for the derivative.", "id": 17}, {"question": "The VaR (Value at Risk) will be higher for _______ .", "options": ["Short positions", "Long positions", "Both equally", "Neither"], "correctIndex": 0, "explanation": "VaR will be slightly higher for short positions than for long positions. The reason is that the price can theoretically rise to infinity, but cannot fall below zero. As a result, the possible loss on short positions is infinity (because price can rise to infinity) while the possible loss on long positions cannot be higher than the current price (because price cannot fall below zero).", "id": 18}, {"question": "Holdings of Govt. securities of investors are held in _________ with the Public Debt Office of the RBI.", "options": ["Subsidiary General Ledger (SGL) Account", "Constituent Subsidiary General Ledger (CSGL) Account"], "correctIndex": 1, "explanation": "Schedule Commercial Banks and Primary Dealers must separate their holdings in government securities from those held on behalf of their constituents, ie, investors. The holdings of Schedule Commercial Banks and Primary Dealers are held in Subsidiary General Ledger A/c, and the holdings of other investors are held in Constituent Subsidiary General Ledger A/c.", "id": 19}, {"question": "Investors can hold Government Securities _______ .", "options": ["In physical form", "In dematerialized (SGL/CSGL) form", "Both physical and dematerialized form", "Only through mutual funds"], "correctIndex": 2, "explanation": "Government Securities (G-Secs) may be held by investors either as physical stock or in dematerialized (demat/electronic) form. However, from May 20, 2002, it is mandatory for all the RBI regulated entities to hold and transact in G-Secs only in dematerialized (SGL) form.", "id": 20}, {"question": "When there is a failure to notify of the Intent to Deliver, the auction is conducted on __________", "options": ["The first business day after the Day of Intention", "The second business day after the Day of Intention", "One week after the Day of Intention"], "correctIndex": 0, "explanation": "When there is a failure to notify of the Intent to Deliver, the auction is conducted on the first business day after the Day of Intention, and the result of the auction is added to the settlement obligation due on the settlement day.", "id": 21}, {"question": "Limitation of Interest Rate Derivatives for Hedgers is mainly due to __________.", "options": ["Basis risk between hedge and exposure", "Imperfect correlation due to standardized contract terms", "Both basis risk and imperfect correlation due to standardization", "Lack of any hedging instruments"], "correctIndex": 2, "explanation": "Interest Rate Derivatives (IRDs) often face limitations for hedgers due to the lack of customization and non-availability for all kinds of underlying instruments. Since IRDs are typically standardized contracts, they may not perfectly match the specific exposure or maturity profile of a hedger’s debt instruments. This introduces basis risk—the risk that the hedge will not perfectly offset the exposure. Furthermore, some instruments like exotic bonds or structured debt may not have corresponding IRDs, making hedging less effective.", "id": 22}, {"question": "Current yield is an unsatisfactory measure of return because _______ .", "options": ["it ignores the capital gain/loss at redemption", "it ignores the premium/discount in bond price"], "correctIndex": 0, "explanation": "Current yield is an unsatisfactory return measure. Although it considers the premium/discount in bond price but ignores the capital gain/loss and reinvestment rate; and therefore cannot be a true return.", "id": 23}, {"question": "Which of the following is a “risk-free” security ?", "options": ["Corporate Bond", "State Government Bond", "Bank Fixed Deposit", "None of the above"], "correctIndex": 3, "explanation": "Only Sovereign bonds issued by the government are considered “risk-free” securities in terms of of credit risk.", "id": 24}, {"question": "The price of a bond (of Rs 100 face value) is Rs 97. It has a coupon rate of 8.5%. What is the current yield?", "options": ["8.76%", "8.50%", "8.25%", "9.02%"], "correctIndex": 0, "explanation": "Current Yield = Coupon / Current Price x 100 = 8.5 / 97 x 100 = 8.76 %", "id": 25}, {"question": "If the coupon of the bond increases, its Modified Duration will __________. (Other things remain constant).", "options": ["Decrease", "Increase", "Remain unchanged", "Become negative"], "correctIndex": 0, "explanation": "Modified Duration measures the price sensitivity of a bond to changes in interest rates. Higher coupon payments mean investors receive more of their returns earlier, reducing the bond’s price sensitivity to interest rate changes. Hence, as coupon increases, duration decreases, making the bond less volatile. Lower duration is desirable for conservative investors as it implies less risk due to interest rate fluctuations.", "id": 26}, {"question": "___________ is the true return on investment.", "options": ["Coupon Rate", "Current Yield", "Face Value Return", "None of the above"], "correctIndex": 3, "explanation": "Spot rate (also known as “zero rate”) is the true return on investment because it considers premium/discount in bond price, capital gain/loss at redemption, and reinvestment of interim income.", "id": 27}, {"question": "You have bought a car by taking a vehicle loan at fixed interest rate. Which of the following is true in this case ?", "options": ["You are exposed to Credit Risk", "You are exposed to Market Risk", "You are not exposed to Interest Rate Risk", "You are exposed to Bank Risk"], "correctIndex": 2, "explanation": "If you have taken a fixed-rate loan, there is no interest rate risk because you know in advance how much you will have to pay in future. The amount will not change even if the interest rates in the economy goes up.", "id": 28}, {"question": "_______ are derivatives with underlying theoretical bonds and not a physical bond.", "options": ["Physical Bond Futures", "Notional Bond Futures", "Currency Futures", "Equity Index Futures"], "correctIndex": 1, "explanation": "Notional Bond Futures are standardized derivatives based on hypothetical or theoretical bonds, rather than any existing bond. They serve as benchmarks to hedge or speculate on interest rate movements. Since these are not linked to specific bonds, they reduce complexities involved in physical settlement. Traders use them to manage portfolio duration or interest rate exposure efficiently. They simplify contract design and enhance liquidity in interest rate futures.", "id": 29}, {"question": "Among the following options, which is true about Position Limits?", "options": ["Position limit is the maximum daily volume at the client level.", "Position limit is the maximum daily volume at the trading member level", "Position limit is the maximum daily volume at the clearing member level.", "None of the above"], "correctIndex": 3, "explanation": "Position Limit is the limit on an investor’s / trading member's share in the total open interest. It concerns the daily gross open positions and not the total daily volume.", "id": 30}, {"question": "In India, the Interest Rate Derivatives are regulated by ______ .", "options": ["RBI alone", "SEBI alone", "Jointly by the RBI and SEBI", "Ministry of Finance alone"], "correctIndex": 2, "explanation": "Reserve Bank of India permission is required for all derivatives on interest rate and debt instruments. RBI has delegated powers to further define the futures contract terms (e.g. contract amount, expiry months, etc, defined below) to SEBI.", "id": 31}, {"question": "The contract months, ie, expiry months for Treasury Bills futures in India, are ___________ .", "options": ["Three nearest “serial” months", "Three nearest “quarterly” months", "Both \"Serial\" and \"Quarterly\" months", "None of the above"], "correctIndex": 3, "explanation": "The Contract Months for 91-day bill futures are the three nearest “serial” months and the three nearest “quarterly” months.", "id": 32}, {"question": "__________ is a fund created to take care of legitimate investment claims, which are not of speculative nature of the clients of defaulting members.", "options": ["Core settlement guarantee fund", "Investor protection fund", "Investor grievance fund"], "correctIndex": 1, "explanation": "The Investor Protection Fund (IPF) is a safety mechanism established by stock exchanges to protect investors’ interests in case a member (broker) defaults. It compensates retail investors for legitimate dues that could not be recovered due to the broker’s insolvency. The IPF adds credibility to the financial market and enhances investor confidence by mitigating the risk of losing capital due to intermediary failure.", "id": 33}, {"question": "Which of the following best describes an Interest Rate Swap?", "options": ["A contract to buy or sell a bond at a future date", "An agreement to exchange one stream of interest payments for another", "A contract that provides the right but not the obligation to buy a bond", "A future contract traded on interest-bearing instruments"], "correctIndex": 1, "explanation": "An Interest Rate Swap is a derivative contract in which two parties agree to exchange interest rate cash flows, typically one fixed and one floating, based on a notional principal amount. These swaps are used to manage exposure to fluctuations in interest rates or to obtain a marginally lower interest rate than would have been possible without the swap.", "id": 34}, {"question": "The effect of price risk on a bond is __________ .", "options": ["Immediate", "Delayed by one year", "Never realized", "Only at maturity"], "correctIndex": 0, "explanation": "Price risk (also known as market risk) is the possibility of a change in bond price before maturity because of a change in the market interest rate. The change in bond price is instant after the change in interest rate. Usually, if the interest rate rises, the bond price falls, and vice versa.", "id": 35}, {"question": "If the shape of term structure is INVERTED, this means that ______ .", "options": ["Rate rises first and then falls with the term", "Rate rises with the term", "Rate is same through out the term"], "correctIndex": 0, "explanation": "In an inverted curve, there is demand for short-term money (i.e., working capital) and not for long-term money (i.e., capital expenditure). So the rate is higher at first and then falls. This means that borrowers are not going for capital expenditure, possibly because they expect no economic growth in the future, which explains why an inverted yield curve may indicate A recession is shortly.", "id": 36}, {"question": "A company issues two bonds having the same maturity but different coupons. An The investor will choose one bond over the other for investment because of ______ .", "options": ["Face value difference", "Yield to Maturity difference", "Issuer's name", "Listing exchange"], "correctIndex": 1, "explanation": "A coupon is not a return measure because it ignores: (1) the premium/discount in bond price; (2) capital gain or loss at redemption; and (3) reinvestment rate of periodic cash flows. Yield to Maturity considers the premium/discount in bond price and capital gain/loss at redemption, and even handles the reinvestment roughly. Thus, the investor will prefer the bond that offers a better YTM.", "id": 37}, {"question": "The concept of “accrued interest” applies to which of the following?", "options": ["Zero Coupon Bond", "Coupon bond", "Treasury Bill", "Equity share"], "correctIndex": 1, "explanation": "Accrued interest refers to the interest that has accumulated on a bond since its last interest payment date but hasn’t yet been paid. It is only applicable to coupon-bearing bonds because they pay periodic interest (usually semi-annual or annual). When such bonds are sold before the coupon date, the buyer compensates the seller for the accrued interest. Zero-coupon bonds do not pay interim interest, so the concept of accrued interest does not apply to them.", "id": 38}, {"question": "If the interest rate falls within the period, the shape of the term structure will be ________ .", "options": ["Normal/positive", "Inverted/negative", "Flat", "Humped"], "correctIndex": 3, "explanation": "Shape and Description of the term structure rates : Normal - The Longer the term, the higher the rate Inverted - The Longer the term, the lower the rate Flat rate is the same for all terms Humped - Rate is high for medium term and falls off on either side", "id": 39}, {"question": "When is the auction conducted for short delivery of securities?", "options": ["First business day after the Day of Intention", "The second business day after the Day of Intention", "The third business day after the Day of Intention", "settlement day"], "correctIndex": 3, "explanation": "When there is a short delivery on the settlement day, the shortage is auctioned on the same day. When there is a failure to notify of the Intent to Deliver, the auction is conducted on the first business day after the Day of Intention.", "id": 40}, {"question": "Delivery margin is collected on the ________ .", "options": ["Day of Intent", "Settlement Day", "Last Trading Day", "Day of Trade"], "correctIndex": 0, "explanation": "Delivery margin is collected on the Day of Intent (which is the Last Trading Day) after the intention to deliver and allocations are completed.", "id": 41}, {"question": "What is Market liquidity risk?", "options": ["The seller is unable to make the deliveries of the securities", "The buyer is unable to make payments.", "There are not sufficient volumes in the market to enable the required trades"], "correctIndex": 2, "explanation": "Market liquidity risk is the inability to quickly buy or sell a futures contract without disturbing the futures price. If there is no market liquidity, the futures price is de-linked from the price of cash markets.", "id": 42}, {"question": "If the VaR (1 Day - 99%) for a security is Rs 17, what is the correct interpretation of 'Rs 17'?", "options": ["There will loss over next day with 99% probability but the loss will be over Rs 17", "There will loss over next day with 99% probability but the loss will be not be over Rs 17", "There will profit over the next day with 99% probability, but the profit will not be over Rs 17"], "correctIndex": 1, "explanation": "Value-at-risk (VaR) is a measure of the maximum likely price change over a given interval (called “horizon”) and at a given confidence level (called “percentile”). The correct interpretation of the above statement is that in the next one day (“horizon”), the price change will be: Less than or equal to Rs 17 in 99 out of 100 days.", "id": 43}, {"question": "Among the following options, which quantity of face value can be bought or sold for Govt bond futures?", "options": ["Rs 8 lakh", "Rs 2 lakh", "Rs 20 lakh", "Rs 80 lakh"], "correctIndex": 0, "explanation": "Contract Amount (or Market Lot) is the minimum and multiple of the trade size. It is Rs 200,000 of face value. Because the face value will always be an integral multiple of Rs 2 lakhs, we cannot buy or sell for amounts like Rs 3 lakh, Rs 5 lakh, etc., ie, odd amounts. Only even amounts can be traded.", "id": 44}, {"question": "A client of a trading member has a long position of 14 contracts and a short position of 3 contracts in the same underlying. What is the net position for the client?", "options": ["11 long contracts", "17 long contracts", "3 short contracts", "Cannot be determined"], "correctIndex": 0, "explanation": "The long and short positions of the client in the same underlying can be netted to arrive at the net outstanding position. In the above example, the client has 14 Long and 3 Short contracts, so his net position is 14 - 3 = 11 contracts. (However, for net trades of the Trading Member, the buy trades of one client cannot be offset with the sell trades of another client)", "id": 45}, {"question": "Loss on derivative transactions which are carried out in a “recognized stock exchange” can be set off against any other income during the year, except _________.", "options": ["Business income", "Salary income", "Agricultural income", "Gift income"], "correctIndex": 1, "explanation": "As per the Income Tax Act of India, losses from derivative transactions on recognized stock exchanges are treated as business losses. These can be set off against any income except for salary income in the same financial year. For example, if a trader incurs a loss in derivatives and earns income from capital gains or house property, the loss can be adjusted. However, salary income is specifically excluded from this set-off provision, which ensures that regular income remains unaffected by speculative or business losses.", "id": 46}, {"question": "A client of a trading member has a long position of 15 contracts and short position of 4 contracts in the same underlying. What is the net position for the client ?", "options": ["11 long contracts", "19 long contracts", "4 short contracts", "Cannot be determined"], "correctIndex": 0, "explanation": "The long and short position of the client in the same underlying, can be netted to arrive at the net outstanding position. In the above example, the client has 15 Long and 4 Short contracts, so his net position is 15 - 4 = 11 contracts. (However, for net trades of the Trading Member, the buy trades of one client cannot be offset with the sell trades of another client)", "id": 47}, {"question": "A zero coupon bond issued by a corporate will have which of the following risks ?", "options": ["Default Risk", "Reinvestment Risk", "Both Default Risk and Reinvestment Risk", "Neither of the above"], "correctIndex": 2, "explanation": "Market Risk: The possibility of a change in bond price before maturity because of a change in market interest rate. Credit risk: The possibility of default by the issuer, and therefore the source of risk, is the issuer.", "id": 48}, {"question": "Which is the risk you face if the prices of cash treasury bills and treasury bills Futures are not the same?", "options": ["Basis Risk", "Credit Risk", "Currency Risk", "Liquidity Risk"], "correctIndex": 0, "explanation": "Basis risk occurs when there is a difference between the price of cash treasury bills (the underlying asset) and treasury bills futures (the derivative contract). This discrepancy arises because the two do not move perfectly in sync due to factors like market conditions, interest rates, and supply-demand imbalances. This is a common risk in hedging strategies, where futures prices may not perfectly offset the price movement of the underlying asset.", "id": 49}, {"question": "The members of Exchange are called __________ .", "options": ["Trading Members", "Clearing Members", "Custodians", "Depositories"], "correctIndex": 0, "explanation": "The members of Exchange are called Trading Members, and those of Clearing Corporation are called Clearing Members.", "id": 50}];
+
+/* ===================== CONFIG ===================== */
+const TEST_DURATION_SEC = 1800; // 30 minutes
+const MARKS_CORRECT = 1;
+const MARKS_WRONG = -0.25;
+const PASS_PERCENT = 60;
+const STORAGE_KEY = 'nism4_mocktest2_state_v1';
+
+/* ===================== STATE ===================== */
+let state = {
+  current: 0,
+  answers: {},     // qid -> selected option index
+  visited: {},      // qid -> true
+  marked: {},       // qid -> true
+  timeSpent: {},    // qid -> milliseconds spent on that question (TPQ source)
+  timeLeft: TEST_DURATION_SEC,
+  startedAt: null,
+  finished: false,
+};
+
+let timerInterval = null;
+let questionEnteredAt = null;   // Date.now() timestamp when current question was shown
+let lastTrackedQId = null;      // id of the question time is currently accruing against
+
+/* ===================== ELEMENTS ===================== */
+const el = id => document.getElementById(id);
+const testScreen = el('testScreen');
+const resultScreen = el('resultScreen');
+
+/* ===================== LOCAL STORAGE ===================== */
+function saveState(){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }catch(e){ console.warn('save failed', e); }
+}
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return null;
+    return JSON.parse(raw);
+  }catch(e){ return null; }
+}
+function clearState(){
+  try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+}
+
+/* ===================== AUTO LAUNCH ON LOAD ===================== */
+(function autoLaunch(){
+  el('totalText').textContent = QUESTIONS.length;
+  const saved = loadState();
+  if(saved && !saved.finished && saved.startedAt){
+    state = saved;
+    if(!state.timeSpent) state.timeSpent = {}; // backward-compat for older saved sessions
+    questionEnteredAt = Date.now(); // resume point — don't count offline/refresh gap as question time
+    lastTrackedQId = null;
+    enterTestScreen();
+  } else {
+    beginFreshTest();
+  }
+})();
+
+function beginFreshTest(){
+  state = {
+    current: 0,
+    answers: {},
+    visited: {},
+    marked: {},
+    timeSpent: {},
+    timeLeft: TEST_DURATION_SEC,
+    startedAt: Date.now(),
+    finished: false,
+  };
+  questionEnteredAt = Date.now();
+  lastTrackedQId = null;
+  saveState();
+  enterTestScreen();
+}
+
+function enterTestScreen(){
+  testScreen.classList.add('active');
+  buildPalette();
+  renderQuestion();
+  startTimer();
+}
+
+/* ===================== TIMER (TIMESTAMP-BASED) =====================
+   Bug fix: the old version decremented timeLeft by 1 inside setInterval,
+   which drifts badly when the browser throttles timers on a background
+   tab, and on refresh it just resumed the last-saved countdown without
+   accounting for time that passed while the page was closed/inactive.
+   Fix: always derive timeLeft from Date.now() - state.startedAt, so the
+   timer is self-correcting regardless of throttling, refreshes, or the
+   user switching tabs for a while. */
+function computeTimeLeft(){
+  const elapsedSec = Math.floor((Date.now() - state.startedAt) / 1000);
+  return Math.max(0, TEST_DURATION_SEC - elapsedSec);
+}
+function startTimer(){
+  state.timeLeft = computeTimeLeft();
+  updateTimerDisplay();
+  timerInterval = setInterval(()=>{
+    state.timeLeft = computeTimeLeft();
+    updateTimerDisplay();
+    if(state.timeLeft <= 0){
+      clearInterval(timerInterval);
+      finishTest(true);
+      return;
+    }
+    if(state.timeLeft % 5 === 0) saveState();
+  }, 1000);
+  // Re-sync immediately when the tab regains focus (covers throttled/paused intervals)
+  document.addEventListener('visibilitychange', onVisibilityResync);
+}
+function onVisibilityResync(){
+  if(document.visibilityState === 'visible' && timerInterval){
+    state.timeLeft = computeTimeLeft();
+    updateTimerDisplay();
+    if(state.timeLeft <= 0){
+      clearInterval(timerInterval);
+      finishTest(true);
+    }
+  }
+}
+function updateTimerDisplay(){
+  const m = Math.floor(state.timeLeft/60).toString().padStart(2,'0');
+  const s = (state.timeLeft%60).toString().padStart(2,'0');
+  el('timerText').textContent = `${m}:${s}`;
+  const box = el('timerBox');
+  if(state.timeLeft <= 120) box.classList.add('warn'); else box.classList.remove('warn');
+}
+
+/* ===================== RENDER QUESTION ===================== */
+function accrueTimeForLastQuestion(){
+  // Adds the time spent on whichever question was on screen before this
+  // render call into state.timeSpent — the raw data source for TPQ.
+  if(lastTrackedQId !== null && questionEnteredAt !== null){
+    const delta = Date.now() - questionEnteredAt;
+    state.timeSpent[lastTrackedQId] = (state.timeSpent[lastTrackedQId] || 0) + delta;
+  }
+}
+function renderQuestion(){
+  accrueTimeForLastQuestion();
+  const idx = state.current;
+  const q = QUESTIONS[idx];
+  questionEnteredAt = Date.now();
+  lastTrackedQId = q.id;
+  state.visited[q.id] = true;
+
+  const selected = state.answers[q.id];
+  const isMarked = !!state.marked[q.id];
+
+  const optionsHtml = q.options.map((opt, i)=>{
+    const sel = selected === i ? 'selected' : '';
+    const letter = String.fromCharCode(65+i);
+    return `<div class="option ${sel}" data-idx="${i}">
+      <div class="opt-radio">${selected===i ? '✓' : letter}</div>
+      <div class="opt-text">${escapeHtml(opt)}</div>
+    </div>`;
+  }).join('');
+
+  el('questionArea').innerHTML = `
+    <div class="q-meta-row">
+      <div class="q-counter">Question <b>${idx+1}</b> of ${QUESTIONS.length}</div>
+    </div>
+    <div class="q-card">
+      <span class="q-tag">Interest Rate Derivatives</span>
+      <div class="q-text">${escapeHtml(q.question)}</div>
+      <div class="options" id="optionsWrap">${optionsHtml}</div>
+    </div>
+  `;
+
+  document.querySelectorAll('#optionsWrap .option').forEach(opt=>{
+    opt.addEventListener('click', ()=>{
+      const i = parseInt(opt.dataset.idx);
+      state.answers[q.id] = i;
+      saveState();
+      renderQuestion();
+      refreshPaletteItem(idx);
+      updateSidebarStats();
+    });
+  });
+
+  el('markBtn').classList.toggle('active', isMarked);
+  el('markBtn').innerHTML = `<span>${isMarked ? '★' : '☆'}</span> ${isMarked ? 'Marked for Review' : 'Mark for Review'}`;
+
+  el('prevBtn').disabled = idx === 0;
+  el('nextBtn').textContent = idx === QUESTIONS.length-1 ? 'Save & Submit ✓' : 'Save & Next →';
+
+  refreshPaletteItem(idx, true);
+  updateSidebarStats();
+  updateTopProgress();
+}
+
+function escapeHtml(str){
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+/* ===================== NAVIGATION ===================== */
+el('prevBtn').addEventListener('click', ()=>{
+  if(state.current > 0){ state.current--; saveState(); renderQuestion(); window.scrollTo(0,0); }
+});
+el('nextBtn').addEventListener('click', ()=>{
+  if(state.current < QUESTIONS.length-1){ state.current++; saveState(); renderQuestion(); window.scrollTo(0,0); }
+  else { openSubmitModal(); }
+});
+el('clearResponseBtn').addEventListener('click', ()=>{
+  const q = QUESTIONS[state.current];
+  delete state.answers[q.id];
+  saveState();
+  renderQuestion();
+  refreshPaletteItem(state.current);
+  updateSidebarStats();
+});
+el('markBtn').addEventListener('click', ()=>{
+  const q = QUESTIONS[state.current];
+  if(state.marked[q.id]) delete state.marked[q.id];
+  else state.marked[q.id] = true;
+  saveState();
+  renderQuestion();
+  refreshPaletteItem(state.current);
+  updateSidebarStats();
+});
+
+document.addEventListener('keydown', (e)=>{
+  if(!testScreen.classList.contains('active')) return;
+  if(e.key === 'ArrowRight'){ el('nextBtn').click(); }
+  if(e.key === 'ArrowLeft'){ el('prevBtn').click(); }
+  if(['1','2','3','4'].includes(e.key)){
+    const i = parseInt(e.key)-1;
+    const q = QUESTIONS[state.current];
+    if(i < q.options.length){
+      state.answers[q.id] = i;
+      saveState(); renderQuestion(); refreshPaletteItem(state.current); updateSidebarStats();
+    }
+  }
+});
+
+/* ===================== PALETTE ===================== */
+function buildPalette(){
+  const grid = el('paletteGrid');
+  grid.innerHTML = QUESTIONS.map((q,i)=>`<button class="pal-item" id="pal-${i}" data-idx="${i}">${i+1}</button>`).join('');
+  grid.querySelectorAll('.pal-item').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      state.current = parseInt(btn.dataset.idx);
+      saveState();
+      renderQuestion();
+      window.scrollTo(0,0);
+    });
+  });
+}
+function paletteClassFor(idx){
+  const q = QUESTIONS[idx];
+  const answered = state.answers.hasOwnProperty(q.id);
+  const visited = !!state.visited[q.id];
+  const marked = !!state.marked[q.id];
+  let cls = '';
+  if(answered) cls = 'answered';
+  else if(visited) cls = 'notanswered';
+  if(marked) cls += ' marked';
+  return cls;
+}
+function refreshPaletteItem(idx, isCurrent){
+  for(let i=0;i<QUESTIONS.length;i++){
+    const btn = el('pal-'+i);
+    if(!btn) continue;
+    btn.className = 'pal-item ' + paletteClassFor(i);
+    if(i === state.current) btn.classList.add('current');
+  }
+}
+
+/* ===================== SIDEBAR STATS ===================== */
+function updateSidebarStats(){
+  const total = QUESTIONS.length;
+  let answered=0, marked=0, visitedNotAns=0, notVisited=0;
+  QUESTIONS.forEach(q=>{
+    const isAns = state.answers.hasOwnProperty(q.id);
+    const isVis = !!state.visited[q.id];
+    const isMarked = !!state.marked[q.id];
+    if(isAns) answered++;
+    if(isMarked) marked++;
+    if(!isVis) notVisited++;
+  });
+  el('statAnswered').textContent = answered;
+  el('statMarked').textContent = marked;
+  el('statNotVisited').textContent = notVisited;
+  el('attemptedText').textContent = answered;
+  const pct = Math.round((answered/total)*100);
+  el('sidebarProgressPct').textContent = pct + '%';
+  el('sidebarBarFill').style.width = pct + '%';
+}
+function updateTopProgress(){
+  const total = QUESTIONS.length;
+  const visitedCount = Object.keys(state.visited).length;
+  const pct = Math.round((visitedCount/total)*100);
+  el('progressTopFill').style.width = pct + '%';
+}
+
+/* ===================== SUBMIT FLOW ===================== */
+function openSubmitModal(){
+  const total = QUESTIONS.length;
+  const answered = Object.keys(state.answers).length;
+  const unanswered = total - answered;
+  el('modalTitle').textContent = 'Submit Test?';
+  el('modalText').textContent = unanswered > 0
+    ? `You have ${unanswered} unanswered question(s). Are you sure you want to submit the test now? This action cannot be undone.`
+    : `You have answered all questions. Are you sure you want to submit the test now?`;
+  el('submitModal').classList.add('active');
+}
+el('submitBtnTop').addEventListener('click', openSubmitModal);
+
+/* ---- MOBILE PALETTE TOGGLE ---- */
+(function(){
+  const toggleBtn = el('paletteToggleBtn');
+  const closeBtn = el('sidebarCloseBtn');
+  const panel = el('sidebarPanel');
+  const backdrop = el('sidebarBackdrop');
+  function openPanel(){ panel.classList.add('open'); backdrop.classList.add('open'); }
+  function closePanel(){ panel.classList.remove('open'); backdrop.classList.remove('open'); }
+  if(toggleBtn) toggleBtn.addEventListener('click', openPanel);
+  if(closeBtn) closeBtn.addEventListener('click', closePanel);
+  if(backdrop) backdrop.addEventListener('click', closePanel);
+})();
+el('modalCancel').addEventListener('click', ()=> el('submitModal').classList.remove('active'));
+el('modalConfirm').addEventListener('click', ()=>{
+  el('submitModal').classList.remove('active');
+  finishTest(false);
+});
+
+function finishTest(autoSubmitted){
+  clearInterval(timerInterval);
+  document.removeEventListener('visibilitychange', onVisibilityResync);
+  accrueTimeForLastQuestion();
+  lastTrackedQId = null;
+  state.finished = true;
+  state.finishedAt = Date.now();
+  saveState();
+  computeAndRenderResult(autoSubmitted);
+  testScreen.classList.remove('active');
+  resultScreen.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* ===================== SCORING ===================== */
+let lastResultData = null;
+function computeAndRenderResult(autoSubmitted){
+  let correct=0, wrong=0, skipped=0, score=0;
+  const perQ = QUESTIONS.map(q=>{
+    const sel = state.answers.hasOwnProperty(q.id) ? state.answers[q.id] : null;
+    let status;
+    if(sel === null){ status='skip'; skipped++; }
+    else if(sel === q.correctIndex){ status='correct'; correct++; score += MARKS_CORRECT; }
+    else { status='wrong'; wrong++; score += MARKS_WRONG; }
+    return {q, sel, status, marked: !!state.marked[q.id]};
+  });
+  score = Math.round(score*100)/100;
+  const total = QUESTIONS.length;
+  const attempted = correct+wrong;
+  const accuracy = attempted>0 ? Math.round((correct/attempted)*100) : 0;
+  const maxScore = total*MARKS_CORRECT;
+  const percentObtained = (score/maxScore)*100;
+  const passed = percentObtained >= PASS_PERCENT;
+
+  const elapsed = state.startedAt ? Math.floor(((state.finishedAt||Date.now()) - state.startedAt)/1000) : (TEST_DURATION_SEC-state.timeLeft);
+  const em = Math.floor(elapsed/60).toString().padStart(2,'0');
+  const es = (elapsed%60).toString().padStart(2,'0');
+
+  el('resultBadge').textContent = passed ? '✓ PASS' : '✗ FAIL';
+  el('resultBadge').className = 'badge ' + (passed?'pass':'fail');
+  el('resultSubtext').textContent = autoSubmitted
+    ? "Time's up! Your test was submitted automatically. Here's how you performed."
+    : "Here's a detailed breakdown of your performance.";
+  el('rScore').textContent = score + ' / ' + maxScore;
+  el('rCorrect').textContent = correct;
+  el('rWrong').textContent = wrong;
+  el('rSkipped').textContent = skipped;
+  el('rAccuracy').textContent = accuracy + '%';
+  el('rTimeTaken').textContent = `${em}:${es}`;
+  el('rTotalQ').textContent = total;
+
+  lastResultData = perQ;
+  renderReviewList(perQ, 'all');
+
+  // ---- Push this attempt into the shared Performance Dashboard store ----
+  if(window.AnalyticsEngine){
+    AnalyticsEngine.saveMockResult({
+      mockId: 'mock2',
+      mockName: 'NISM-IV Mock Test 2',
+      questions: QUESTIONS,
+      perQ,
+      timeSpent: state.timeSpent,
+      timeTakenSec: elapsed,
+      score, maxScore, correct, wrong, skipped, accuracy, percentObtained, passed
+    });
+  }
+
+  clearState(); // test complete, clear saved in-progress state
+}
+
+/* ===================== REVIEW ===================== */
+el('reviewBtn').addEventListener('click', ()=>{
+  const sec = el('reviewSection');
+  sec.style.display = sec.style.display === 'none' ? 'block' : 'none';
+  if(sec.style.display === 'block') sec.scrollIntoView({behavior:'smooth', block:'start'});
+});
+el('retakeBtn').addEventListener('click', ()=>{
+  clearState();
+  resultScreen.classList.remove('active');
+  el('reviewSection').style.display = 'none';
+  beginFreshTest();
+});
+
+document.querySelectorAll('.filter-chip').forEach(chip=>{
+  chip.addEventListener('click', ()=>{
+    document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    renderReviewList(lastResultData, chip.dataset.filter);
+  });
+});
+
+function renderReviewList(perQ, filter){
+  let list = perQ;
+  if(filter==='correct') list = perQ.filter(r=>r.status==='correct');
+  if(filter==='wrong') list = perQ.filter(r=>r.status==='wrong');
+  if(filter==='skip') list = perQ.filter(r=>r.status==='skip');
+  if(filter==='marked') list = perQ.filter(r=>r.marked);
+
+  if(list.length===0){
+    el('reviewList').innerHTML = `<p style="color:var(--text-faint);text-align:center;padding:30px;">No questions in this category.</p>`;
+    return;
+  }
+
+  el('reviewList').innerHTML = list.map(r=>{
+    const q = r.q;
+    const qIndexGlobal = QUESTIONS.findIndex(x=>x.id===q.id)+1;
+    const statusLabel = r.status==='correct'?'Correct':r.status==='wrong'?'Wrong':'Unattempted';
+    const optsHtml = q.options.map((opt,i)=>{
+      let cls='', tag='';
+      if(i===q.correctIndex){ cls='correct-ans'; tag='✓ Correct'; }
+      if(r.sel===i && i!==q.correctIndex){ cls='wrong-ans'; tag='✗ Your Answer'; }
+      if(r.sel===i && i===q.correctIndex){ tag='✓ Your Answer'; }
+      return `<div class="mini-opt ${cls}"><span>${escapeHtml(opt)}</span>${tag?`<span class="tag" style="margin-left:auto;">${tag}</span>`:''}</div>`;
+    }).join('');
+    return `<div class="review-card">
+      <div class="review-card-head">
+        <div><b>Q${qIndexGlobal}.</b> ${escapeHtml(q.question)}</div>
+        <span class="review-status ${r.status==='skip'?'skip':r.status}">${statusLabel}</span>
+      </div>
+      <div class="mini-options">${optsHtml}</div>
+      <div class="explanation-box"><b>Explanation</b>${escapeHtml(q.explanation)}</div>
+    </div>`;
+  }).join('');
+}
+</script>
+</body>
+</html>

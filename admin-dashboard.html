@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard</title>
+<meta name="robots" content="noindex, nofollow">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{
+  --lc-navy:#1B3A6B;
+  --lc-gold:#F5A623;
+  --lc-green:#3A7D44;
+  --lc-red:#C0392B;
+  --lc-bg:#EEF3FF;
+  --text-dark:rgba(27,58,107,.92);
+  --text-mid:rgba(27,58,107,.55);
+  --b8:rgba(27,58,107,.08);
+  --b12:rgba(27,58,107,.12);
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--lc-bg);color:var(--text-dark);}
+
+.topbar{background:linear-gradient(135deg,var(--lc-navy),#123057);color:#fff;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;box-shadow:0 2px 12px rgba(0,0,0,.15);}
+.topbar-left{display:flex;align-items:center;gap:10px;}
+.topbar-left .emoji{font-size:22px;}
+.topbar h1{font-size:15px;margin:0;font-weight:700;}
+.topbar .sub{font-size:10.5px;color:rgba(255,255,255,.65);margin-top:1px;}
+.logout-btn{height:32px;padding:0 16px;border:none;border-radius:9px;background:var(--lc-gold);color:var(--lc-navy);font-size:11.5px;font-weight:700;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease;}
+.logout-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(245,166,35,.4);}
+
+main{max-width:1180px;margin:0 auto;padding:22px 18px 40px;}
+
+.greet{margin-bottom:18px;}
+.greet .title{font-size:17px;font-weight:800;color:var(--lc-navy);}
+.greet .desc{font-size:11.5px;color:var(--text-mid);margin-top:3px;}
+
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:18px;}
+.stat-card{background:#fff;border:.5px solid var(--b8);border-radius:16px;padding:16px 18px;position:relative;overflow:hidden;transition:transform .18s ease,box-shadow .18s ease;cursor:default;}
+.stat-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(27,58,107,.12);}
+.stat-card .icon{font-size:20px;margin-bottom:8px;display:inline-block;}
+.stat-card .num{font-size:24px;font-weight:800;color:var(--lc-navy);line-height:1;}
+.stat-card .label{font-size:10.5px;color:var(--text-mid);margin-top:6px;font-weight:600;}
+.stat-card .glow{position:absolute;right:-20px;top:-20px;width:80px;height:80px;border-radius:50%;opacity:.10;}
+.sc-1 .glow{background:var(--lc-navy);}
+.sc-2 .glow{background:var(--lc-green);}
+.sc-3 .glow{background:var(--lc-gold);}
+.sc-4 .glow{background:#8E44AD;}
+
+.panel{background:#fff;border:.5px solid var(--b8);border-radius:16px;padding:18px;margin-bottom:16px;}
+.panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
+.panel-head .t{font-size:12.5px;font-weight:700;color:var(--text-dark);}
+.panel-head .s{font-size:10px;color:var(--text-mid);margin-top:2px;}
+
+.two-col{display:grid;grid-template-columns:1.3fr 1fr;gap:16px;}
+@media(max-width:820px){.two-col{grid-template-columns:1fr;}}
+
+.lb-row{display:flex;align-items:center;gap:10px;padding:9px 6px;border-radius:10px;transition:background .15s ease;}
+.lb-row:hover{background:var(--lc-bg);}
+.lb-rank{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0;}
+.lb-1{background:linear-gradient(135deg,#F5A623,#FFD26B);}
+.lb-2{background:linear-gradient(135deg,#94A3B8,#CBD5E1);}
+.lb-3{background:linear-gradient(135deg,#CD7F32,#E8A972);}
+.lb-n{background:var(--b12);color:var(--text-dark);}
+.lb-name{font-size:12px;font-weight:600;color:var(--text-dark);flex:1;}
+.lb-score{font-size:11.5px;font-weight:800;color:var(--lc-green);}
+
+table{width:100%;border-collapse:collapse;}
+th{text-align:left;padding:10px 12px;font-size:10.5px;color:var(--text-mid);border-bottom:1.5px solid var(--b8);font-weight:700;text-transform:uppercase;letter-spacing:.3px;}
+td{padding:11px 12px;font-size:12px;border-bottom:1px solid var(--b8);color:var(--text-dark);}
+tr.tbl-row:hover td{background:var(--lc-bg);}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:999px;font-size:10px;font-weight:700;}
+.badge-online{background:rgba(58,125,68,.12);color:var(--lc-green);}
+.badge-offline{background:rgba(27,58,107,.08);color:var(--text-mid);}
+.dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+.avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--lc-navy),#2E5BA8);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;margin-right:8px;vertical-align:middle;}
+
+.empty-state{text-align:center;padding:50px 20px;color:var(--text-mid);}
+.empty-state .big{font-size:38px;margin-bottom:10px;}
+.empty-state .t1{font-size:13px;font-weight:700;color:var(--text-dark);margin-bottom:6px;}
+.empty-state .t2{font-size:11px;line-height:1.7;max-width:420px;margin:0 auto;}
+.setup-pill{display:inline-block;margin-top:14px;background:rgba(245,166,35,.12);color:#B5760C;font-size:10.5px;font-weight:700;padding:6px 14px;border-radius:999px;}
+
+.wrong-pct-wrap{display:flex;align-items:center;gap:8px;}
+.wrong-pct-bar{flex:1;height:6px;background:var(--b8);border-radius:999px;overflow:hidden;max-width:80px;}
+.wrong-pct-fill{height:100%;border-radius:999px;}
+.wrong-pct-num{font-size:11px;font-weight:800;min-width:34px;}
+.q-rank{width:24px;height:24px;border-radius:8px;background:rgba(192,57,43,.1);color:var(--lc-red);display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:800;}
+
+.chart-wrap{position:relative;height:210px;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="emoji">🎓</span>
+    <div>
+      <h1>Apna Learning Club</h1>
+      <div class="sub">Student activity &amp; performance overview</div>
+    </div>
+  </div>
+  <button class="logout-btn">🚪 Logout</button>
+</div>
+
+<main>
+
+  <div class="greet">
+    <div class="title">Welcome back, Admin 👋</div>
+    <div class="desc">All student activity, test scores and engagement in one place</div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card sc-1"><div class="glow"></div><div class="icon">👥</div><div class="num" id="statStudents">—</div><div class="label">TOTAL STUDENTS</div></div>
+    <div class="stat-card sc-2"><div class="glow"></div><div class="icon">✅</div><div class="num" id="statTests">—</div><div class="label">TESTS ATTEMPTED</div></div>
+    <div class="stat-card sc-3"><div class="glow"></div><div class="icon">🎬</div><div class="num" id="statVideos">—</div><div class="label">VIDEOS WATCHED</div></div>
+    <div class="stat-card sc-4"><div class="glow"></div><div class="icon">🔥</div><div class="num" id="statActive">—</div><div class="label">ACTIVE TODAY</div></div>
+  </div>
+
+  <div class="two-col">
+    <div class="panel">
+      <div class="panel-head">
+        <div><div class="t">📈 Daily Activity Trend</div><div class="s">Last 7 days of signup + test activity</div></div>
+      </div>
+      <div class="chart-wrap"><canvas id="chartActivity"></canvas></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <div><div class="t">🏆 Top Performers</div><div class="s">Highest average score</div></div>
+      </div>
+      <div id="leaderboard">
+        <div class="empty-state">
+          <div class="big">🏅</div>
+          <div class="t2">Top students will appear here once data is connected</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <div><div class="t">🎯 Topic-wise Average Accuracy (All Students)</div><div class="s">Which topics students find most difficult</div></div>
+    </div>
+    <div class="chart-wrap"><canvas id="chartTopics"></canvas></div>
+  </div>
+
+  <!-- QUESTION-WISE WRONG ANALYSIS -->
+  <div class="panel">
+    <div class="panel-head">
+      <div><div class="t">❌ Most Wrong-Answered Questions</div><div class="s">Which questions get missed most often — across all student attempts</div></div>
+    </div>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:34px;">#</th>
+            <th>Question</th>
+            <th>Topic</th>
+            <th>Wrong Attempts</th>
+            <th>Total Attempts</th>
+            <th>Wrong %</th>
+          </tr>
+        </thead>
+        <tbody id="wrongQBody">
+          <tr><td colspan="6">
+            <div class="empty-state">
+              <div class="big">🧩</div>
+              <div class="t1">No question-analysis data yet</div>
+              <div class="t2">As soon as students complete mock tests, each question's wrong-answer count will be tracked here, with the most-missed questions surfaced at the top — so you can instantly spot which topic or question needs re-explaining.</div>
+              <div class="setup-pill">⚙️ Firebase setup pending</div>
+            </div>
+          </td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <div><div class="t">📋 All Students</div><div class="s">Every student's activity at a glance</div></div>
+    </div>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th>Mobile</th>
+            <th>Status</th>
+            <th>Tests</th>
+            <th>Avg Score</th>
+            <th>Videos</th>
+            <th>Last Seen</th>
+          </tr>
+        </thead>
+        <tbody id="studentsBody">
+          <tr><td colspan="7">
+            <div class="empty-state">
+              <div class="big">📭</div>
+              <div class="t1">No student data yet</div>
+              <div class="t2">Once Firebase Firestore is connected, every student's name, mobile number, test scores and video-watch activity will appear here automatically.</div>
+              <div class="setup-pill">⚙️ Firebase setup pending</div>
+            </div>
+          </td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBHKEyLgBvJLQYicgQi86QQgMa_p8aHsC0",
+    authDomain: "apnalearningclub.firebaseapp.com",
+    projectId: "apnalearningclub",
+    storageBucket: "apnalearningclub.firebasestorage.app",
+    messagingSenderId: "1096782457056",
+    appId: "1:1096782457056:web:906a2896d9e865adadc885"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // Page protection: redirect straight to the login page if not authenticated
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      window.location.href = "admin-login.html";
+    }
+  });
+
+  // Wire the logout button to a real Firebase signOut
+  document.querySelector('.logout-btn').addEventListener('click', async () => {
+    await signOut(auth);
+    window.location.href = "admin-login.html";
+  });
+
+  const navy = '#1B3A6B', gold = '#F5A623', green = '#3A7D44';
+
+  new Chart(document.getElementById('chartActivity'), {
+    type: 'line',
+    data: {
+      labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+      datasets: [{
+        label: 'Activity',
+        data: [0,0,0,0,0,0,0],
+        borderColor: navy,
+        backgroundColor: 'rgba(27,58,107,.08)',
+        fill: true,
+        tension: .35,
+        pointRadius: 3,
+        pointBackgroundColor: gold
+      }]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false} },
+      scales:{ y:{ beginAtZero:true, grid:{color:'rgba(27,58,107,.06)'} }, x:{ grid:{display:false} } }
+    }
+  });
+
+  new Chart(document.getElementById('chartTopics'), {
+    type: 'bar',
+    data: {
+      labels: ['Topic A','Topic B','Topic C','Topic D','Topic E'],
+      datasets: [{
+        label: 'Avg Accuracy %',
+        data: [0,0,0,0,0],
+        backgroundColor: [navy, gold, green, '#2E5BA8', '#8E44AD'],
+        borderRadius: 8
+      }]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false} },
+      scales:{ y:{ beginAtZero:true, max:100, grid:{color:'rgba(27,58,107,.06)'} }, x:{ grid:{display:false} } }
+    }
+  });
+
+  // ============================================
+  // Question-wise wrong-answer analysis
+  // Each mock-attempt in Firestore should be saved with:
+  //   { questionId, questionText, topic, isCorrect }
+  // Then group all attempts by questionId here to compute
+  // wrong-count / total-count, and call this function
+  // once the data is ready:
+  //
+  //   renderWrongQuestions([
+  //     { question: "...", topic: "SEBI Regulations", wrong: 42, total: 60 },
+  //     ...
+  //   ]);
+  // ============================================
+  function renderWrongQuestions(rows) {
+    const tbody = document.getElementById('wrongQBody');
+    if (!rows || rows.length === 0) return; // keep empty-state as is
+    rows.sort((a,b) => (b.wrong/b.total) - (a.wrong/a.total));
+    tbody.innerHTML = rows.map((r, i) => {
+      const pct = Math.round((r.wrong / r.total) * 100);
+      const color = pct >= 60 ? '#C0392B' : pct >= 35 ? '#F5A623' : '#3A7D44';
+      return `<tr class="tbl-row">
+        <td><span class="q-rank">${i+1}</span></td>
+        <td>${r.question}</td>
+        <td>${r.topic}</td>
+        <td>${r.wrong}</td>
+        <td>${r.total}</td>
+        <td><div class="wrong-pct-wrap">
+              <div class="wrong-pct-bar"><div class="wrong-pct-fill" style="width:${pct}%;background:${color};"></div></div>
+              <span class="wrong-pct-num" style="color:${color};">${pct}%</span>
+            </div></td>
+      </tr>`;
+    }).join('');
+  }
+
+  // ============================================
+  // Load real data from Firestore
+  // Expected structure: collection "students", each document with:
+  //   { name, mobile, testsCount, avgScore, videosCount,
+  //     online (bool), lastSeen (string/timestamp) }
+  // ============================================
+  async function loadDashboardData() {
+    try {
+      const snap = await getDocs(collection(db, "students"));
+      if (snap.empty) return; // empty-state HTML already shown by default
+
+      const students = [];
+      snap.forEach(doc => students.push({ id: doc.id, ...doc.data() }));
+
+      // ---- Stat cards ----
+      document.getElementById('statStudents').textContent = students.length;
+      document.getElementById('statTests').textContent =
+        students.reduce((sum, s) => sum + (s.testsCount || 0), 0);
+      document.getElementById('statVideos').textContent =
+        students.reduce((sum, s) => sum + (s.videosCount || 0), 0);
+      document.getElementById('statActive').textContent =
+        students.filter(s => s.online).length;
+
+      // ---- Leaderboard (top 5 by avgScore) ----
+      const top = [...students].filter(s => s.avgScore != null)
+        .sort((a, b) => b.avgScore - a.avgScore).slice(0, 5);
+      if (top.length) {
+        const rankClasses = ['lb-1', 'lb-2', 'lb-3'];
+        document.getElementById('leaderboard').innerHTML = top.map((s, i) => `
+          <div class="lb-row">
+            <div class="lb-rank ${rankClasses[i] || 'lb-n'}">${i + 1}</div>
+            <div class="lb-name">${s.name || 'Unnamed'}</div>
+            <div class="lb-score">${s.avgScore}%</div>
+          </div>`).join('');
+      }
+
+      // ---- Students table ----
+      const tbody = document.getElementById('studentsBody');
+      tbody.innerHTML = students.map(s => {
+        const initials = (s.name || '?').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+        const statusBadge = s.online
+          ? `<span class="badge badge-online"><span class="dot"></span> Online</span>`
+          : `<span class="badge badge-offline"><span class="dot"></span> Offline</span>`;
+        return `<tr class="tbl-row">
+          <td><span class="avatar">${initials}</span>${s.name || 'Unnamed'}</td>
+          <td>${s.mobile || '—'}</td>
+          <td>${statusBadge}</td>
+          <td>${s.testsCount ?? 0}</td>
+          <td>${s.avgScore != null ? s.avgScore + '%' : '—'}</td>
+          <td>${s.videosCount ?? 0}</td>
+          <td>${s.lastSeen || '—'}</td>
+        </tr>`;
+      }).join('');
+
+    } catch (e) {
+      console.warn('Dashboard data load failed', e);
+    }
+  }
+
+  // ============================================
+  // Question-wise wrong-answer analysis load
+  // Expected: collection "questionStats", each doc with:
+  //   { question, topic, wrong, total }
+  // ============================================
+  async function loadWrongQuestions() {
+    try {
+      const snap = await getDocs(collection(db, "questionStats"));
+      if (snap.empty) return;
+      const rows = [];
+      snap.forEach(doc => rows.push(doc.data()));
+      renderWrongQuestions(rows);
+    } catch (e) {
+      console.warn('Question stats load failed', e);
+    }
+  }
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      loadDashboardData();
+      loadWrongQuestions();
+    }
+  });
+</script>
+
+</body>
+</html>
