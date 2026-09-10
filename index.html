@@ -1458,6 +1458,84 @@ button{cursor:pointer}
   </div>
 </div>
 
+<div class="book-card">
+  <button class="book-card-head" id="bookHeadPsychMoney" onclick="bookToggle('bookPsychMoney')">
+    <div class="book-card-head-left">
+      <span class="book-emoji">💰</span>
+      <div>
+        <div class="book-title">The Psychology of Money</div>
+        <div class="book-author">Morgan Housel</div>
+        <div style="font-size:9.5px;color:rgba(255,255,255,.65);margin-top:2px;">Paise ke saath vyavahar hi asli daulat hai</div>
+      </div>
+    </div>
+    <div class="book-card-head-right">
+      <span class="book-tag book-tag-audio">🎧 Audiobook</span>
+      <span class="book-card-arrow" id="bookArrowPsychMoney">▶</span>
+    </div>
+  </button>
+
+  <div class="book-card-body" id="bookPsychMoney">
+
+    <!-- 1. View Original Book (inline PDF) -->
+    <div class="book-view-block">
+      <button class="book-view-toggle" id="bookViewBtnPsychMoney" onclick="toggleBookView('PsychMoney')"><span id="bookViewBtnTextPsychMoney">📘 View Original Book</span></button>
+      <div class="book-view-frame-wrap" id="bookViewFramePsychMoney">
+        <iframe src="The Psychology Of Money.pdf" title="The Psychology of Money — original book"></iframe>
+      </div>
+    </div>
+
+    <!-- 2. Hindi Summary -->
+    <div class="book-summary-block">
+      <div class="book-summary-label">🇮🇳 हिंदी सारांश (Hindi Summary)</div>
+      <div class="book-summary-text">मॉर्गन हाउसल की यह किताब बताती है कि पैसों में सफलता किसी फॉर्मूले, गणित या फाइनेंस की डिग्री से नहीं, बल्कि आपके "व्यवहार" (Behavior) से तय होती है। स्मार्ट लोग भी पैसों के गलत फैसले ले लेते हैं क्योंकि पैसा एक टेक्निकल विषय नहीं, एक भावनात्मक (emotional) विषय है — इसलिए इसे समझने के लिए इतिहास, मनोविज्ञान और अनुभव ज़्यादा काम आते हैं, सिर्फ स्प्रेडशीट नहीं।</div>
+
+      <div class="book-summary-full" id="bookSummaryFullPsychMoney">
+        <div class="book-ch-title">अध्याय 1 — कोई भी पागल नहीं है (No One's Crazy)</div>
+        <div class="book-summary-text">हर इंसान का पैसों से जुड़ा नज़रिया उसके अपने अनुभवों, उम्र और जिस दौर में वो बड़ा हुआ, उस पर निर्भर करता है — इसलिए दो समझदार लोग भी पैसों को लेकर बिल्कुल अलग फैसले ले सकते हैं, और दोनों अपनी जगह सही हो सकते हैं। जो चीज़ किसी को "जोखिम भरी" लगे, वही दूसरे के अनुभव में बिल्कुल सामान्य लग सकती है।</div>
+
+        <div class="book-ch-title">अध्याय 2 — भाग्य और जोखिम (Luck and Risk)</div>
+        <div class="book-summary-text">सफलता में भाग्य (luck) और असफलता में जोखिम (risk) का हाथ हमेशा होता है, लेकिन इन्हें नापना मुश्किल है। इसलिए किसी की सफलता या असफलता को सिर्फ उसकी मेहनत या फैसलों से जोड़कर देखना गलत है — बहुत ज़्यादा extreme results (बड़ी सफलता/असफलता) पर भरोसा करने की बजाय व्यापक (broad) पैटर्न पर ध्यान देना चाहिए।</div>
+
+        <div class="book-ch-title">अध्याय 3 — कभी न खत्म होने वाली चाहत (Never Enough)</div>
+        <div class="book-summary-text">पैसों से जुड़ी सबसे बड़ी समस्या यह है कि लोग "कितना काफी है" यह तय नहीं कर पाते और लगातार ज़्यादा की चाहत में वह चीज़ भी दांव पर लगा देते हैं जो उनके पास पहले से है (प्रतिष्ठा, आज़ादी, परिवार, दोस्त) — सिर्फ ज़्यादा पाने के लिए, जिसकी उन्हें ज़रूरत ही नहीं थी।</div>
+
+        <div class="book-ch-title">अध्याय 4 — Compounding का चौंकाने वाला असर</div>
+        <div class="book-summary-text">वॉरेन बफेट की ज़्यादातर दौलत उनकी 50 साल की उम्र के बाद बनी — असली जादू उनकी निवेश स्किल में नहीं, बल्कि 70+ साल तक लगातार निवेशित रहने (compounding की ताकत) में है। छोटी रकम भी अगर लंबे समय तक बिना रोक-टोक बढ़ने दी जाए, तो नतीजे हैरान करने वाले होते हैं — जल्दी अमीर बनने की कोशिश से बेहतर है, धैर्य के साथ लंबे समय तक टिके रहना।</div>
+
+        <div class="book-ch-title">अध्याय 5 — पाना बनाम बचाए रखना (Getting Wealthy vs. Staying Wealthy)</div>
+        <div class="book-summary-text">दौलत कमाने के लिए आशावाद (optimism) और जोखिम लेना ज़रूरी है, लेकिन दौलत को बचाए रखने के लिए डर, विनम्रता और थोड़ा सा "paranoia" चाहिए — यह मानना कि जो कमाया है, वह अचानक जा भी सकता है। सबसे ज़रूरी वित्तीय गुण है टिके रहना (survival) — बड़े रिटर्न से ज़्यादा ज़रूरी है कभी पूरी तरह उजड़ न जाना, ताकि compounding चलती रहे।</div>
+
+        <div class="book-ch-title">अध्याय 6 — गलती की गुंजाइश (Room for Error)</div>
+        <div class="book-summary-text">कोई भी प्लान इस उम्मीद पर नहीं बनाना चाहिए कि सब कुछ बिल्कुल सही ही होगा। फाइनेंशियल प्लानिंग में हमेशा एक सुरक्षा मार्जिन (margin of safety) रखें, ताकि गलत अनुमान या बुरे दौर में भी टिके रहा जा सके — यही एक चीज़ है जो लंबे समय तक खेल में बनाए रखती है।</div>
+
+        <div class="book-ch-title">अध्याय 7 — असली आज़ादी: समय पर अपना नियंत्रण</div>
+        <div class="book-summary-text">पैसों का सबसे बड़ा फायदा गाड़ी या घर खरीदना नहीं, बल्कि यह ताकत है कि आप अपने समय और ज़िंदगी के फैसले खुद ले सकें — बिना किसी और की मर्ज़ी के। यह आज़ादी (control over your time) ही असली, टिकाऊ खुशी का सबसे बड़ा ज़रिया है।</div>
+
+        <div class="book-ch-title">अध्याय 8 — बचत करने की कला (Save Money)</div>
+        <div class="book-summary-text">दौलत बनाने के लिए ज़्यादा कमाई या ऊंचे रिटर्न ज़रूरी नहीं — सिर्फ ऊंची "savings rate" (बचत दर) काफी है, जो पूरी तरह आपके अपने कंट्रोल में है। बचत की असली वजह किसी खास खरीद के लिए नहीं, बल्कि भविष्य में मिलने वाले विकल्पों और लचीलेपन (flexibility) के लिए होनी चाहिए।</div>
+      </div>
+
+      <button class="book-summary-toggle" id="bookSummaryBtnPsychMoney" onclick="toggleBookSummary('PsychMoney')"><span id="bookSummaryBtnTextPsychMoney">पूरा सारांश पढ़ें</span> <span id="bookSummaryArrowPsychMoney">▾</span></button>
+    </div>
+
+    <!-- 3. Audio Player (dummy — real file pending) -->
+    <div class="book-audio-block">
+      <div class="book-audio-label">🎧 Audiobook Player</div>
+      <audio class="book-audio-el" controls>
+        <source src="Paise-ke-saath-vyavahar-hi-asli.mp3" type="audio/mpeg">
+        Aapka browser audio player support nahi karta.
+      </audio>
+    </div>
+
+    <!-- 4. Downloads: all three (Book / Hindi Summary / Audio) -->
+    <div class="book-dl-row">
+      <a class="dl-btn" href="The Psychology Of Money.pdf" download>⬇ Book (PDF)</a>
+      <a class="dl-btn" style="background:var(--lc-green);" href="Psychology_of_Money_Hindi_Translation.docx" download>⬇ Hindi Summary</a>
+      <a class="dl-btn" style="background:var(--lc-navy);" href="Paise-ke-saath-vyavahar-hi-asli.mp3" download>⬇ Audio (MP3)</a>
+    </div>
+  </div>
+</div>
+
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;">
 <div style="background:#fff;border:.5px solid var(--b8);border-top:3px solid var(--lc-gold);border-radius:14px;padding:14px;"><div style="font-size:26px;margin-bottom:7px;">📘</div><div style="font-size:12px;font-weight:600;color:var(--text-dark);margin-bottom:2px;">Rich Dad Poor Dad</div><div style="font-size:10px;color:var(--text-mid);margin-bottom:2px;">Robert Kiyosaki</div><div style="font-size:10px;color:var(--lc-gold);font-weight:500;margin-bottom:10px;">🎧 Audiobook</div><button style="height:27px;width:100%;border:0;border-radius:8px;background:var(--lc-gold);color:#1B3A6B;font-size:11px;font-weight:600;">Free Download</button></div>
 <div style="background:#fff;border:.5px solid var(--b8);border-top:3px solid #2E5BA8;border-radius:14px;padding:14px;"><div style="font-size:26px;margin-bottom:7px;">📗</div><div style="font-size:12px;font-weight:600;color:var(--text-dark);margin-bottom:2px;">NISM Official Workbook</div><div style="font-size:10px;color:var(--text-mid);margin-bottom:2px;">NISM Publication</div><div style="font-size:10px;color:#58B2DC;font-weight:500;margin-bottom:10px;">📄 PDF</div><button style="height:27px;width:100%;border:0;border-radius:8px;background:#2E5BA8;color:#fff;font-size:11px;">Free Download</button></div>
