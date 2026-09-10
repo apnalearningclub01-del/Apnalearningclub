@@ -1369,6 +1369,95 @@ button{cursor:pointer}
 </div>
 <!-- ===== END SAMPLE ===== -->
 
+<div class="book-card">
+  <button class="book-card-head" id="bookHeadAtomicHabits" onclick="bookToggle('bookAtomicHabits')">
+    <div class="book-card-head-left">
+      <span class="book-emoji">⚛️</span>
+      <div>
+        <div class="book-title">Atomic Habits</div>
+        <div class="book-author">James Clear · Tiny Changes, Remarkable Results</div>
+        <div style="font-size:9.5px;color:rgba(255,255,255,.65);margin-top:2px;">Chhoti aadatein, bade badlaav</div>
+      </div>
+    </div>
+    <div class="book-card-head-right">
+      <span class="book-tag book-tag-audio">🎧 Audiobook</span>
+      <span class="book-card-arrow" id="bookArrowAtomicHabits">▶</span>
+    </div>
+  </button>
+
+  <div class="book-card-body" id="bookAtomicHabits">
+
+    <!-- 1. View Original Book (inline PDF) -->
+    <div class="book-view-block">
+      <button class="book-view-toggle" id="bookViewBtnAtomicHabits" onclick="toggleBookView('AtomicHabits')"><span id="bookViewBtnTextAtomicHabits">📘 View Original Book</span></button>
+      <div class="book-view-frame-wrap" id="bookViewFrameAtomicHabits">
+        <iframe src="Atomic Habits Tiny Changes, Remarkable Results.pdf" title="Atomic Habits: Tiny Changes, Remarkable Results — original book"></iframe>
+      </div>
+    </div>
+
+    <!-- 2. Hindi Summary -->
+    <div class="book-summary-block">
+      <div class="book-summary-label">🇮🇳 हिंदी सारांश (Hindi Summary)</div>
+      <div class="book-summary-text">जेम्स क्लियर की यह किताब बताती है कि बड़ी सफलता किसी एक बड़े फैसले से नहीं, बल्कि रोज़ किए गए छोटे-छोटे 1% सुधारों से आती है। हम अक्सर सोचते हैं कि नतीजे बड़े लक्ष्य (Goals) तय करने से मिलते हैं, जबकि असली फर्क हमारे रोज़मर्रा के सिस्टम और आदतों से पड़ता है — "आप अपने लक्ष्यों के स्तर तक नहीं, बल्कि अपने सिस्टम के स्तर तक गिरते हैं।"</div>
+
+      <div class="book-summary-full" id="bookSummaryFullAtomicHabits">
+        <div class="book-ch-title">अध्याय 1 — छोटे बदलावों की चौंकाने वाली ताकत</div>
+        <div class="book-summary-text">रोज़ सिर्फ 1% बेहतर होने पर एक साल में आप लगभग 37 गुना बेहतर बन जाते हैं, जबकि 1% बुरा होने पर लगभग शून्य के करीब पहुंच जाते हैं। आदतें "compound interest" की तरह काम करती हैं — नतीजे तुरंत नहीं, बल्कि समय के साथ जमा होकर दिखते हैं, इसीलिए शुरुआत में बदलाव महसूस नहीं होता और लोग बीच में ही हार मान लेते हैं। असली लक्ष्य लक्ष्य तय करना नहीं, बल्कि एक अच्छा सिस्टम बनाना है।</div>
+
+        <div class="book-ch-title">अध्याय 2 — पहचान आधारित आदतें (Identity-Based Habits)</div>
+        <div class="book-summary-text">आदत बदलने के तीन स्तर होते हैं — नतीजे (क्या पाना है), प्रक्रिया (क्या करना है), और पहचान (आप खुद को कौन मानते हैं)। ज़्यादातर लोग नतीजों पर ध्यान देते हैं, जबकि टिकाऊ बदलाव पहचान से शुरू होता है — जैसे "मुझे 5 किलो वज़न घटाना है" कहने की बजाय "मैं एक सेहतमंद इंसान हूँ" सोचना। हर बार जब आप कोई आदत निभाते हैं, आप उस नई पहचान के लिए वोट डाल रहे होते हैं।</div>
+
+        <div class="book-ch-title">अध्याय 3 — आदत लूप: Cue, Craving, Response, Reward</div>
+        <div class="book-summary-text">हर आदत एक चार-चरण के लूप से गुज़रती है, जो लगातार दोहराया जाता है और हमारे दिमाग में एक फीडबैक लूप बनाता है।</div>
+        <table class="book-mini-table">
+          <tr><th>चरण</th><th>मतलब</th><th>उदाहरण</th></tr>
+          <tr><td>Cue (संकेत)</td><td>दिमाग को ट्रिगर करता है</td><td>फोन की नोटिफिकेशन बीप</td></tr>
+          <tr><td>Craving (चाहत)</td><td>बदलाव की इच्छा पैदा करता है</td><td>अपडेट देखने की इच्छा</td></tr>
+          <tr><td>Response (प्रतिक्रिया)</td><td>असली आदत/काम</td><td>फोन उठाकर ऐप खोलना</td></tr>
+          <tr><td>Reward (इनाम)</td><td>संतुष्टि, संकेत को याद रखना</td><td>जानकारी/मनोरंजन मिलना</td></tr>
+        </table>
+
+        <div class="book-ch-title">अध्याय 4 — बदलाव के चार नियम</div>
+        <div class="book-summary-text">इसी चार-चरण लूप से चार व्यावहारिक नियम निकलते हैं — अच्छी आदत बनाने के लिए इन्हें अपनाएं, बुरी आदत तोड़ने के लिए इन्हें उल्टा करें।</div>
+        <table class="book-mini-table">
+          <tr><th>नियम</th><th>अच्छी आदत बनाएं</th><th>बुरी आदत तोड़ें</th></tr>
+          <tr><td>1. स्पष्ट बनाएं</td><td>Habit stacking + सामने दिखने वाला संकेत रखें</td><td>ट्रिगर को नज़रों से हटाएं</td></tr>
+          <tr><td>2. आकर्षक बनाएं</td><td>पसंदीदा काम के साथ जोड़ें (Temptation bundling)</td><td>इसे उबाऊ/अनाकर्षक बना दें</td></tr>
+          <tr><td>3. आसान बनाएं</td><td>2-मिनट नियम से शुरुआत करें, माहौल तैयार करें</td><td>घर्षण (friction) बढ़ाएं, मुश्किल बना दें</td></tr>
+          <tr><td>4. संतोषजनक बनाएं</td><td>तुरंत छोटा इनाम दें, आदत ट्रैक करें</td><td>न करने पर तुरंत कीमत/नुकसान जोड़ें</td></tr>
+        </table>
+
+        <div class="book-ch-title">अध्याय 5 — माहौल (Environment) की भूमिका</div>
+        <div class="book-summary-text">इच्छाशक्ति से ज़्यादा असरदार है अपने आस-पास का माहौल बदलना। जो चीज़ें दिखती हैं, वही सबसे ज़्यादा असर डालती हैं — फल टेबल पर रखने से लोग ज़्यादा फल खाते हैं, जबकि छिपी हुई मिठाई कम खाई जाती है। हर आदत का अपना एक तय जगह और समय होना चाहिए, जिससे संकेत साफ रहे।</div>
+
+        <div class="book-ch-title">अध्याय 6 — 2-मिनट नियम और Habit Stacking</div>
+        <div class="book-summary-text">हर नई आदत को शुरुआत में इतना छोटा बना दें कि वह 2 मिनट से कम समय में हो सके — जैसे "रोज़ पढ़ना" की जगह "एक पन्ना पढ़ना।" Habit Stacking में एक मौजूदा आदत के तुरंत बाद नई आदत जोड़ी जाती है: "जब मैं ___ करूं, तब मैं ___ करूंगा।" इससे नई आदत को याद रखने के लिए अलग संकेत नहीं ढूंढना पड़ता।</div>
+
+        <div class="book-ch-title">अध्याय 7 — Habit Tracking और निरंतरता</div>
+        <div class="book-summary-text">आदत को ट्रैक करना (जैसे कैलेंडर पर क्रॉस लगाना) खुद में एक संतोषजनक इनाम है और प्रगति साफ दिखाता है। सबसे ज़रूरी नियम: "कभी लगातार दो बार मिस मत करो" — एक दिन चूकना दुर्घटना है, दो बार चूकना नई (बुरी) आदत की शुरुआत बन जाता है।</div>
+      </div>
+
+      <button class="book-summary-toggle" id="bookSummaryBtnAtomicHabits" onclick="toggleBookSummary('AtomicHabits')"><span id="bookSummaryBtnTextAtomicHabits">पूरा सारांश पढ़ें</span> <span id="bookSummaryArrowAtomicHabits">▾</span></button>
+    </div>
+
+    <!-- 3. Audio Player (dummy — real file pending) -->
+    <div class="book-audio-block">
+      <div class="book-audio-label">🎧 Audiobook Player</div>
+      <audio class="book-audio-el" controls>
+        <source src="छोटी_आदतें_बड़े_बदलाव_एटॉमिक_हैबिट्स.mp3" type="audio/mpeg">
+        Aapka browser audio player support nahi karta.
+      </audio>
+    </div>
+
+    <!-- 4. Downloads: all three (Book / Hindi Summary / Audio) -->
+    <div class="book-dl-row">
+      <a class="dl-btn" href="Atomic Habits Tiny Changes, Remarkable Results.pdf" download>⬇ Book (PDF)</a>
+      <a class="dl-btn" style="background:var(--lc-green);" href="Atomic_Habits_Hindi_Translation.docx" download>⬇ Hindi Summary</a>
+      <a class="dl-btn" style="background:var(--lc-navy);" href="छोटी_आदतें_बड़े_बदलाव_एटॉमिक_हैबिट्स.mp3" download>⬇ Audio (MP3)</a>
+    </div>
+  </div>
+</div>
+
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;">
 <div style="background:#fff;border:.5px solid var(--b8);border-top:3px solid var(--lc-gold);border-radius:14px;padding:14px;"><div style="font-size:26px;margin-bottom:7px;">📘</div><div style="font-size:12px;font-weight:600;color:var(--text-dark);margin-bottom:2px;">Rich Dad Poor Dad</div><div style="font-size:10px;color:var(--text-mid);margin-bottom:2px;">Robert Kiyosaki</div><div style="font-size:10px;color:var(--lc-gold);font-weight:500;margin-bottom:10px;">🎧 Audiobook</div><button style="height:27px;width:100%;border:0;border-radius:8px;background:var(--lc-gold);color:#1B3A6B;font-size:11px;font-weight:600;">Free Download</button></div>
 <div style="background:#fff;border:.5px solid var(--b8);border-top:3px solid #2E5BA8;border-radius:14px;padding:14px;"><div style="font-size:26px;margin-bottom:7px;">📗</div><div style="font-size:12px;font-weight:600;color:var(--text-dark);margin-bottom:2px;">NISM Official Workbook</div><div style="font-size:10px;color:var(--text-mid);margin-bottom:2px;">NISM Publication</div><div style="font-size:10px;color:#58B2DC;font-weight:500;margin-bottom:10px;">📄 PDF</div><button style="height:27px;width:100%;border:0;border-radius:8px;background:#2E5BA8;color:#fff;font-size:11px;">Free Download</button></div>
